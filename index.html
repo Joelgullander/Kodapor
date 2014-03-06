@@ -5,7 +5,7 @@
     <script src="php/caljac/"></script>
 
     <!--  Fyll i sökvägen till din htdocs --> 
-    <base href="Kodapor" />
+    <base href="/Kodapor/" />
   
   </head>
   <body>
@@ -19,8 +19,14 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">Kodapor CP</a>
+<p class="navbar-text navbar-right">Inloggad som <div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    Action <span class="caret"></span>
+  </button>
+</div>
         </div>
         <div class="navbar-collapse collapse">
+          <a href="login">Login</a>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Logga in formulär??">
           </form>
