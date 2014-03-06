@@ -68,7 +68,8 @@ computenzServices.service('LoginToggleService', function() {
       }
     },
     getStatus: function() {
-      return status;
+      if (status)
+        return true;
     }
   };
 

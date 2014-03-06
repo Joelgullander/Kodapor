@@ -8,8 +8,12 @@
   (c) TF 2013
 */
 
+//base = $_GET["dir"] ? $_GET["dir"] : "../..";
+
+$base = "../..";
+
 ini_set('max_execution_time', 300);
-$settingspath = "../../settings/app.json";
+$settingspath = "$base/settings/app.json";
 $settings = json_decode(file_get_contents($settingspath),1);
 $debug = $settings["compressJsAndCss"] ? 0 : 1;
 $version = $settings["version"];
@@ -56,7 +60,9 @@ function sortByLoadOrder($ar,$loadOrder){
 }
 
 function getFilePaths($dir,$strip = ""){
+
   $files = array();
+
   $objects = new RecursiveIteratorIterator(
     new RecursiveDirectoryIterator($dir), 
     RecursiveIteratorIterator::SELF_FIRST
@@ -69,41 +75,41 @@ function getFilePaths($dir,$strip = ""){
 }
 
 function js_files($debug = 0,$changeTime = 0){
-  global $settings;
+  global $settings, $base;
   $js = ""; $biggestTime = 0; $t;
-  $f = sortByLoadOrder(getFilePaths("../../js","../../"),$settings["loadOrderJS"]);
+  $f = sortByLoadOrder(getFilePaths("$base/js","$base/"),$settings["loadOrderJS"]);
   foreach($f as $i){
     if(strpos($i,"/.") > 0) continue;
     if(!strpos($i,".")) continue;
     if(!strpos($i,".js")) continue;
     if($changeTime){
-      $t = filemtime("../../".$i);
+      $t = filemtime("$base/".$i);
       if($t > $biggestTime) $biggestTime = $t;
       continue;
     }
     if($debug) $js .= '<script src="'.$i.'"></script>';
-    else $js .= file_get_contents("../../".$i)."\n\n";
+    else $js .= file_get_contents("$base/".$i)."\n\n";
   }
   if($changeTime) return $biggestTime;
   return $js;
 }
 
 function css_files($debug = 0,$changeTime = 0){
-  global $settings;
+  global $settings, $base;
   $css = ""; $biggestTime = 0; $t;
-  $f = sortByLoadOrder(getFilePaths("../../css","../../"),$settings["loadOrderCSS"]);
+  $f = sortByLoadOrder(getFilePaths("$base/css","$base/"),$settings["loadOrderCSS"]);
   foreach($f as $i){
     if(strpos($i,"/.") > 0) continue;
     if(strpos($i,"caljac_cache") > 0) continue;
     if(!strpos($i,".")) continue;
     if(!strpos($i,".less") && !strpos($i,".css")) continue;
     if($changeTime){
-      $t = filemtime("../../".$i);
+      $t = filemtime("$base/".$i);
       if($t > $biggestTime) $biggestTime = $t;
       continue;
     }
     if($debug)$css .= '<link rel="stylesheet" type="text/'.(strpos($i,".less") ? "less" : "css").'" href="'.$i.'"/>';
-    else $css .= file_get_contents("../../".$i)."\n\n";
+    else $css .= file_get_contents("$base/".$i)."\n\n";
   }
   if($changeTime) return $biggestTime;
   return $css;
@@ -138,7 +144,9 @@ function googleFonts(){
 googleFonts();
 if($debug == 1){
   header("content-type: application/javascript");
-  echo("document.write('".standardHeaders().googleFonts().css_files(1).js_files(1)."');");
+  $toEcho = "document.write('".standardHeaders().googleFonts().css_files(1).js_files(1)."');";
+  $toEcho = str_replace("/profile/","/",$toEcho);
+  echo($toEcho);
 }
 else {
   clearCache();

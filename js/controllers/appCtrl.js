@@ -4,11 +4,14 @@
 // Here you can declare functions needed in navbars, sidebars, footer etc,
 // elements that are in common wherever the user navigates on the site. 
 
-computenzControllers.controller('appCtrl', ['$scope','$http','UserService','LoginToggleService',
-  function($scope,$http, UserService, LoginToggleService) {
+computenzControllers.controller('appCtrl', ['$scope','$http','$location','UserService','LoginToggleService',
+  function($scope,$http,$location,UserService,LoginToggleService) {
     
-    $scope.updateLogin = function(statusObj) {
-      $scope.whereToGo = statusObj;
+    var redirect = window.location.href.split(document.baseURI)[1];
+    $location.path(redirect);
+
+    $scope.updateLogin = function(linkData) {
+      $scope.whereToGo = linkData;
     };
 
     $scope.logOut = function() {

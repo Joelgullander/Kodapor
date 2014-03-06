@@ -3,11 +3,11 @@
 
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!--  Fyll i sökvägen från din htdocs till appen --> 
+    <base href="/Kodapor/" />
     <script src="php/caljac/"></script>
 
-    <!--  Fyll i sökvägen till din htdocs --> 
-    <base href="/plush/delkurs-7/Kodapor/" />
-  
   </head>
   
   <body ng-controller="appCtrl">
@@ -30,13 +30,16 @@
         </div>
       </div>
     </div>
-
+    {{ loginStatus() ? getFullName() : "Please log in" }}
+     
+    <br>
     <!-- Till Joel: Länken nedan ska du nu kunna lägga i navigationsfältet eller var du vill 
           Du kan även använda funktionen  {{ getFullName() }} om du vill visa namnet efter
           man har loggat in (vill du bara visa förnamnet måste funktionen i controllern bytas ut). 
-          För att kolla om någon är inloggad använder du funktionen 
-          {{ loginStatus() && 'annan funktion du vill utföra om inloggad' }} eller
-          {{ loginStatus() || 'annan funktion du vill utföra om ej inloggad }} 
+          För att kolla om någon är inloggad använder du någon av modellerna: 
+          {{ loginStatus() && 'annan funktion du vill utföra om inloggad' }} 
+          {{ !loginStatus() && 'annan funktion du vill utföra om ej inloggad }} 
+          {{ loginstatus() ? 'inloggad action' : 'ej inloggad actiion' }}
     -->
     <!-- go to login view if not already logged in, else logout and return to homepage -->
     <a ng-href="{{whereToGo.link}}" ng-click="whereToGo.text == 'logout' && logOut()"> {{ whereToGo.text }} </a>
