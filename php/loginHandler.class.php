@@ -10,8 +10,8 @@ class LoginHandler {
     // change these if you want
     $host = "localhost",
     $dbname = "coderspool",
-    $dbusername = "sonix",
-    $dbpassword = "coders",
+    $dbusername = "root",
+    $dbpassword = "",
     $usertablename = "accounts"
   ){
  
