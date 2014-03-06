@@ -20,17 +20,20 @@
     "loadOrderJS": [
       "less.js",
         "jquery.js",
-        "jquery.ui.js",
         "angular.js",
         "angular-route.js",
         "...",
         "app.js",
-        "controllers.js"
+        "appCtrl.js",
+        "browserCtrl.js",
+        "loginCtrl.js",
+        "profileCtrl.js",
+        "regCtrl.js",
+        "services.js"
     ],
 
     "loadOrderCSS": [
         "meyerReset.css",
-        "jquery-ui.css",
         "...",
         "css.css",
         "css.less"

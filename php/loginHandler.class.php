@@ -10,8 +10,8 @@ class LoginHandler {
     // change these if you want
     $host = "localhost",
     $dbname = "coderspool",
-    $dbusername = "root",
-    $dbpassword = "",
+    $dbusername = "sonix",
+    $dbpassword = "coders",
     $usertablename = "accounts"
   ){
  
@@ -92,17 +92,29 @@ class LoginHandler {
     // check if login is ok
     $q -> execute();
     $r = $q -> fetchAll();
+
     if($r[0]["count"] == 0){
       // combination of username and password does not exist
       // so no go
       return false;
     }
 
- 
+    $response = array();
+
+    $q = $this -> pdo -> prepare(
+      "SELECT firstname, lastname FROM appliers WHERE username = '$username'"
+    );  
+    $q -> execute();
+    $r = $q -> fetchAll();
+    
+    $response["firstname"] = $r[0]["firstname"];
+    $response["lastname"] = $r[0]["lastname"];
+    $response["username"] = $username;
+
     // store the user in a session variable
     $_SESSION["LoginHandlerCurrentUser"] = $username;
  
-    return $username;
+    return $response;
   }
  
   public function getUser(){
@@ -126,8 +138,11 @@ class LoginHandler {
  
     // We are lazy and do not want to write $_REQUEST
     // a gazillions times below...
-    $r = $_REQUEST;
-    
+
+    $json = file_get_contents('php://input');
+
+    // packa upp och tvinga associativ array
+    $r = json_decode($json, true);
     // Do nothing if no action is sent
     if(!isset($r["loginHandlerAction"])){return false;}
  
@@ -135,7 +150,7 @@ class LoginHandler {
     $action = $r["loginHandlerAction"];
     $username = isset($r["username"]) ? $r["username"] : '';
     $password = isset($r["username"]) ? $r["password"] : '';
-    
+
     // Call method corresponding to action if it exist
     // echo as json and die (stop running php)
     if (method_exists($this, $action) ){ 
@@ -157,7 +172,7 @@ class LoginHandler {
     
     // Create our PDO instance 
     // and create database and/or table if non existing
- 
+
     $this -> initialSetUpMySQL();
  
     // Listen to requests to the Loginhandler
