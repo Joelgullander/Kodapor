@@ -11,18 +11,11 @@ computenzControllers.controller('LoginCtrl', ['$scope','$http','$location', 'Use
         password: $scope.user.password
       };
 
-      // Några testpersoner: 
-      //  PerCenterwall GzrTCRljCu
-      //  VictoriaAsplund spvmM3Zzci
-      //  PeterGullberg WaSfW9EcaE
-      //  OskarBlomstrand RkBArq1mNA
-
       $http.post('php/main.php', requestData).success(function(data){
-        if(data && data.username === $scope.user.username){
+        if(data){
           UserService.setUser(data);
           LoginToggleService.setLinkData(true);
           $location.path('profile/' + UserService.getUsername());
-          $scope.message = 'Your login succeeded';
         }else{
           $scope.message = data;
         }

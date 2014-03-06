@@ -10,8 +10,8 @@ class LoginHandler {
     // change these if you want
     $host = "localhost",
     $dbname = "coderspool",
-    $dbusername = "root",
-    $dbpassword = "",
+    $dbusername = "sonix",
+    $dbpassword = "coders",
     $usertablename = "accounts"
   ){
  
@@ -106,13 +106,10 @@ class LoginHandler {
     );  
     $q -> execute();
     $response = $q -> fetchAll(PDO::FETCH_ASSOC);
-    /*
-    $response["firstname"] = $r[0]["firstname"];
-    $response["lastname"] = $r[0]["lastname"];*/
     $response[0]["username"] = $username;
     
     // store the user in a session variable
-    $_SESSION["LoginHandlerCurrentUser"] = $username;
+    $_SESSION["LoginHandlerCurrentUser"] = $response[0];
  
     return $response[0];
   }

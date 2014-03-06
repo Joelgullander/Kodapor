@@ -1,19 +1,34 @@
-<div>
-  <!--
-  Ĺogin: <input type="text" ng-model="username">
-  Password: <input type="password" ng-model="password">
-  -->
-  <form name="loginForm" novalidate>
 
-    <label>Username</label><input type="text" name="username" ng-model="user.username" required> <span ng-show="loginForm.username.$dirty && loginForm.username.$invalid">Please enter your username</span>
-    <br>
+  
+    <form name="loginForm" class="loginForm" novalidate>
 
-    <label>Password</label><input type="password" name="password" ng-model="user.password" ng-minlength="6"> <span ng-show="loginForm.password.$dirty && loginForm.password.$invalid">Your password must be at least 6 characters</span>
-    <br>
+      <label>Användarnamn: </label><input type="text" name="username" ng-model="user.username" required> <span ng-show="loginForm.username.$dirty && loginForm.username.$invalid">Please enter your username</span>
+      <br>
 
-    <button ng-click="loginForm.$valid && sendForm()">Login</button>
+      <label>Lösenord: </label><input type="password" name="password" ng-model="user.password" ng-minlength="6"> <span ng-show="loginForm.password.$dirty && loginForm.password.$invalid">Your password must be at least 6 characters</span>
+      <br>
 
-  </form>
+      <button ng-click="loginForm.$valid && sendForm()">Logga in</button>
 
-<div>
+    </form>
+  
+
+  <br>
+  
+  <div> 
+    Inte registrerad? <br>
+    Registrera dig som: <a ng-href="register/person">privatperson</a>  <a href="register/company">företag</a>
+  {{ message }}
+  </div>
+
+  <div id="testpersoner">
+    <h5>Här är några testpersoner för inlogg:</h5>
+    <p>
+      PerCenterwall <span>GzrTCRljCu</span><br>
+      VictoriaAsplund <span>spvmM3Zzci</span><br>
+      PeterGullberg <span>WaSfW9EcaE</span><br>
+      OskarBlomstrand <span>RkBArq1mNA</span><br>
+    </p>
+  </div>
+
 

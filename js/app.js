@@ -1,4 +1,7 @@
-  'use strict';
+'use strict';
+
+// This file contains registration of the global app, its 
+// controllers, services etc. 
 
 var computenzApp = angular.module('computenzApp', [
     'ngRoute',
@@ -10,11 +13,17 @@ computenzApp.config(['$locationProvider', function($locationProvider){
   $locationProvider.html5Mode(true);
 }]);
 
+var computenzControllers = angular.module('computenzControllers', []);
+var computenzServices = angular.module('computenzServices', []).value('version', '0.1');
+
+// The routing is configured here, to redirect to desired partial
+// according to what is in the url after the app root (Kodapor/...)
+
 computenzApp.config(['$routeProvider', function($routeProvider){
     
     $routeProvider.
-      when('/register', {
-        templateUrl: 'partials/register.html',
+      when('/register/:type', {
+        templateUrl: 'partials/registrationPerson.html',
         controller: 'RegCtrl'
       }).
       when('/login', {
@@ -35,6 +44,4 @@ computenzApp.config(['$routeProvider', function($routeProvider){
 
 }]);
 
-var computenzControllers = angular.module('computenzControllers', []);
 
-var computenzServices = angular.module('computenzServices', []).value('version', '0.1');
