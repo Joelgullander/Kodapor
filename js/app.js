@@ -38,10 +38,11 @@ computenzApp.config(['$routeProvider', function($routeProvider){
         templateUrl: 'partials/browse.html',
         controller: 'BrowseCtrl'
       }).
-      when('home', {
-        redirectTo: 'index.html'
+      when('/home', {
+        templateUrl: 'partials/home.html',
+        controller: 'HomeCtrl'
+      }).
+      otherwise({
+        redirectTo: '/home'
       });
-
 }]);
-
-

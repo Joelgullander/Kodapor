@@ -18,18 +18,19 @@
     "/* unless you know what you are doing don't change loadOrder */" : "",
 
     "loadOrderJS": [
-      "less.js",
+        "less.js",
         "jquery.js",
         "angular.js",
         "angular-route.js",
-        "...",
         "app.js",
+        "services.js",
+        "...",
         "appCtrl.js",
         "browserCtrl.js",
+        "homeCtrl.js",
         "loginCtrl.js",
         "profileCtrl.js",
-        "regCtrl.js",
-        "services.js"
+        "regCtrl.js"
     ],
 
     "loadOrderCSS": [
