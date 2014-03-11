@@ -7,7 +7,7 @@
 // set global net_buffer_length=1000000; 
 // set global max_allowed_packet=1000000000;
 
-system("mysql <reset_db.sql coderspool -usonix -pcoders --max_allowed_packet=100M");
+system("mysql <reset_db.sql coderspool -uroot --max_allowed_packet=100M");
 
 require_once("LoremIpsum.class.php");
 require_once("DB.php");

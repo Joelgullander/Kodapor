@@ -1,4 +1,5 @@
 <?php
+
   $host = "localhost";
   $db = "coderspool";
   try {
@@ -34,13 +35,13 @@
   if ($method == "POST") {
 
     if ($target == "user_person") { // CREATE user_person account
-      $sql = "INSERT INTO account (username,email,password,user_table) VALUES ('".$input['username']."','".$input['email']."','".$input['password']."','".$target."');". 
-        "INSERT INTO $target (username,firstname,lastname,birthdate,company_tax,company_name,phone) VALUES "."('".$input['username']."','".$input['firstname']."','".
+      $sql = "INSERT INTO account (username,email,password,user_table) VALUES ('".$id."','".$input['email']."','".$input['password']."','".$target."');". 
+        "INSERT INTO $target (username,firstname,lastname,birthdate,company_tax,company_name,phone) VALUES "."('".$id."','".$input['firstname']."','".
         $input['lastname']."','".$input['birthdate']."','".$input['company_tax']."','".$input['company_name']."','".$input['phone']."');"; 
     }
     elseif ($target == "user_company") { // CREATE user_company account
-      $sql = "INSERT INTO account (username,email,password,user_table) VALUES ('".$input['username']."','".$input['email']."','".$input['password']."','".$target."');".
-        "INSERT INTO $target (username,name,contact_person,phone) VALUES ('".$input['username']."','".$input['name']."','".$input['contact_person'].$input['phone']."');";
+      $sql = "INSERT INTO account (username,email,password,user_table) VALUES ('".$id."','".$input['email']."','".$input['password']."','".$target."');".
+        "INSERT INTO $target (username,name,contact_person,phone) VALUES ('".$id."','".$input['name']."','".$input['contact_person'].$input['phone']."');";
     }
     elseif (substr($target,0,7) == "profile") {
       create_metadata('username', $input['username']);
@@ -62,24 +63,30 @@
 
   if ($method == "GET") {
     
+    $response = array();
+
     if (substr($target,0,4) == "user") {  // Requests from registration and account view
-      $response = array();
+      
+      $id = urldecode($id);
       $sql = "SELECT * FROM account WHERE username = '$id';";// 
       $q = $connection->prepare($sql);
       $q -> execute();
       $response = $q -> fetchAll(PDO::FETCH_ASSOC)[0];
-      $sql = "SELECT * FROM " . $target . " WHERE username = '$id';";
-      $q = $connection->prepare($sql);
-      $q -> execute();
-      array_merge($response, $q -> fetchAll(PDO::FETCH_ASSOC)[0]);
-      $response['password'] = "not sent with response.";
-      die(json_encode($response));
+      if ($response !== false) {
+        $sql = "SELECT * FROM " . $target . " WHERE username = '$id';";
+        $q = $connection->prepare($sql);
+        $q -> execute();
+        $response['password'] = "It's a secret."; // slice away this..
+        $response = array_merge($response, $q -> fetchAll(PDO::FETCH_ASSOC)[0]);
+        die(json_encode($response));
+      }
+      die("Not found");
     }
 
     if (substr($target,0,7) == "profile") {  // Requests from profile view
-      $response = array();
-      var_dump($target);
-      $sql = "SELECT * FROM $target WHERE username = '$id'; SELECT * FROM profile_company WHERE username = '$id';"; 
+
+      $id = urldecode($id);
+      $sql = "SELECT * FROM $target WHERE username = '$id';"; 
       $q = $connection->prepare($sql);
       $q -> execute();
       $response = $q -> fetchAll(PDO::FETCH_ASSOC)[0];
@@ -90,9 +97,27 @@
       // The hard one... Matching
     }
 
+    if ($target == "testusers") {
+
+      $response = array();
+      function setTableRow ($username,$password) {
+        return array($username,$password);
+      }
+      $sql = "SELECT username,password FROM account WHERE user_table = 'user_person' LIMIT 5;";
+      $q = $connection->prepare($sql);
+      $q -> execute();
+      $response = $q -> fetchAll(PDO::FETCH_FUNC, 'setTableRow');
+      $sql = "SELECT username,password FROM account WHERE user_table = 'user_company' LIMIT 5;";
+      $q = $connection->prepare($sql);
+      $q -> execute();
+      $response = array_merge($response, $q -> fetchAll(PDO::FETCH_FUNC, 'setTableRow'));
+
+      die(json_encode($response));
+    }
+
   }
 
-  // UPDATE - PUT - PATCH
+  // UPDATE --  PUT or PATCH
 
   if ($method == "PUT" || $method == "PATCH") {
 
@@ -104,19 +129,16 @@
   }
 
   function update ($table) {
-
-    $keys;
-    if ($method == "PUT") {
-      $sql = "DESCRIBE $table;";
-      $q->prepare($sql);
-      $q->execute();
-      $keys = $q->fetchColumn();
-    }
-    else {
-      $keys = $input;
-    }
-
+    global $connection, $input, $method, $id;
+    var_dump($table);
+    $sql = "DESCRIBE $table;";// "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'coderspool' AND TABLE_NAME = '$table';";
+    var_dump($sql);
+    $q = $connection->prepare($sql);
+    $q->execute();
+    $keys = $q->fetchAll(PDO::FETCH_COLUMN);
+    var_dump($keys);
     $sql = "UPDATE $table SET ";
+
 
     foreach ($keys as $key) {
       if (isset($input[$key])) {
@@ -126,31 +148,34 @@
         $sql .= $key . " = NULL,";
       }
     }
-    $sql = substr($sql,0,-1) . ")";
+    $sql = substr($sql,0,-1) . " WHERE username = '$id';";
+    var_dump($sql);
 
     $q = $connection->prepare($sql);
     $q -> execute();
 
-    // Error check if any column set to NOT NULL
+    // Should make rror check if any column set to NOT NULL
   
   }
 
   // DELETE
 
   if ($method == "DELETE") {
+    $sql;
     if (substr($target,0,4) == "user") { // Complete delete of user account
-      $sql = "DELETE FROM map_tag_user WHERE username = '$id';";
-      $sql .= "DELETE FROM map_category_user WHERE username = '$id';";
-      $sql .= "DELETE FROM advertisement WHERE username = '$id';"; // FIX orphans
-      $sql .= "DELETE FROM $target WHERE username = '$id';";
+      $sql = "DELETE FROM map_tag_user WHERE connect = '$id';";
+      $sql .= "DELETE FROM map_category_user WHERE connect = '$id';";
+      $sql .= "DELETE FROM advertisement WHERE username = '$id';"; // FIX orphan risk
       $sql .= "DELETE FROM profile_person WHERE username = '$id';";
       $sql .= "DELETE FROM profile_company WHERE username = '$id';";
+      $sql .= "DELETE FROM $target WHERE username = '$id';";
       $sql .= "DELETE FROM account WHERE username = '$id';";
     }
     if (substr($target,0,7) == "profile") { // Delete only profile data, preserve account
       $sql = "DELETE FROM profile_person WHERE username = '$id';";
       $sql .= "DELETE FROM profile_company WHERE username = '$id';";
     }
+    var_dump($sql);
     $q = $connection->prepare($sql);
     $q -> execute();
   }
@@ -158,10 +183,11 @@
   
 
   function create_metadata($bindMe) {
+    global $connection, $input;
     if(!isset($input['meta'])) return null;
 
     $keyOffset = array_search('meta', array_keys($input));
-    $meta = array_values(array_splice($array, $keyOffset, 1));
+    $meta = array_values(array_splice($meta, $keyOffset, 1));
 
     foreach ($meta as $table => $content) {
       $base = substr($table, 0, strpos($table, '_'));

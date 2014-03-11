@@ -4,11 +4,11 @@
 computenzControllers.controller('LoginCtrl', ['$scope','$http','$location', 'UserService', 'LoginToggleService',
   function($scope,$http,$location,UserService,LoginToggleService) {
 
-    $scope.sendForm = function(){
+    $scope.sendForm = function(username, password){
       var requestData = {
         loginHandlerAction: 'login',
-        username: $scope.user.username,
-        password: $scope.user.password
+        username: username || $scope.user.username,
+        password: password || $scope.user.password
       };
 
       $http.post('php/main.php', requestData).success(function(data){
@@ -21,5 +21,16 @@ computenzControllers.controller('LoginCtrl', ['$scope','$http','$location', 'Use
         }
       });
     };
+
+    (function(){
+      $http.get('php/testusers/', {
+        headers : {
+          'Content-Type' : 'application/json; charset=UTF-8'
+        }
+      }).success(function(data){
+        $scope.testPersons = data.splice(0,5);
+        $scope.testCompanies = data;
+      });
+    }());
 
 }]);

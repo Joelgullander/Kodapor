@@ -11,7 +11,6 @@
   requestData = {
     // Everything mandatory in this table.
     // How to do with location - region and address??
-    "username": "KalleAndersson",
     "firstname": "Kalle",
     "lastname": "Andersson",
     "birthdate": "19860714-1234",     // Should we demand full or date only?
@@ -26,7 +25,6 @@
   requestData = {
     // All mandatory
     // More needed? Company description, size etc is in profile..
-    "username": "Microsoft-Agda",
     "name": "Microsoft",
     "contact_person": "Agda Eriksson",
     "phone": "0108888888",

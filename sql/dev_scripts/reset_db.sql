@@ -20,7 +20,7 @@ CREATE TABLE user_person (
   username        VARCHAR(32) PRIMARY KEY,
   firstname       VARCHAR(32) NOT NULL,
   lastname        VARCHAR(32) NOT NULL,
-  birthdate       DATE        NOT NULL,
+  birthdate       VARCHAR(16) NOT NULL, -- changed, but will not work until recreated database
   company_tax     BIT(1)      NOT NULL,
   company_name    VARCHAR(64),  
   phone           VARCHAR(64),

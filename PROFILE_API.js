@@ -1,9 +1,9 @@
 
-// CREATE profile user_person
+// CREATE profile 
 
   // method: 'POST',
-  // url: 'php/profile_person
 
+  // url: 'php/profile_person
   requestData = {
 
       "usename": "KalleAndersson",
@@ -23,11 +23,7 @@
       }
   };
 
-// CREATE profile user_incorporated
-  
-  // method: 'POST',
   // url: "/profile_company"
-
   requestData = {
  
       "username": "Microsoft-Agda",
@@ -53,12 +49,13 @@
 // READ profile
   
   // method: 'GET',
-  // url: "/profile"
+  // url: "/profile_person/" + username
+  // url: "/profile_company/" + username
 
   // No data attached. Example: 
 
   $http({
-    url: 'php/profile/' + username,
+    url: 'php/profile_person/' + username,
     method: 'GET',
     headers : {
       'Content-Type' : 'application/json; charset=UTF-8'
@@ -89,8 +86,5 @@
 // DELETE profile
 
   // method: 'DELETE',
-  // url: 'php'
+  // url: 'php/profile/'
 
-  data = {
-    "username": "KalleAndersson" // Deletes profile data but keeps registered account
-  };
