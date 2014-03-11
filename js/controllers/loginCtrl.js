@@ -12,13 +12,12 @@ computenzControllers.controller('LoginCtrl', ['$scope','$http','$location', 'Use
       };
 
       $http.post('php/main.php', requestData).success(function(data){
-        if(data !== false){
-          console.log("HEloo: ", data);
+        if(data != "false"){
           UserService.setUser(data);
           LoginToggleService.setLinkData(true);
           $location.path('profile/' + UserService.getUsername());
         }else{
-          $scope.message = data;
+          $scope.message = "Användarnamn eller lösenord felaktigt. Kunde inte logga in!";
         }
       });
     };

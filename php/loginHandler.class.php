@@ -85,7 +85,7 @@ class LoginHandler {
  
   public function login($username,$password){
     $q = $this -> pdo -> prepare(
-      "SELECT COUNT(*) as count FROM $this->usertablename ".
+      "SELECT COUNT(*) as count, user_table FROM $this->usertablename ".
       "WHERE username = '$username' && password = '$password'"
     );
     
@@ -96,24 +96,23 @@ class LoginHandler {
     if($r[0]["count"] == 0){
       // combination of username and password does not exist
       // so no go
-      echo ("failed");
       return false;
     }
+    $table = $r[0]['user_table'];
 
     $response = array();
-
     $q = $this -> pdo -> prepare(
-      "SELECT firstname, lastname FROM appliers WHERE username = '$username'"
+      "SELECT firstname, lastname FROM $table WHERE username = '$username'"
     );  
     $q -> execute();
-    $response = $q -> fetchAll(PDO::FETCH_ASSOC);
-    $response[0]["username"] = $username;
-
+    $response = $q -> fetchAll(PDO::FETCH_ASSOC)[0];
+    $response["username"] = $username;
+    $response["user_table"] = $r[0]['user_table'];
     
     // store the user in a session variable
-    $_SESSION["LoginHandlerCurrentUser"] = $response[0];
+    $_SESSION["LoginHandlerCurrentUser"] = $response;
  
-    return $response[0];
+    return $response;
   }
  
   public function getUser(){

@@ -1,6 +1,6 @@
 
 .loginForm {
-  width:320px;
+  width:550px;
 }
 
 .loginForm label {
@@ -14,7 +14,12 @@
 }
 
 .loginForm button {
-  float: right;
+  /*float: right;*/
+}
+
+.warning {
+  color: red;
+  margin-bottom: 10px;
 }
 
 #testpersoner {
@@ -29,7 +34,7 @@
 }
 
 #testpersoner p {
-
+  font-size: 16px;
 }
 
 #testpersoner span {
