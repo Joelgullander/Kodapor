@@ -19,4 +19,8 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
 
   getUserAccount();
 
+  $scope.save = function() {
+    alert("sparad");
+  }
+
 }]);
