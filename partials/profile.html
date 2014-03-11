@@ -1,8 +1,10 @@
 
+<p> Här ska profilsida för användare med username {{ getFullName() }} visas </p>
 
+<a ng-href="account">Länk till användarkonto (ska flyttas till nav och få egen routing/controller) </a><br><br>
+ 
+<div class="Profile">
 
-<div class="profile">
-  <div class="contaner">
   <h1>PROFILE</h1>
   <h2>PERSON</h2>
     <form class="form-horizontal" role="form">
@@ -66,7 +68,12 @@
 
 
 
+
 </div>
-</div>
-=======
+
+<br>
+Data från GET request:
+<br>
+<br>
+{{ data }}
 

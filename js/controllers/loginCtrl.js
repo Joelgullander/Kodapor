@@ -12,7 +12,8 @@ computenzControllers.controller('LoginCtrl', ['$scope','$http','$location', 'Use
       };
 
       $http.post('php/main.php', requestData).success(function(data){
-        if(data){
+        if(data !== false){
+          console.log("HEloo: ", data);
           UserService.setUser(data);
           LoginToggleService.setLinkData(true);
           $location.path('profile/' + UserService.getUsername());
