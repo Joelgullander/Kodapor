@@ -11,7 +11,7 @@
     <input type='text' name='namn' class="form-control" maxlength="60"/>
 
     <label for='email'>Email</label>
-    <input type='text' name='email' "form-control"maxlength="60"/>
+    <input type='text' name='email' class="form-control"maxlength="60"/>
 
     <label for='användarnamn'>Användarnamn</label>
     <input type='text' name='användarnamn' class="form-control" maxlength="30"/>
@@ -70,7 +70,7 @@
         
     </div>
 
-      <button type="submit" class="btn btn-default">Klar</button>
+      <button ng-click="save()" class="btn btn-default">Spara</button>
 
 
   </fieldset>
@@ -79,6 +79,4 @@
   <br><br>
   {{ userData }}
 
-</body>
-</html>
 
