@@ -12,7 +12,7 @@ class LoginHandler {
     $dbname = "coderspool",
     $dbusername = "root",
     $dbpassword = "",
-    $usertablename = "accounts"
+    $usertablename = "account"
   ){
  
     // create our pdo instance
@@ -96,6 +96,7 @@ class LoginHandler {
     if($r[0]["count"] == 0){
       // combination of username and password does not exist
       // so no go
+      echo ("failed");
       return false;
     }
 
@@ -107,6 +108,7 @@ class LoginHandler {
     $q -> execute();
     $response = $q -> fetchAll(PDO::FETCH_ASSOC);
     $response[0]["username"] = $username;
+
     
     // store the user in a session variable
     $_SESSION["LoginHandlerCurrentUser"] = $response[0];

@@ -1,6 +1,17 @@
 'use strict';
 
-computenzControllers.controller('ProfileCtrl', ['$scope','$routeParams','UserService', function($scope,$routeParams, UserService) {
-  $scope.currentProfile = window.location.href.split('/').pop();
-  //$scope.getFullName = UserService.getFullName;
+computenzControllers.controller('ProfileCtrl', ['$scope','$http','$routeParams','UserService', function($scope,$http,$routeParams, UserService) {
+  
+  var currentUserProfile = window.location.href.split('/').pop();
+
+  $http({
+    url: 'php/profile_person/' + currentUserProfile,
+    method: 'GET',
+    headers : {
+      'Content-Type' : 'application/json; charset=UTF-8'
+    }
+  }).success(function(data) {
+    $scope.data = data;
+  });
+
 }]);
