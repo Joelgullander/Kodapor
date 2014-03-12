@@ -66,12 +66,14 @@
 				<h4><span class="glyphicon glyphicon-home"> Ort:</h4>
 				<select class="form-control" ng-model="location.name"
 				  		ng-options="obj.id as obj.name for obj in locations.options">
+				 </select>
 			</div>
 			<div class="control-group block">
 				<h4>Ervarenhet:</h4>
 					
 						<select class="form-control" ng-model="experienceForm.years"
 				  		ng-options="obj.id as obj.name for obj in experienceForm.options">
+				  	</select>
 			
 			</div>
 <!-- end location -->
@@ -127,12 +129,12 @@
 			</div>
 			<table id="searchTextResults">
 				<tr ng-repeat='programmer in programmers | filter: searchText'>
-					<h4>{{ programmer.name }}</h4>
-					<h5>{{ programmer.title }}</h5>
-					<p class="descr">{{ programmer.descr}}</p>
+					<h4>{{ programmer.firstname }}</h4>
+					<h5>{{ programmer.lastname }}</h5>
+					<p class="descr">{{ programmer.category}}</p>
 					<span class="salary">{{ programmer.salary }}</span>
 					<span class="portfolio">{{ programmer.url }}</span>
-					<a href="">{{ programmer.link }}</a>
+					<p href="">{{ programmer.image }}</p>
 				</tr>
 			</table>
 			<div class="block">
