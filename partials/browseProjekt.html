@@ -1,6 +1,6 @@
 <div class="row" ng-controller="BrowseCtrl">
 	<div class="container">
-		<h1>Hitta kompetenta medarbetare </h1>
+		<h1>Hitta projekt </h1>
 		<!-- sidebar -->
 		<div class="col-md-4 box" >
 			<h2>Avancerad sökning</h2>
@@ -120,66 +120,26 @@
 				
 		</div>
 <!-- content -->
-		<div class="col-md-7 box" ng-controller='BrowseCtrl'>
+<!-- content -->
+<!-- content -->
+		<div class="col-md-7 box" ng-controller='ProjectListController'>
 			<div class="block">
 				<input class="col-xs-10" type="text" placeholder="sökord" ng-model="searchText">
 				<button type="button" class="btn btn-success">Sök</button>
 			</div>
 			<table id="searchTextResults">
-				<tr ng-repeat='programmer in programmers | filter: searchText'>
-					<h4>{{ programmer.name }}</h4>
-					<h5>{{ programmer.title }}</h5>
-					<p class="descr">{{ programmer.descr}}</p>
-					<span class="salary">{{ programmer.salary }}</span>
-					<span class="portfolio">{{ programmer.url }}</span>
-					<a href="">{{ programmer.link }}</a>
+				<tr ng-repeat='project in projects | filter: searchText'>
+					<h4>{{ project.title }}</h4>
+					<h5>{{ project.category }}</h5>
+					<p class="descr">{{ project.description}}</p>
+					<p class="price">{{ project.salary }}</p>
+					<p>{{ project.id }}</p>
+					<p>Project id: {{ project.id }}</p>
+					<p>Client id: {{ project.id }}</p>
+					<p>{{ project.urgency }}</p>
+					<p>Date {{ project.date }}</p>
 				</tr>
 			</table>
-			<div class="block">
-				<h4>Samuel Magnusson</h4>
-				<h5>webb utvecklare</h5>
-				<p class="descr">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-				<span class="salary">500.000 - 700.000</span>
-				<span class="portfolio">www.samuel.se</span>
-				<a href="">besök sin profile</a>
-			</div>
-			<hr>
-				<div class="block">
-				<h4>Joel Gullander</h4>
-				<h5>Magento developer</h5>
-				<p class="descr">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-				<span class="salary">500.000 - 700.000</span>
-				<span class="portfolio">www.joel.se</span>
-				<a href="">besök sin profile</a>
-			</div>
-			<hr>
-				<div class="block">
-				<h4>Andreas Benatti</h4>
-				<h5>ActionScript programmerare</h5>
-				<p class="descr">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-				<span class="salary">500.000 - 700.000</span>
-				<span class="portfolio">www.andreas.se</span>
-				<a href="">besök sin profile</a>
-			</div>
-			<hr>
-				<div class="block">
-				<h4>Herbert Leal</h4>
-				<h5>web developer</h5>
-				<p class="descr">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-				<span class="salary">500.000 - 700.000</span>
-				<span class="portfolio">www.herbert.se</span>
-				<a href="">besök sin profile</a>
-			</div>
-			<hr>
-				<div class="block">
-				<h4>Julia Rietveld</h4>
-				<h5>CSS prinses</h5>
-				<p class="descr">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-				<span class="salary">500.000 - 700.000</span>
-				<span class="portfolio">www.julia.se</span>
-				<a href="">besök sin profile</a>
-			</div>
 		</div>
 	</div>
-
 </div>

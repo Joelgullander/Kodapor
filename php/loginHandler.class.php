@@ -10,9 +10,9 @@ class LoginHandler {
     // change these if you want
     $host = "localhost",
     $dbname = "coderspool",
-    $dbusername = "root",
-    $dbpassword = "",
-    $usertablename = "accounts"
+    $dbusername = "sonix",
+    $dbpassword = "coders",
+    $usertablename = "account"
   ){
  
     // create our pdo instance
@@ -50,7 +50,7 @@ class LoginHandler {
     // remember user table name as a property
     $this -> usertablename = $usertablename;
   }
- 
+/* 
   public function registerUser($username,$password,$minLen = 3){
     
     // do not accept usernames or passwords below a certain length
@@ -82,10 +82,10 @@ class LoginHandler {
     return $this -> login($username,$password);
  
   }
- 
+ */
   public function login($username,$password){
     $q = $this -> pdo -> prepare(
-      "SELECT COUNT(*) as count FROM $this->usertablename ".
+      "SELECT COUNT(*) as count, user_table FROM $this->usertablename ".
       "WHERE username = '$username' && password = '$password'"
     );
     
@@ -98,20 +98,21 @@ class LoginHandler {
       // so no go
       return false;
     }
+    $table = $r[0]['user_table'];
 
     $response = array();
-
     $q = $this -> pdo -> prepare(
-      "SELECT firstname, lastname FROM appliers WHERE username = '$username'"
+      "SELECT firstname, lastname FROM $table WHERE username = '$username'"
     );  
     $q -> execute();
-    $response = $q -> fetchAll(PDO::FETCH_ASSOC);
-    $response[0]["username"] = $username;
+    $response = $q -> fetchAll(PDO::FETCH_ASSOC)[0];
+    $response["username"] = $username;
+    $response["user_table"] = $r[0]['user_table'];
     
     // store the user in a session variable
-    $_SESSION["LoginHandlerCurrentUser"] = $response[0];
+    $_SESSION["LoginHandlerCurrentUser"] = $response;
  
-    return $response[0];
+    return $response;
   }
  
   public function getUser(){

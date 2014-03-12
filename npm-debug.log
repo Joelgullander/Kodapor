@@ -1,0 +1,43 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'generator-angular' ]
+2 info using npm@1.4.3
+3 info using node@v0.10.26
+4 verbose cache add [ 'generator-angular', null ]
+5 verbose cache add name=undefined spec="generator-angular" args=["generator-angular",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'generator-angular',
+6 verbose parsed url   path: 'generator-angular',
+6 verbose parsed url   href: 'generator-angular' }
+7 silly lockFile 458e0b50-generator-angular generator-angular
+8 verbose lock generator-angular /Users/juliarietveld/.npm/458e0b50-generator-angular.lock
+9 silly lockFile 458e0b50-generator-angular generator-angular
+10 error Error: Attempt to unlock generator-angular, which hasn't been locked
+10 error     at unlock (/usr/local/lib/node_modules/npm/lib/cache.js:1304:11)
+10 error     at cb (/usr/local/lib/node_modules/npm/lib/cache.js:866:5)
+10 error     at /usr/local/lib/node_modules/npm/lib/cache.js:883:20
+10 error     at /usr/local/lib/node_modules/npm/lib/cache.js:1290:7
+10 error     at /usr/local/lib/node_modules/npm/node_modules/lockfile/lockfile.js:167:38
+10 error     at OpenReq.Req.done (/usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:144:5)
+10 error     at OpenReq.done (/usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:64:22)
+10 error     at Object.oncomplete (fs.js:107:15)
+11 error If you need help, you may report this *entire* log,
+11 error including the npm and node versions, at:
+11 error     <http://github.com/npm/npm/issues>
+12 error System Darwin 12.5.0
+13 error command "node" "/usr/local/bin/npm" "install" "-g" "generator-angular"
+14 error cwd /Applications/XAMPP/xamppfiles/htdocs/Kodapor
+15 error node -v v0.10.26
+16 error npm -v 1.4.3
+17 verbose exit [ 1, true ]

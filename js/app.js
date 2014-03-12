@@ -22,8 +22,12 @@ var computenzServices = angular.module('computenzServices', []).value('version',
 computenzApp.config(['$routeProvider', function($routeProvider){
     
     $routeProvider.
-      when('/register/:type', {
-        templateUrl: 'partials/registrationPerson.html',
+      when('/register', {
+        templateUrl: 'partials/register.html',
+        controller: 'RegCtrl'
+      }).
+      when('/account', {
+        templateUrl: 'partials/register.html',
         controller: 'RegCtrl'
       }).
       when('/login', {
@@ -37,6 +41,15 @@ computenzApp.config(['$routeProvider', function($routeProvider){
       when('/browse', {
         templateUrl: 'partials/browse.html',
         controller: 'BrowseCtrl'
+
+      when('/browseProjekt', {
+        templateUrl: 'partials/browseProjekt.html',
+        controller: 'BrowseProjektCtrl'
+
+      when('/ads/:adID', {
+        templateUrl: 'partials/advertisement.html',
+        controller: 'AdCtrl'
+
       }).
       when('/home', {
         templateUrl: 'partials/home.html',
