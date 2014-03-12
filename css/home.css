@@ -1,11 +1,17 @@
-.col-lg-6 {
-border-right: 1px solid black;
+.line {
+  width:5px;
+  height:100%;
+  border: 2px solid black;
+}
+.rightcol{
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 .container{
-  padding-left:0;
-  padding-right:0;
-  width:100%;
+
 }
 .jumbotron{
   padding-top:0;
