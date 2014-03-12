@@ -20,32 +20,44 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
 
   getUserAccount(UserService.getUsername());
 
+  // Code to add Person!
   $scope.save = function() {
-    
+    // Temporary check if user missed to type in a inputfield!
+    if($scope.user.username==undefined || $scope.user.email==undefined || ($scope.user.name==undefined ){
+       $scope.message = "Registrering felaktigt i fyllt, fyll i fält som saknas!";
+    }
+    else{
     console.log($scope.user);
+    addPerson($scope.user);
+    }
   };
-
-  var testPerson = "KalleAndersson";
 
   //CREATE - method: POST
-  $scope.addTestPerson = function(){
-    var testData = {
-      // Everything mandatory in this table.
-      // How to do with location - region and address??
-      "firstname": "Kalle",
-      "lastname": "Andersson",
-      "birthdate": "19860714-1234",     // Should we demand full or date only?
-      "company_tax": "1",               // = true  "Godkänd för F-skatt"
-      "company_name": "Kalles IT-Byrå",
-      "phone": "070912223",
-      "email": "kalle@gmail.com",
-      "password": "QWdfpe34F2"
-    };
-    handleTestPerson('POST', testData);
+  $scope.addPerson = function(obj){
+    var personData = obj; 
+      
+    handlePerson('POST', personData);
   };
+    function handlePerson(method, data) {
+    $http({
+      url:'php/user_person/'/* + testPerson */ ,
+      method: method,
+      data: data,
+      headers : {
+        'Content-Type' : 'application/json; charset=UTF-8'
+      }
+    }).success(function(data){
+      $scope.res = getUserAccount(personData.username);
+    });
+  }
+
+
+}]);
+
+/*
 
   //UPDATE - method: PATCH
-  $scope.patchTestPerson = function(){
+  $scope.patchPerson = function(){
     var testData = {
       "email": "carl@wallin-andersen.se",
       "firstname": "Carl",
@@ -69,18 +81,4 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
     handleTestPerson('DELETE');
   };
 
-  function handleTestPerson(method, data) {
-    $http({
-      url:'php/user_person/' + testPerson,
-      method: method,
-      data: data,
-      headers : {
-        'Content-Type' : 'application/json; charset=UTF-8'
-      }
-    }).success(function(data){
-      $scope.res = getUserAccount(testPerson);
-    });
-  }
-
-
-}]);
+*/
