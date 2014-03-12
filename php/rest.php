@@ -5,8 +5,8 @@
   try {
     $connection = new PDO(
       "mysql:host=$host;dbname=$db;charset=utf8", 
-      "sonix", 
-      "coders",
+      "root", 
+      "",
       array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING)
     );
   }

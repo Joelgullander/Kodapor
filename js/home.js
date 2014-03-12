@@ -1,6 +1,6 @@
 $(function(){
 
-$('.circlecontainer').click(function(e) {  
+$('.circle').click(function(e) {  
     alert(1);
 });
 
