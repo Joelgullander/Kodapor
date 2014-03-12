@@ -2,6 +2,7 @@
 
 computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', function($scope,$http, UserService) {
 
+  $scope.user={};
   // For getting current users registration data. We don't have routing for this yet, since user now only get to registration view
   // through login view when not logged in. 
   function getUserAccount(username){
@@ -20,7 +21,8 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
   getUserAccount(UserService.getUsername());
 
   $scope.save = function() {
-    alert("sparad");
+    
+    console.log($scope.user);
   };
 
   var testPerson = "KalleAndersson";

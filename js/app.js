@@ -23,11 +23,11 @@ computenzApp.config(['$routeProvider', function($routeProvider){
     
     $routeProvider.
       when('/register', {
-        templateUrl: 'partials/registrationPerson.html',
+        templateUrl: 'partials/register.html',
         controller: 'RegCtrl'
       }).
       when('/account', {
-        templateUrl: 'partials/registrationPerson.html',
+        templateUrl: 'partials/register.html',
         controller: 'RegCtrl'
       }).
       when('/login', {

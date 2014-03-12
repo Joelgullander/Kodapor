@@ -37,7 +37,7 @@
               <input  type="password" name="password" ng-model="user.password" ng-minlength="6" class="form-control" placeholder="Lösenord"required>
             </div>
             <button ng-click="loginForm.$valid && sendForm()" class="btn btn-success">Logga in</button>
-             <label><a ng-href="register">registrera</a></label>
+             <label><a href="register">registrera</a></label>
           </form>
           <!-- <p class="navbar-text navbar-right"> {{ loginStatus() ? "Inloggad som " + getFullName() : "Inte inloggad" }} </p> -->
         </div> <!--/.navbar-collapse -->
@@ -47,7 +47,7 @@
     <div class="views" ng-view></div>
     </div>
   <div class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container-fluid">
+    <div class="container">
       <p class="navbar-text">All rights reserved - Kodapor </p>
     </div>
   </div>
