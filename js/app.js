@@ -22,12 +22,12 @@ var computenzServices = angular.module('computenzServices', []).value('version',
 computenzApp.config(['$routeProvider', function($routeProvider){
     
     $routeProvider.
-      when('/register/:type', {
-        templateUrl: 'partials/registrationPerson.html',
+      when('/register', {
+        templateUrl: 'partials/register.html',
         controller: 'RegCtrl'
       }).
       when('/account', {
-        templateUrl: 'partials/registrationPerson.html',
+        templateUrl: 'partials/register.html',
         controller: 'RegCtrl'
       }).
       when('/login', {

@@ -1,28 +1,27 @@
 
-
-
-
 <h1>Registrering Anställd</h1>
 <!--här ska jag ha en form KANSKE? -->
   <fieldset>
     <legend>Registrering</legend>
-
-    <label for='namn'>Namn</label>
-    <input type='text' name='namn' class="form-control" maxlength="60"/>
+  <label for='namn'>Namn</label>
+    <input type='text' name='namn' class="form-control" ng-model="user.name" maxlength="60"/>
 
     <label for='email'>Email</label>
-    <input type='text' name='email' class="form-control"maxlength="60"/>
+    <input type='text' name='email' class="form-control" ng-model="user.email"maxlength="60"/>
 
     <label for='användarnamn'>Användarnamn</label>
-    <input type='text' name='användarnamn' class="form-control" maxlength="30"/>
+    <input type='text' name='användarnamn' class="form-control" ng-model="user.username" maxlength="30"/>
 
     <label for='lösenord'>Lösenord</label>
-    <input type='lösenord' name='lösenord' class="form-control" maxlength="30"/>
+    <input type='lösenord' name='lösenord' class="form-control" ng-model="user.password" maxlength="30"/>
+
+    <label for='lösenord'>Repetera lösenord</label>
+    <input type='lösenord' name='lösenord' class="form-control" maxlength="30"/><!--Ska fixas med bootstrap-->
 
     <label for='lösenord'>Repetera lösenord</label>
     <input type='lösenord' name='lösenord' class="form-control" maxlength="30"/>
 
-    <label for='form-control'>Din Erfarenhet i år:</label>
+    <label for='form-control'ng-model="user.experience">Din Erfarenhet i år:</label>
     <select class="form-control">
       <option>1</option>
         <option>2</option>
@@ -35,36 +34,36 @@
     <h4>Kompeteser:</h4>
     <!--SKa in fler checkboxes här-->
      <div class="checkbox"><label>
-            <input type="checkbox"> Html5
+            <input type="checkbox"ng-model="user.html5"> Html5
          </label>
       </div>
 
        <div class="checkbox"><label>
-            <input type="checkbox"> Css3
+            <input type="checkbox"ng-model="user.css3"> Css3
          </label>
       </div>
 
        <div class="checkbox"><label>
-            <input type="checkbox"> JavaScript
+            <input type="checkbox"ng-model="user.javascript"> JavaScript
         </div>
 
        <div class="checkbox"><label>
-            <input type="checkbox"> Php
+            <input type="checkbox"ng-model="user.php"> Php
          </label>
        </div>
 
       <div class="checkbox"><label>
-            <input type="checkbox"> MySql
+            <input type="checkbox"ng-model="user.mysql"> MySql
          </label>
         </div>
 
       <div class="checkbox"><label>
-            <input type="checkbox"> Pyton
-         </label>
+            <input type="checkbox"ng-model="user.pyton"> Pyton
+         </label>ng-model="user.password"
         </div>
 
       <div class="checkbox"><label>
-            <input type="checkbox"> .NET & Visual Studio
+            <input type="checkbox"ng-model="user.visualstudio"> .NET & Visual Studio
          </label>
         </div>
         
@@ -74,7 +73,7 @@
 
 
   </fieldset>
-
+<!--
 
 <br>
 <button ng-click="addTestPerson()">Add</button>
@@ -85,3 +84,4 @@
 
 {{ userData }}
 
+-->
