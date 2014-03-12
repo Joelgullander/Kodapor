@@ -41,11 +41,7 @@ computenzApp.config(['$routeProvider', function($routeProvider){
       when('/browse', {
         templateUrl: 'partials/browse.html',
         controller: 'BrowseCtrl'
-
-      when('/browseProjekt', {
-        templateUrl: 'partials/browseProjekt.html',
-        controller: 'BrowseProjektCtrl'
-
+      }).
       when('/ads/:adID', {
         templateUrl: 'partials/advertisement.html',
         controller: 'AdCtrl'
