@@ -17,7 +17,7 @@
   padding-top:0;
 }
 
-.circle {
+.circleL, .circleR {
   background-image: -webkit-radial-gradient(45px 45px, circle cover, gray, black);
   border: 1px solid black;
   border-radius: 50%;

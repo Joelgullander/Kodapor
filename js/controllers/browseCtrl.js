@@ -98,10 +98,10 @@ computenzControllers.controller('BrowseCtrl',
 		'price': '$ 300',
 		'date': '2014-03-01',
 		'description': 'this is a long description of the job. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.',
-		'clientId': '4777'
+		//'clientId': '4777'
 		},
 		{
-		 "id":2,
+		"id":2,
 		"title":"Design logo",
 		"category":"graphic design",
 		"urgency": "not urgent",
@@ -109,8 +109,8 @@ computenzControllers.controller('BrowseCtrl',
 		'date': '2014-02-25',
 		"description": "new logo for a football team. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
 		"clientId": "456"
-	 },
-	 {
+  },
+	{
 	 	"id":4,
 		"title":"Build a contact manager",
 		"category":"web development",
