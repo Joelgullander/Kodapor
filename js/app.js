@@ -51,6 +51,10 @@ computenzApp.config(['$routeProvider', function($routeProvider){
         controller: 'AdCtrl'
 
       }).
+      when('/ads/:adID', {
+        templateUrl: 'partials/advertisement.html',
+        controller: 'AdCtrl'
+      }).
       when('/home', {
         templateUrl: 'partials/home.html',
         controller: 'HomeCtrl'
