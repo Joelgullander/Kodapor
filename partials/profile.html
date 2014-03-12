@@ -1,62 +1,56 @@
 
-<p> Här ska profilsida för användare med username {{ getFullName() }} visas </p>
 
-<a ng-href="account">Länk till användarkonto (ska flyttas till nav och få egen routing/controller) </a><br><br>
- 
-<div class="Profile">
+<div class="row">
+  <div class="container">
+  <div class="col-md-10">
+  <a ng-href="account">EDIT PROFILE</a><br><br>
+  <h1>{{ getFullName() }}</h1>
+
+  <div class="Profile">
 
   <h1>PROFILE</h1>
   <h2>PERSON</h2>
-    <form class="form-horizontal" role="form">
-          <div class="form-group">
-                <label class="col-sm-2 control-label">Full Name</label>
-                <div class="col-sm-10">
-                  <p class="form-control-static">{{ getFullName() }}</p>
-                </div>
-                <label class="col-sm-2 control-label">Adress</label>
-                <div class="col-sm-10">
-                  <p class="form-control-static">{{ getAdress }}</p>
-                </div>
-                <label class="col-sm-2 control-label">Email</label>
-                <div class="col-sm-10">
-                  <p class="form-control-static">{{ getEmail }}</p>
-                </div>
-                <label class="col-sm-2 control-label">Telefone</label>
-                <div class="col-sm-10">
-                  <p class="form-control-static">{{ getTelefone }}</p>
-                </div>
-                <label class="col-sm-2 control-label">mobilTelefone</label>
-                <div class="col-sm-10">
-                  <p class="form-control-static">{{ getMobilTelefone }}</p>
-                </div>
-                <label class="col-sm-2 control-label">Webbsite</label>
-                <div class="col-sm-10">
-                  <p class="form-control-static">{{ getUrl }}</p>
-                </div>
-          </div>      
-    </form>
+   <fieldset>
+    <label for='namn'>Namn:</label>
+    <p class="form-control-static">{{ getFullName() }}</p>    
+
+    <label for='email'>Email:</label>
+    <p class="form-control-static">{{ getEmail()  }}</p>
+
+     <label for='email'>Adress:</label>
+    <p class="form-control-static">{{ getAdress()  }}</p>
+
+    <label for='email'>Telefone:</label>
+    <p class="form-control-static">{{ getTelefone()  }}</p>
+
+    <label for='email'>mobilTelefone:</label>
+    <p class="form-control-static">{{ getMobilTelefone()  }}</p>
+    
+    <label for='email'>Webbsite:</label>
+    <p class="form-control-static">{{ getUrl()  }}</p>
+
+
+     
      <h3>Rubrik/Description</h3>
-        <textarea class="form-control" rows="30"></textarea>
+        <textarea class="form-control" rows="30">getContent</textarea>
      <div class="form-group">
         <h4 class="help-block">File uploading</h4>
         <label for="exampleInputFile">File Upload</label>
         <input type="file" id="exampleInputFile">        
     </div>
-        <label class="col-sm-2 control-label">Erfarenhet</label>
-        <div class="col-sm-10">
-          <p class="form-control-static">{{ getErfarenhet }}</p>
-        </div>  
+         
          <h4>Erfarenhet</h4>
-        <textarea class="form-control" rows="1"></textarea>
+        <textarea class="form-control" rows="1">getErfarenhet()</textarea>
          <h5>Competenser</h5>
-        <textarea class="form-control" rows="4"></textarea>
+        <textarea class="form-control" rows="4">getCompetencer()</textarea>
         <h5>Alternative</h5>
         <select class="form-control">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            <option>Distans</option>
+            <option>anställning</option>
+            <option>Konsult</option>
+            <option>Ört</option>
+            <option>Frelance</option>
+            <option>Praktik</option>
         </select>
         <label class="checkbox-inline">
         <input type="checkbox" id="inlineCheckbox1" value="option1"> ACTIVERA ANNONCERING
@@ -64,8 +58,11 @@
         <label class="checkbox-inline">
           <input type="checkbox" id="inlineCheckbox2" value="option2">INACTIVERA ANNONCERING
         </label>
+        </div>
+</div>
+</div>
 
-
+</fieldset>
 
 
 

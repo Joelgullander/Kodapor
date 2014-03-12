@@ -15,5 +15,6 @@ computenzControllers.controller('ProfileCtrl', ['$scope','$http','$routeParams',
   });
 
   $scope.getFullName = UserService.getFullName;
+  $scope.getAdress = UserService.getAdress;
 
 }]);
