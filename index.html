@@ -65,6 +65,7 @@
         <ul class="nav navbar-nav">
         <li><a ng-href="{{ loginStatus() ? 'profile/'+getUsername() : '' }}">{{ loginStatus() ? "Min profil" : "" }}</a></li>
         <li><a href="browse">Sök profiler</a></li>
+        <li><a href="browseProject">Sök projekt</a></li>
         <li><a ng-href="{{whereToGo.link}}" ng-click="whereToGo.text == 'Logga ut' && logOut()"> {{ whereToGo.text }} </a></li>
         <li><a ng-href="ads/dummy">Annons (tillf)</a></li>
       </ul>
