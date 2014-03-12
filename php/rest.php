@@ -5,8 +5,8 @@
   try {
     $connection = new PDO(
       "mysql:host=$host;dbname=$db;charset=utf8", 
-      "root", 
-      "",
+      "sonix", 
+      "coders",
       array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING)
     );
   }
@@ -34,12 +34,17 @@
 
   if ($method == "POST") {
 
+    if ($target == "login"){
+
+    }
     if ($target == "user_person") { // CREATE user_person account
+      checkIfOccupied($target, $id);
       $sql = "INSERT INTO account (username,email,password,user_table) VALUES ('".$id."','".$input['email']."','".$input['password']."','".$target."');". 
         "INSERT INTO $target (username,firstname,lastname,birthdate,company_tax,company_name,phone) VALUES "."('".$id."','".$input['firstname']."','".
         $input['lastname']."','".$input['birthdate']."','".$input['company_tax']."','".$input['company_name']."','".$input['phone']."');"; 
     }
     elseif ($target == "user_company") { // CREATE user_company account
+      checkIfOccupied($target, $id);
       $sql = "INSERT INTO account (username,email,password,user_table) VALUES ('".$id."','".$input['email']."','".$input['password']."','".$target."');".
         "INSERT INTO $target (username,name,contact_person,phone) VALUES ('".$id."','".$input['name']."','".$input['contact_person'].$input['phone']."');";
     }
@@ -58,6 +63,23 @@
     $q = $connection->prepare($sql);
     $q -> execute(); 
   }
+
+  function checkIfOccupied($table, $username) {
+    global $connection;
+    $q = $connection -> prepare(
+      "SELECT COUNT(*) as count FROM $table ".
+      "WHERE username = '$id' "
+    );
+    $q -> execute();
+    $r = $q -> fetchAll();
+    var_dump($r[0]['count']);
+    if($r[0]["count"] !== '0'){
+      // user exists so no go
+      var_dump($username);
+      echo ("Användarnamnet är upptaget. Försök igen med annat namn!");
+    }
+
+  }  
 
   // READ
 
@@ -98,7 +120,8 @@
     }
 
     if ($target == "testusers") {
-
+      // Only for developement stage and testing. Puts name-passwd of 5 persons and 5 companies
+      // to login page with button for direct login 
       $response = array();
       function setTableRow ($username,$password) {
         return array($username,$password);
@@ -130,15 +153,11 @@
 
   function update ($table) {
     global $connection, $input, $method, $id;
-    var_dump($table);
     $sql = "DESCRIBE $table;";// "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'coderspool' AND TABLE_NAME = '$table';";
-    var_dump($sql);
     $q = $connection->prepare($sql);
     $q->execute();
     $keys = $q->fetchAll(PDO::FETCH_COLUMN);
-    var_dump($keys);
     $sql = "UPDATE $table SET ";
-
 
     foreach ($keys as $key) {
       if (isset($input[$key])) {
@@ -149,7 +168,6 @@
       }
     }
     $sql = substr($sql,0,-1) . " WHERE username = '$id';";
-    var_dump($sql);
 
     $q = $connection->prepare($sql);
     $q -> execute();

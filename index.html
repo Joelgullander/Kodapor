@@ -26,6 +26,7 @@
         <li><a ng-href="{{ loginStatus() ? 'profile/'+getUsername() : '' }}">{{ loginStatus() ? "Min profil" : "" }}</a></li>
         <li><a href="browse">Sök profiler</a></li>
         <li><a ng-href="{{whereToGo.link}}" ng-click="whereToGo.text == 'Logga ut' && logOut()"> {{ whereToGo.text }} </a></li>
+        <li><a ng-href="ads/dummy">Annons (tillf)</a></li>
       </ul>
         <!-- go to login view if not already logged in, else logout and return to homepage -->
           <form class="navbar-form navbar-right" role="form">
@@ -36,7 +37,7 @@
               <input  type="password" name="password" ng-model="user.password" ng-minlength="6" class="form-control" placeholder="Lösenord"required>
             </div>
             <button ng-click="loginForm.$valid && sendForm()" class="btn btn-success">Logga in</button>
-             <label><a href="registrationPerson">registrera</a></label>
+             <label><a ng-href="register">registrera</a></label>
           </form>
           <!-- <p class="navbar-text navbar-right"> {{ loginStatus() ? "Inloggad som " + getFullName() : "Inte inloggad" }} </p> -->
         </div> <!--/.navbar-collapse -->
