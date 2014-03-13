@@ -1,75 +1,77 @@
 
 
 <div class="row">
-  <div class="container">
-  <div class="col-md-10">
-  <a ng-href="account">EDIT PROFILE</a><br><br>
-  <h1>{{ getFullName() }}</h1>
-  <img src="imageRepo/profiles/profile-pic-300x291.jpg" class="img-responsive" alt="Responsive image">
+
+  
 
 
-  <div class="Profile">
+  
 
-  <h1>PROFILE</h1>
-  <h2>PERSON</h2>
-   <fieldset>
+  <h1>Profile</h1>
+  <hr>
+ 
+</div>
+  <div class="row">
+    <div class="container">
+  <div class="col-md-6">
+    <img src="imgs/jag.png" class="img-responsive" alt="Responsive image">
+  
     <label for='namn'>Namn:</label>
-    <p class="form-control-static">{{ getFullName() }}</p>    
+    <p>Sompn Sentri</p>    
 
     <label for='email'>Email:</label>
-    <p class="form-control-static">{{ getEmail()  }}</p>
+    <p>loster@gigif.de</p>
 
-     <label for='email'>Adress:</label>
-    <p class="form-control-static">{{ getAdress()  }}</p>
+     <label for='adress'>Adress:</label>
+    <address>las pajas de gg <br />
+      lsot tre 233443, sederre.
+    </address>
 
-    <label for='email'>Telefone:</label>
-    <p class="form-control-static">{{ getTelefone()  }}</p>
+    <label for='telefone'>Telefone:</label>
+    <p>00256 4528978</p>
 
-    <label for='email'>mobilTelefone:</label>
-    <p class="form-control-static">{{ getMobilTelefone()  }}</p>
+    <label for='mobilTelefone'>Mobil Telefone:</label>
+    <p>00545 855 698</p>
     
-    <label for='email'>Webbsite:</label>
-    <p class="form-control-static">{{ getUrl()  }}</p>
+    <label for='webbsite'>Webbsite:</label>
+    <p>www.andyBenatty.pl</p>
+   </div>
+   <div class="col-md-6">
 
+      <h4>Erfarenhet</h4>
+        <p>3 år</p>
+         <h4>Competenser</h4>
+        <ul class="tags">
+        <li>Html5</li>
+         <li>java</li>
+         <li>c++</li>
+         <li>ActionScript</li>
 
+        </ul>
+        <h4>Anställningsform</h4>
+        <p>Fulltid</p>
+      </div>
+       </div>
+     <div class="row">
+     <div class="container">
+     <div class="col-md-8">
+     <h3>Beskrivning</h3>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+     </p>
+     </div>
+       
      
-     <h3>Rubrik/Description</h3>
-        <textarea class="form-control" rows="30">getContent</textarea>
-     <div class="form-group">
-        <h4 class="help-block">File uploading</h4>
-        <label for="exampleInputFile">File Upload</label>
-        <input type="file" id="exampleInputFile">        
-    </div>
-         
-         <h4>Erfarenhet</h4>
-        <textarea class="form-control" rows="1">getErfarenhet()</textarea>
-         <h5>Competenser</h5>
-        <textarea class="form-control" rows="4">getCompetencer()</textarea>
-        <h5>Alternative</h5>
-        <select class="form-control">
-            <option>Distans</option>
-            <option>anställning</option>
-            <option>Konsult</option>
-            <option>Ört</option>
-            <option>Frelance</option>
-            <option>Praktik</option>
-        </select>
-        <label class="checkbox-inline">
-        <input type="checkbox" id="inlineCheckbox1" value="option1"> ACTIVERA ANNONCERING
-        </label>
-        <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox2" value="option2">INACTIVERA ANNONCERING
-        </label>
-        </div>
-</div>
-</div>
 
-</fieldset>
-
-
-
-</div>
-
+      </div>
+       </div>  
+       <div class="row">
+     <div class="container">
+     <div class="col-md-3 col-md-offset-3">
+          <button class="btn btn-warning" type="button" ng-href="account">EDIT PROFILE</button>
+          </div> 
+      </div>
+       </div> 
 <br>
 Data från GET request:
 <br>
