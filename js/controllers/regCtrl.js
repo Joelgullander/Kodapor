@@ -23,7 +23,7 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
   // Code to add Person!
   $scope.save = function() {
     // Temporary check if user missed to type in a inputfield!
-    if($scope.user.username==undefined || $scope.user.email==undefined || ($scope.user.name==undefined ){
+    if($scope.user.username==undefined || $scope.user.email==undefined || $scope.user.name==undefined ){
        $scope.message = "Registrering felaktigt i fyllt, fyll i fält som saknas!";
     }
     else{

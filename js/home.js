@@ -1,7 +1,11 @@
 $(function(){
 
-$('.circlecontainer').click(function(e) {  
-    alert(1);
+$(document).on("click",".circleL", function () {
+  $( "#privat" ).slideUp( "slow", function() {
+    // Animation complete.
+  $( "#registration" ).slideDown( "slow", function() {
+    // Animation complete.
+  });
+  });
 });
-
 });

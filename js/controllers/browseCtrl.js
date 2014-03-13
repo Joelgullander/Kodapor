@@ -89,6 +89,7 @@ computenzControllers.controller('BrowseCtrl',
 			}
 
 		];
+
 		
 		
 }]);
