@@ -26,9 +26,10 @@
           <li><a ng-href="{{ loginStatus() ? 'profile/'+getUsername() : '' }}">{{ loginStatus() ? "Min profil" : "" }}</a></li>
           <li><a href="browse">Sök profiler</a></li>
           <li><a ng-href="{{whereToGo.link}}" ng-click="whereToGo.text == 'Logga ut' && logOut()"> {{ whereToGo.text }} </a></li>
-          <li><a ng-href="ads/dummy">Annons (tillf)</a></li>
+
           <li class="divider"></li>
-          
+          <li><a ng-href="new_ad">Lägg till nytt annons</a></li>
+          <li><a ng-href="show_ad"> Annonser </a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <form class="navbar-form navbar-right" role="form">

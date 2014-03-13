@@ -42,14 +42,14 @@ computenzApp.config(['$routeProvider', function($routeProvider){
         templateUrl: 'partials/browse.html',
         controller: 'BrowseCtrl'
       }).
-      when('/ads/:adID', {
-        templateUrl: 'partials/advertisement.html',
-        controller: 'AdCtrl'
+      when('/new_ad', {
+        templateUrl: 'partials/new_ad.html',
+        controller: 'NewAdController'
 
       }).
-      when('/ads/:adID', {
-        templateUrl: 'partials/advertisement.html',
-        controller: 'AdCtrl'
+      when('/show_ad', {
+        templateUrl: 'partials/show_ad.html',
+        controller: 'ShowAdController'
       }).
       when('/home', {
         templateUrl: 'partials/home.html',
