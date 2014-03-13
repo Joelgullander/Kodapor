@@ -1,14 +1,42 @@
-<div class="row">
-<div class="col-lg-6" id="privat">
-          <h3>Vill du leta jobb utefter din kunskap?</h3>
-          <div class="circleL">Klicka här!</div>
-          <div class="circlecontainer"><div class="smallnavcircles" id="activenav" /><div class="smallnavcircles" /><div class="smallnavcircles" /></div>
-          <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+<div class="flip"> 
+        <div class="card"> 
+            <div class="face front"> 
+<h3>Vill du leta jobb utefter din kunskap?</h3>
+          <div class="circleL"></div>
+
+            </div> 
+            <div class="face back"> 
+              <form class="form-horizontal" role="form">
+                <h3>Registrering</h3>
+                <input type='text' name='namn' class="form-control" ng-model="user.name"  placeholder="Namn" maxlength="60" required />
+                <input type='text' name='email' class="form-control" ng-model="user.email"  placeholder="Email"maxlength="60" required />
+                <input type='text' name='användarnamn' class="form-control" ng-model="user.username"  placeholder="Användarnamn" maxlength="30" required />
+                <input type='password' name='lösenord' class="form-control" ng-model="user.password"  placeholder="Lösenord" maxlength="30" required />
+                <input type='lösenord' name='lösenord' class="form-control" placeholder="Repetera Lösenord" maxlength="30" required />
+        <div class="warning">
+        {{ message }}
         </div>
-<div class="col-lg-6" id="foretag">
-          <h3>Vill du leta jobb utefter din kunskap?</h3>
-          <div class="circleR">Klicka här!</div>
-          <div class="circlecontainer"><div class="smallnavcircles" id="activenav" /><div class="smallnavcircles" /><div class="smallnavcircles" /></div>
-          <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-        </div>
-</div>
+        <label for='form-control'ng-model="user.experience">Din Erfarenhet i år:</label>
+        <select class="form-control">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+              </form>
+            </div> 
+        </div> 
+    </div> 
+
+    <div class="flip"> 
+        <div class="card"> 
+            <div class="face front"> 
+                Front
+            </div> 
+            <div class="face back"> 
+                Back
+            </div> 
+        </div> 
+    </div> 
+

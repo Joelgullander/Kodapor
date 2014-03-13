@@ -1,11 +1,9 @@
-$(function(){
 
-$(document).on("click",".circleL", function () {
-  $( "#privat" ).slideUp( "slow", function() {
-    // Animation complete.
-  $( "#registration" ).slideDown( "slow", function() {
-    // Animation complete.
-  });
-  });
-});
+$(function(){
+$(document).on("click",".flip", function () {
+        $(this).find('.card').addClass('flipped').mouseleave(function(){
+            $(this).removeClass('flipped');
+        });
+        return false;
+    });
 });
