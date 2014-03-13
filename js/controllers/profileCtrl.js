@@ -12,9 +12,11 @@ computenzControllers.controller('ProfileCtrl', ['$scope','$http','$routeParams',
     }
   }).success(function(data) {
     $scope.data = data;
+    $scope.content = data.content;
+    $scope.image = data.image;
   });
 
   $scope.getFullName = UserService.getFullName;
-  $scope.getAdress = UserService.getAdress;
+ 
 
 }]);

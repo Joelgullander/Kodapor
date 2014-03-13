@@ -5,12 +5,13 @@ computenzControllers.controller('LoginCtrl', ['$scope','$http','$location', 'Use
   function($scope,$http,$location,UserService,LoginToggleService) {
 
     $scope.sendForm = function(username, password){
+     
       var requestData = {
         loginHandlerAction: 'login',
         username: username || $scope.user.username,
         password: password || $scope.user.password
       };
-
+      
       $http.post('php/main.php', requestData).success(function(data){
         if(data != "false"){
           UserService.setUser(data);
