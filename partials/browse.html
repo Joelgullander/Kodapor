@@ -38,22 +38,22 @@
 				<div class="controlls">	
 					<div class="checkbox">
 				  		<label class="checkbox">
-            				<input type="checkbox" ng-model="language.html"> HTML5
+            				<input type="checkbox" ng-model="tags.html"> HTML5
           				</label>
           			</div><!--.checkbox-->
           			<div class="checkbox">
           				<label class="checkbox">
-            				<input type="checkbox" ng-model="language.css"> CSS3
+            				<input type="checkbox" ng-model="tags.css"> CSS3
           				</label>
           			</div><!--.checkbox-->
 		          	<div class="checkbox">
 		          		<label class="checkbox">
-		            		<input type="checkbox" ng-model="language.pyton"> Pyton
+		            		<input type="checkbox" ng-model="tags.pyton"> Pyton
 		          		</label>
 		          	</div><!--.checkbox-->
 		          	<div class="checkbox">
 		          		<label class="checkbox">
-		            		<input type="checkbox" ng-model="language.javascript"> Javascript
+		            		<input type="checkbox" ng-model="tags.javascript"> Javascript
 		          		</label>
 		          	</div><!--.checkbox-->
 				  </div><!--.controlls-->
@@ -64,15 +64,15 @@
 <!-- location -->
 			<div class="control-group block">
 				<h4><span class="glyphicon glyphicon-home"> Ort:</h4>
-				<select class="form-control" ng-model="location.name"
-				  		ng-options="obj.id as obj.name for obj in locations.options">
+				<select class="form-control" ng-model="region.name"
+				  		ng-options="obj.id as obj.name for obj in region.options">
 				 </select>
 			</div>
 			<div class="control-group block">
 				<h4>Ervarenhet:</h4>
 					
-						<select class="form-control" ng-model="experienceForm.years"
-				  		ng-options="obj.id as obj.name for obj in experienceForm.options">
+						<select class="form-control" ng-model="experience.years"
+				  		ng-options="obj.id as obj.name for obj in experience.options">
 				  	</select>
 			
 			</div>
@@ -81,7 +81,7 @@
 				<h4><span class="glyphicon glyphicon-star"> Uptagen:</h4>
 				<div class="checkbox">
 					  <label>
-					    <input type="checkbox" ng-model="">
+					    <input type="checkbox" ng-model="active">
 					    endast aktiva annonser
 					  </label>
 				</div>
