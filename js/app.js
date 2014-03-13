@@ -34,7 +34,7 @@ computenzApp.config(['$routeProvider', function($routeProvider){
         templateUrl: 'partials/login.html',
         controller: 'LoginCtrl'
       }).
-      when('/profile/:userID', {
+      when('/profile', {
         templateUrl: 'partials/profile.html',
         controller: 'ProfileCtrl'
       }).
