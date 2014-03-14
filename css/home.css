@@ -52,7 +52,7 @@
   display:inline-block;
   -webkit-perspective: 800;
    width: 49%;
-   height: 400px;
+   height: 600px;
    font-size: 5px;
     position: relative;
     margin: 0 auto;
@@ -90,4 +90,9 @@
     background: white;
     color: black;
     cursor: pointer;
+}
+
+.regform
+{
+  height:10px;
 }
