@@ -3,8 +3,12 @@
 computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', function($scope,$http, UserService) {
 
   $scope.user={};
+
+  var testData ={};
   // For getting current users registration data. We don't have routing for this yet, since user now only get to registration view
   // through login view when not logged in. 
+ 
+
   function getUserAccount(username){
     $http({
       url:'php/user_person/' + username,
@@ -18,36 +22,24 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
     });
   }
 
-  getUserAccount(UserService.getUsername());
-
-  // Code to add Person!
   $scope.save = function() {
-    // Temporary check if user missed to type in a inputfield!
-    if($scope.user.username==undefined || $scope.user.email==undefined || $scope.user.name==undefined ){
-       $scope.message = "Registrering felaktigt i fyllt, fyll i fält som saknas!";
-    }
-    else{
-    console.log($scope.user);
-    addPerson($scope.user);
-    }
+    testData = $scope.user;
+    handlePerson('POST', testData);
   };
+  function handlePerson(method, data) {
 
-  //CREATE - method: POST
-  $scope.addPerson = function(obj){
-    var personData = obj; 
-      
-    handlePerson('POST', personData);
-  };
-    function handlePerson(method, data) {
+    console.log(data);
+    //Add person to database!
     $http({
-      url:'php/user_person/'/* + testPerson */ ,
+      url:'php/user_person/' + testData.username,
       method: method,
       data: data,
       headers : {
         'Content-Type' : 'application/json; charset=UTF-8'
       }
     }).success(function(data){
-      $scope.res = getUserAccount(personData.username);
+      $scope.res = getUserAccount(testData.username);
+     
     });
   }
 
@@ -55,9 +47,7 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
 }]);
 
 /*
-
-  //UPDATE - method: PATCH
-  $scope.patchPerson = function(){
+ $scope.patchTestPerson = function(){
     var testData = {
       "email": "carl@wallin-andersen.se",
       "firstname": "Carl",
@@ -80,5 +70,4 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
   $scope.deleteTestPerson = function(){
     handleTestPerson('DELETE');
   };
-
-*/
+  */
