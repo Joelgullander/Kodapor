@@ -8,7 +8,7 @@
       <label>Användarnamn: </label><input type="text" name="username" ng-model="user.username" required> <span ng-show="loginForm.username.$dirty && loginForm.username.$invalid">Please enter your username</span>
       <br>
 
-      <label>Lösenord: </label><input type="password" name="password" ng-model="user.password" ng-minlength="6"> <span ng-show="loginForm.password.$dirty && loginForm.password.$invalid">Your password must be at least 6 characters</span>
+      <label>Lösenord: </label><input type="password" name="password" ng-model="password" ng-minlength="6"> <span ng-show="loginForm.password.$dirty && loginForm.password.$invalid">Your password must be at least 6 characters</span>
       <br>
 
       <button ng-click="loginForm.$valid && sendForm()">Logga in</button>

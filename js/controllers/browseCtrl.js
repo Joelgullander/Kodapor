@@ -1,7 +1,7 @@
 'use strict';
 
-computenzControllers.controller('BrowseCtrl', 
-	['$scope','$http', function($scope,$http) {
+computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','MetaService', function($scope,$http,$location,MetaService) {
+/*
 		$scope.experienceForm = {};
 		$scope.experienceForm.years = 1;
 		
@@ -132,8 +132,71 @@ computenzControllers.controller('BrowseCtrl',
 		"description": "install Apache on VPS. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
 		"clientId": "234" 
 	}];
-		
-		
+*/	
+	var testData = {
+
+    "tables": ["user_person"],
+    "input": "streaming spotify",
+
+    //
+    "category": "Webbutveckling",
+    "tags": [
+      "JavaScript",
+      "Node.js",
+      "Scrum",
+      "Frontend",
+      "Social Media"
+    ],
+    //"region": "Stockholm",
+
+    //conditions
+    "company_tax": 0,
+    "experience": 2,  // Minimum experience. Less will show up in results but at lower priority.. 
+    "active": 0,     // Search only active profiles. Default. If set to 0 will match all visible profiles.
+
+    "amount": 4       // Number of result posts shown for each view. Set by the app. 
+                      // Perhaps implement clickable tabs array [<< < 1 2 3 4 5 ... > >>]
+  };
+
+  $scope.categories = MetaService.getCategories();
+	$scope.selectedCategories = [];
+	$scope.tags = MetaService.getTags();
+	$scope.selectedTags = [];
+  
+  $scope.selection = 1;
+  
+  $scope.req = {
+		main: ["advertisement"],
+		users: ["profile_person","profile_company"],
+		company_tax: false,
+		inactive: false,
+		searchText: "",
+		experience: 0,
+		categories: $scope.selectedCategories,
+		tags: $scope.selectedTags
+  };
+  
+
+  $scope.search = function(){
+
+		$http({
+			method: "POST",
+			url: "php/browse/",
+			data: $scope.req,
+			headers : {
+        'Content-Type' : 'application/json; charset=UTF-8'
+      }
+    }).success(function(data){
+      // Display data
+      $scope.result = data;
+    });
+	};
+
+	$scope.go = function(path){
+		$location.path(path);
+	};
+
+	
 }]);
 
 

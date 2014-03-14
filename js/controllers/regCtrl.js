@@ -78,7 +78,7 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
         'Content-Type' : 'application/json; charset=UTF-8'
       }
     }).success(function(data){
-      $scope.res = getUserAccount(testPerson);
+      $scope.res = data || getUserAccount(testPerson);
     });
   }
 

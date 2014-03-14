@@ -1,185 +1,72 @@
-<div class="row" ng-controller="BrowseCtrl">
-	<div class="container">
-		<h1>Hitta kompetenta medarbetare </h1>
-		<!-- sidebar -->
-		<div class="col-md-4 box" >
-			<h2>Avancerad sökning</h2>
-			<form name='findProf'>
-		<fieldset>
-<!-- -->
-			<div class="control-group block">
-				<h4><span class="glyphicon glyphicon-search"></span> Kategorier:</h4>
-				<div class="controlls">	
-					<div class="checkbox">
-						<label class="checkbox">
-			             <input type="checkbox" ng-model="category.webdev"> Webb utveckling</label>
-			         </div><!--.checkbox-->
-          			<div class="checkbox">
-          				<label class="checkbox">
-            				<input type="checkbox" ng-model="category.webdes"> Web design
-          				</label>
-          			</div><!--.checkbox-->
-		          	<div class="checkbox">
-		          		<label class="checkbox">
-		            		<input type="checkbox" ng-model="category.projman"> Project management
-		          		</label>
-		          	</div><!--.checkbox-->
-		          	<div class="checkbox">
-		          		<label class="checkbox">
-		            		<input type="checkbox" ng-model="category.appdev"> Applikationer utveckling
-		          		</label>
-		          	</div><!--.checkbox-->
-				  </div><!--.controlls-->
-				</div><!--.control-group-->
+<div class="container">
+  
+  <fieldset class="browse">
+    
+    <label>Sök bland:</label>
+    
+    <br>
+    
+    <input type="radio" name="maincategory" ng-model="req.main" value="advertisement">Annonser</input>
+    <input type="radio" name="maincategory" ng-model="req.main" value="profile">Profiler</input>
+    
+    <br> 
+    
+    <input type="radio" name="profilecategory" ng-model="selection" value="1"
+      ng-click="req.users=['profile_person','profile_company']">Företag och privatpersoner</input>
+    <input type="radio" name="profilecategory" ng-model="selection" value="2"
+      ng-click="req.users=['profile_company']">Endast företag</input> 
+    <input type="radio" name="profilecategory" ng-model="selection" value="3"
+      ng-click="req.users=['profile_person']">Endast privatpersoner</input>
+    
+    <label class="checkbox"><input type="checkbox" ng-model="req.company_tax" value="">Visa endast personer med F-skatt</label>
+    <label class="checkbox"><input type="checkbox" ng-model="req.inactive" value=""> Visa även inaktiva profiler</label>
+    
+    <br>
+    
+    <input type="text" class="form-control" placeholder="sök fritext" ng-model="req.searchText"><br><br>
 
-<!-- programming lang-->
-			<div class="control-group block">
-				<h4><span class="glyphicon glyphicon-search"></span> Programer språk:</h4>
-				<div class="controlls">	
-					<div class="checkbox">
-				  		<label class="checkbox">
-            				<input type="checkbox" ng-model="language.html"> HTML5
-          				</label>
-          			</div><!--.checkbox-->
-          			<div class="checkbox">
-          				<label class="checkbox">
-            				<input type="checkbox" ng-model="language.css"> CSS3
-          				</label>
-          			</div><!--.checkbox-->
-		          	<div class="checkbox">
-		          		<label class="checkbox">
-		            		<input type="checkbox" ng-model="language.pyton"> Pyton
-		          		</label>
-		          	</div><!--.checkbox-->
-		          	<div class="checkbox">
-		          		<label class="checkbox">
-		            		<input type="checkbox" ng-model="language.javascript"> Javascript
-		          		</label>
-		          	</div><!--.checkbox-->
-				  </div><!--.controlls-->
-				</div><!--.control-group-->
-				 
+    <label for="categories">Kompetensområde: </label> 
+    <select class="tags" name="categories" 
+      ng-model="catSelected"
+      ng-change="selectedCategories.push(catSelected)"
+      ng-options="cat as cat for cat in categories">
+      <option value="">Välj</option>
+    </select>
 
-<!-- end developing language -->
-<!-- location -->
-			<div class="control-group block">
-				<h4><span class="glyphicon glyphicon-home"> Ort:</h4>
-				<select class="form-control" ng-model="location.name"
-				  		ng-options="obj.id as obj.name for obj in locations.options">
-			</div>
-			<div class="control-group block">
-				<h4>Ervarenhet:</h4>
-					
-						<select class="form-control" ng-model="experienceForm.years"
-				  		ng-options="obj.id as obj.name for obj in experienceForm.options">
-			
-			</div>
-<!-- end location -->
-			<div class="control-group block">
-				<h4><span class="glyphicon glyphicon-star"> Uptagen:</h4>
-				<div class="checkbox">
-					  <label>
-					    <input type="checkbox" ng-model="">
-					    endast aktiva annonser
-					  </label>
-				</div>
-			</div>
+    <label for="tags">Nyckelord: </label>
+    <select class="tags" name="tags" 
+      ng-model="tagSelected"
+      ng-change="selectedTags.push(tagSelected)"
+      ng-options="tag as tag for tag in tags">
+      <option value="">Välj</option>
+    </select>
 
-			<div class="control-group block">
-				<h4>Önskad lön:</h4>
-				<p>Lön i sek per år</p>
-				<input type="number" placeholder="min">
-				<input type="number" placeholder="max">
-			</div>
-<!-- -->
-			<div class="control-group block">
-				<h4>Anställningsform</h4>
-				<div class="checkbox">
-					  <label>
-					    <input type="checkbox" value="">
-					    Heltid
-					  </label>
-				</div>
-				<div class="checkbox">
-					  <label>
-					    <input type="checkbox" value="">
-					    Deltid
-					  </label>
-				</div>
-				<div class="checkbox">
-					  <label>
-					    <input type="checkbox" value="">
-					    Project
-					  </label>
-				</div>
-<!-- -->
-				</fieldset>
-				<button type="button" class="btn btn-success" >Sök</button>
+    <label for="experience">Erfarenhet/år i branchen: </label>
+    <select class="tags" ng-model="req.experience" name="experience">
+      <option value="0" default>Inget krav</option>
+      <option value="1">minst 1 år</option>
+      <option value="3">minst 3 år</option>
+      <option value="5">minst 5 år</option>
+      <option value="10">minst 10 år</option>
+    </select>
 
-			</form>
-				
-		</div>
-<!-- content -->
-		<div class="col-md-7 box" ng-controller='BrowseCtrl'>
-			<div class="block">
-				<input class="col-xs-10" type="text" placeholder="sökord" ng-model="searchText">
-				<button type="button" class="btn btn-success">Sök</button>
-			</div>
-			<table id="searchTextResults">
-				<tr ng-repeat='programmer in programmers | filter: searchText'>
-					<h4>{{ programmer.name }}</h4>
-					<h5>{{ programmer.title }}</h5>
-					<p class="descr">{{ programmer.descr}}</p>
-					<span class="salary">{{ programmer.salary }}</span>
-					<span class="portfolio">{{ programmer.url }}</span>
-					<a href="">{{ programmer.link }}</a>
-				</tr>
-			</table>
-			<div class="block">
-				<h4>Samuel Magnusson</h4>
-				<h5>webb utvecklare</h5>
-				<p class="descr">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-				<span class="salary">500.000 - 700.000</span>
-				<span class="portfolio">www.samuel.se</span>
-				<a href="">besök sin profile</a>
-			</div>
-			<hr>
-				<div class="block">
-				<h4>Joel Gullander</h4>
-				<h5>Magento developer</h5>
-				<p class="descr">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-				<span class="salary">500.000 - 700.000</span>
-				<span class="portfolio">www.joel.se</span>
-				<a href="">besök sin profile</a>
-			</div>
-			<hr>
-				<div class="block">
-				<h4>Andreas Benatti</h4>
-				<h5>ActionScript programmerare</h5>
-				<p class="descr">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-				<span class="salary">500.000 - 700.000</span>
-				<span class="portfolio">www.andreas.se</span>
-				<a href="">besök sin profile</a>
-			</div>
-			<hr>
-				<div class="block">
-				<h4>Herbert Leal</h4>
-				<h5>web developer</h5>
-				<p class="descr">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-				<span class="salary">500.000 - 700.000</span>
-				<span class="portfolio">www.herbert.se</span>
-				<a href="">besök sin profile</a>
-			</div>
-			<hr>
-				<div class="block">
-				<h4>Julia Rietveld</h4>
-				<h5>CSS prinses</h5>
-				<p class="descr">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-				<span class="salary">500.000 - 700.000</span>
-				<span class="portfolio">www.julia.se</span>
-				<a href="">besök sin profile</a>
-			</div>
-		</div>
-	</div>
+    <br><br>
+    <hr>
+    <label class="taglist">Valda kompetensområden: </label>
+      <ul class="taglist"><li class="cat" ng-repeat="cat in selectedCategories">{{cat}}</li></ul><br>
+    <label class="taglist">Valda nyckelord: </label>
+      <ul class="taglist"><li class="tag" ng-repeat="tag in selectedTags">{{tag}}</li></ul><br>
+    <hr>
+    <button type="button" class="btn" ng-click="search()">Sök</button>
+
+  </fieldset>
+
+  <hr>
+  {{ req }} <br>
+  <ul>
+    <li class="browse" ng-repeat="post in result" ng-click="go('profile/'+ post.username)"><img class="browse" ng-src="php/{{ post.image }}"> {{post.name}} <br><br> {{ post.snippet }}</li>
+  </ul>
 
 </div>
+
+
