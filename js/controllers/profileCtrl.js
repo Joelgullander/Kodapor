@@ -14,6 +14,8 @@ computenzControllers.controller('ProfileCtrl', ['$scope','$http','$routeParams',
     $scope.data = data;
     $scope.content = data.content;
     $scope.image = data.image;
+    $scope.experience = data.experience;
+   
   });
 
   $scope.getFullName = UserService.getFullName;

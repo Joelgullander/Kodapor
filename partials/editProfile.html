@@ -2,7 +2,7 @@
 
 <div class="row">
 
-  <h1>Profile</h1>
+  <h1>Edit Profile</h1>
   <hr>
  
 </div>
@@ -10,9 +10,12 @@
     <div class="container">
   <div class="col-md-6">
     <img ng-src="php/{{ image }}" class="img-responsive" alt="Responsive image">
-  
+
+    <button type="button" class="btn btn-default">Default</button>
+
     <label for='namn'>Namn:</label>
-    <p>{{getFullName()}}</p>      
+     <input type='text' name='namn' class="form-control" ng-model="user.name"  placeholder="Namn" maxlength="60"/>
+     
    
    </div>
    <div class="col-md-6">
@@ -27,7 +30,7 @@
          <li>ActionScript</li>
 
         </ul>
-      
+        
       </div>
        </div>
      <div class="row">
