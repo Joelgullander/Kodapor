@@ -1,6 +1,6 @@
 'use strict';
 
-computenzControllers.controller('ProfileCtrl', ['$scope','$http','$location','$routeParams','UserService', function($scope,$http,$location,$routeParams, UserService) {
+computenzControllers.controller('editProfileCtrl', ['$scope','$http','$routeParams','UserService', function($scope,$http,$routeParams, UserService) {
   
   var currentUserProfile = window.location.href.split('/').pop();
 
@@ -19,8 +19,6 @@ computenzControllers.controller('ProfileCtrl', ['$scope','$http','$location','$r
   });
 
   $scope.getFullName = UserService.getFullName;
-  $scope.edit = function(){
-    $location.path('profile/edit/'+UserService.getUsername());
-  };
+ 
 
 }]);

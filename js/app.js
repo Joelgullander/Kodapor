@@ -38,6 +38,10 @@ computenzApp.config(['$routeProvider', function($routeProvider){
         templateUrl: 'partials/profile.html',
         controller: 'ProfileCtrl'
       }).
+       when('/profile/edit/:userID', {
+        templateUrl: 'partials/editProfile.html',
+        controller: 'editProfileCtrl'
+      }).
       when('/browse', {
         templateUrl: 'partials/browse.html',
         controller: 'BrowseCtrl'

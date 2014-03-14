@@ -9,14 +9,14 @@
   <div class="row">
     <div class="container">
   <div class="col-md-6">
-    <img ng-src="php/{{ image }}" class="img-responsive" alt="Responsive image">
+    <img ng-src="php/{{ image }}" class=" profileImage" alt="Responsive image">
   
-    <label for='namn'>Namn:</label>
-    <p>{{getFullName()}}</p>      
+      
    
    </div>
    <div class="col-md-6">
-
+      <label for='namn'>Namn:</label>
+    <p>{{getFullName()}}</p>    
       <h4>Erfarenhet</h4>
         <p>{{ experience }}</p>
          <h4>Competenser</h4>
@@ -44,7 +44,7 @@
        <div class="row">
      <div class="container">
      <div class="col-md-3 col-md-offset-3">
-          <button class="btn btn-warning" type="button" ng-href="account">EDIT PROFILE</button>
+          <button class="btn btn-warning" type="button" ng-click="edit()">EDIT PROFILE</button>
           </div> 
       </div>
        </div> 
