@@ -8,15 +8,18 @@ computenzControllers.controller('LoginCtrl', ['$scope','$http','$location', 'Use
      
       var requestData = {
         loginHandlerAction: 'login',
-        username: username || $scope.user.username,
-        password: password || $scope.user.password
+        password: password || $scope.password
       };
       
-      $http.post('php/main.php', requestData).success(function(data){
+      $http.post('php/login/' + username || $scope.username, requestData).success(function(data){
+
         if(data != "false"){
+          data.firstname = decodeURIComponent(data.firstname);
+          data.name = decodeURIComponent(data.name);
+          console.log(data);
           UserService.setUser(data);
           LoginToggleService.setLinkData(true);
-          $location.path('profile/' + UserService.getUsername());
+          $location.path('profile/' + UserService.getFullName());
         }else{
           $scope.message = "Användarnamn eller lösenord felaktigt. Kunde inte logga in!";
         }

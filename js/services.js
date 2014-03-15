@@ -11,7 +11,7 @@ computenzServices.service('UserService', function(){
   var user = {
     username: null,
     firstname: null,
-    lastname: null
+    name: null
   };
 
   return {
@@ -23,13 +23,15 @@ computenzServices.service('UserService', function(){
     },
     getFullName: function(){
       if (user.username !== null)
-        return user.firstname + ' ' + user.lastname;
+        return user.name;
     },
     getUser: function(){
       return user;
     },
     setUser: function(n){
+      console.log(n);
       user = n;
+      console.log(user);
     },
     unsetUser: function(){
       for (var prop in user) {
@@ -82,8 +84,24 @@ computenzServices.service('LoginToggleService', function() {
 
 });
 
+computenzServices.service('MetaService', function() {
 
+    var categories = [];
+    var tags = [];
 
+  return {
+    installData: function(data){
+      categories = data.categories;
+      tags = data.tags;
+    },
+    getCategories: function(){
+      return categories;
+    },
+    getTags: function(){
+      return tags;
+    }
+  };
+});
 
 
 

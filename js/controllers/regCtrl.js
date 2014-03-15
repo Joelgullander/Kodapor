@@ -70,4 +70,6 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
   $scope.deleteTestPerson = function(){
     handleTestPerson('DELETE');
   };
+
   */
+

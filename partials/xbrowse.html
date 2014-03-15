@@ -25,22 +25,6 @@
     
     <input type="text" class="form-control" placeholder="sök fritext" ng-model="req.searchText"><br><br>
 
-    <label for="categories">Kompetensområde: </label> 
-    <select class="tags" name="categories" 
-      ng-model="catSelected"
-      ng-change="selectedCategories.push(catSelected)"
-      ng-options="cat as cat for cat in categories">
-      <option value="">Välj</option>
-    </select>
-
-    <label for="tags">Nyckelord: </label>
-    <select class="tags" name="tags" 
-      ng-model="tagSelected"
-      ng-change="selectedTags.push(tagSelected)"
-      ng-options="tag as tag for tag in tags">
-      <option value="">Välj</option>
-    </select>
-
     <label for="experience">Erfarenhet/år i branchen: </label>
     <select class="tags" ng-model="req.experience" name="experience">
       <option value="0" default>Inget krav</option>
@@ -68,5 +52,4 @@
   </ul>
 
 </div>
-
 
