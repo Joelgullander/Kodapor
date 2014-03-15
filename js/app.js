@@ -28,7 +28,7 @@ computenzApp.config(['$routeProvider', function($routeProvider){
       }).
        when('/register/company', {
         templateUrl: 'partials/registerCompany.html',
-        controller: 'RegCtrl'
+        controller: 'RegCtrlComp'
       }).
 
       when('/account', {

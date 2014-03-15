@@ -14,7 +14,6 @@
           <input type='text' name='lastname' class="form-control" ng-model="user.lastname" placeholder="Efternamn" ng-minlexngth="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z]+$/" required/>
             <div ng-show="form.lastname.$error.required">Fyll i efternamn.</div>
           
-
           <label for='birthdate'>Personnummer</label>
           <input type='birthdate' name='birthdate' class="form-control" ng-model="user.birthdate" placeholder="Personnummer" ng-minlength="10" ng-maxlength="12"/>
             <div ng-show="form.birthdate.$error.minlength">Fel personnummer.</div>
@@ -38,12 +37,14 @@
           <input type='text' name='username' class="form-control" ng-model="user.username" placeholder="Användarnamn" ng-minlength="3" maxlength="30"/>
             <div ng-show="form.username.$error.minlength">Användarnamn måste vara mer än 3 bokstäver</div>
             <div ng-show="form.username.$error.required">Fyll i användarnamn.</div>
+            
         
           <label for='password'>Lösenord</label>
           <input type='password' name='password' class="form-control" placeholder="Lösenord" ng-model="user.password" maxlength="30"/>
 
+
           <label for='repeat'>Repetera lösenord</label>
-          <input type='password' name='repeat' class="form-control" placeholder="Repetera lösenord"  maxlength="30"/><!--Ska fixas med bootstrap-->
+          <input type='password' name='repeat' class="form-control" placeholder="Repetera lösenord"  ng-model="user.repeatPassword" ng-change="checkPassword()" required/><!--Ska fixas med bootstrap-->
 
        
           <button ng-click="save()" class="btn btn-success">Spara</button>

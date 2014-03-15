@@ -8,22 +8,27 @@
 
  
         <legend>Registrering</legend>
-      <label for='name'>Företagsnamn</label>
-        <input type='text' name='name' class="form-control" ng-model="user.name" maxlength="60"/>
+
+        <label for='name'>Företagsnamn</label>
+        <input type='text' name='name' class="form-control" ng-model="user.name" placeholder="Företagsnamn" maxlength="60"/>
+
 
         <label for='contact_person'>Kontaktperson</label>
-        <input type='text' name='contact_person' class="form-control" ng-model="user.contact_person" maxlength="30"/>
+        <input type='text' name='contact_person' class="form-control" ng-model="user.contact_person" placeholder="Kontaktperson" maxlength="30"/>
+
         
-         <label for='org_nr'>Organisationsnummer</label>
-          <input type='org_nr' name='org_nr' class="form-control" ng-model="user.org_nr" placeholder="Organisationsnummer" ng-minlength="10" ng-maxlength="30"/>
+        <label for='org_nr'>Organisationsnummer</label>
+        <input type='org_nr' name='org_nr' class="form-control" ng-model="user.org_nr" placeholder="Organisationsnummer" ng-minlength="10" ng-maxlength="30"/>
             <div ng-show="form.org_nr.$error.minlength">Fel organisationsnummer.</div>
             <div ng-show="form.org_nr.$error.maxlength">Fel organisationsnummer</div>
             <div ng-show="form.org_nr.$error.required">Fyll i organisationsnummer.</div>
 
-        <label for='email'>Email</label>
-        <input type='text' name='email' class="form-control" ng-model="user.email"maxlength="60"/>
 
-        <label for='phone'>Telefonnummer</label>
+        <label for='email'>Email</label>
+        <input type='text' name='email' class="form-control" ng-model="user.email" placeholder="Email" maxlength="60"/>
+
+
+        <label for='phone'>Telefonnummer</label> 
         <input type='phone' name='phone' class="form-control" ng-model="user.phone" placeholder="Telefonnummer" ng-minlength="10" ng-maxlength="16"/>
             <div ng-show="form.phone.$error.minlength">Fel telefonnummer.</div>
             <div ng-show="form.phone.$error.maxlength">Fel telefonnummer.</div>
@@ -31,13 +36,15 @@
 
 
         <label for='användarnamn'>Användarnamn</label>
-        <input type='text' name='användarnamn' class="form-control" ng-model="user.username" maxlength="30"/>
+        <input type='text' name='användarnamn' class="form-control" ng-model="user.username" placeholder="Användarnamn" maxlength="30"/>
 
-        <label for='lösenord'>Lösenord</label>
-        <input type='lösenord' name='lösenord' class="form-control" ng-model="user.password" maxlength="30"/>
 
-        <label for='lösenord'>Repetera lösenord</label>
-        <input type='lösenord' name='lösenord' class="form-control" maxlength="30"/><!--Ska fixas med bootstrap-->
+        <label for='password'>Lösenord</label>
+        <input type='password' name='password' class="form-control" ng-model="user.password" maxlength="30"/>
+        
+
+        <label for='repeat'>Repetera lösenord</label>
+        <input type='lösenord' name='repeat' class="form-control" ng-model="user.repeatPassword" ng-change="checkPassword()" required/><!--Ska fixas med bootstrap-->
 
     
 
