@@ -30,7 +30,7 @@
         "homeCtrl.js",
         "loginCtrl.js",
         "profileCtrl.js",
-          "editProfileCtrl.js",
+        "editProfileCtrl.js",
         "regCtrl.js"
     ],
 
