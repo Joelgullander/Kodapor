@@ -2,14 +2,11 @@
 
 
 computenzControllers.controller('editProfileCtrl', ['$scope','$http','$routeParams','UserService', function($scope,$http,$routeParams, UserService) {
-  $scope.user={};
-
-var testData ={};
-
+  
   var currentUserProfile = window.location.href.split('/').pop();
 
   $http({
-    url: 'php/profile_person/' + encodeURIComponent(currentUserProfile),
+   url: 'php/profile_person/' + encodeURIComponent(UserService.getUsername()),
     method: 'GET',
     headers : {
       'Content-Type' : 'application/json; charset=UTF-8'

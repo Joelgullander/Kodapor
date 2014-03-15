@@ -89,7 +89,7 @@ computenzServices.service('LoginToggleService', function() {
 computenzServices.service('LoginService', function($http,$location,UserService,LoginToggleService) {
   return {
     sendForm: function(username,password){
-      alert("Sending from service");
+      
       $http.post('php/login/' + username,{password:password}).success(function(data){
         if(data != "false"){
           data.firstname = decodeURIComponent(data.firstname);
