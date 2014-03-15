@@ -4,8 +4,6 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
 
   $scope.user={};
 
-  $scope.table;
-
   var testData ={};
   // For getting current users registration data. We don't have routing for this yet, since user now only get to registration view
   // through login view when not logged in. 
@@ -26,6 +24,7 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
 
   $scope.save = function() {
     testData = $scope.user;
+    checkPassword();
     handlePerson('POST', testData);
   };
   function handlePerson(method, data) {
@@ -33,7 +32,7 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
     console.log(data);
     //Add person to database!
     $http({
-      url:'php/'+ $scope.table + testData.username,
+      url:'php/user_person/' + testData.username,
       method: method,
       data: data,
       headers : {
@@ -44,7 +43,10 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
      
     });
   }
-
+    
+  function checkPassword() {
+  $scope.registerForm.repeatPassword.$error.dontMatch = $scope.user.password !== $scope.user.repeatPassword;
+  };
 
 }]);
 
@@ -72,6 +74,4 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
   $scope.deleteTestPerson = function(){
     handleTestPerson('DELETE');
   };
-
   */
-
