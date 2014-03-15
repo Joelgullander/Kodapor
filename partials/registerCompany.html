@@ -24,7 +24,7 @@
         <input type='text' name='email' class="form-control" ng-model="user.email"maxlength="60"/>
 
         <label for='phone'>Telefonnummer</label>
-        <input type='phone' name='phone' class="form-control" ng-model="..phone" placeholder="Telefonnummer" ng-minlength="10" ng-maxlength="16"/>
+        <input type='phone' name='phone' class="form-control" ng-model="user.phone" placeholder="Telefonnummer" ng-minlength="10" ng-maxlength="16"/>
             <div ng-show="form.phone.$error.minlength">Fel telefonnummer.</div>
             <div ng-show="form.phone.$error.maxlength">Fel telefonnummer.</div>
             <div ng-show="form.phone.$error.required">Fyll i telefonnummer.</div>
@@ -41,46 +41,7 @@
 
     
 
-        <div class="warning ng-binding">
-        {{ message }}
-      </div>
-
-        <label for='form-control'ng-model="user.experience">Den du söker bör ha erfarenhet i år?</label>
-        <select class="form-control">
-          <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>5+</option>
-    </select>
-
-    <div class="block">
-        <h4>Vad behöver du för typ av medarbetare?</h4>
-
-        <p>BackEnd, är en person som jobbar med databas och kopplingen mellan websidan och databasen.<br>
-        FrontEnd, är den som arbetar med själva funktionaliteten på sidan och allt som syns på skärmen<br>
-        GraphicsDesigner, är den som stylar din applikation/websida, jobbar helt enkelt med grafik.</p>
-
-        <!--SKa in fler checkboxes här-->
-         <div class="checkbox"><label>
-                <input type="checkbox"ng-model="user.FrontEnd">FrontEnd
-             </label>
-          </div>
-
-           <div class="checkbox"><label>
-                <input type="checkbox"ng-model="user.css3">BackEnd
-             </label>
-          </div>
-
-           <div class="checkbox"><label>
-                <input type="checkbox"ng-model="user.javascript">GraphicsDesigner
-            </div>
-
-           <div class="checkbox"><label>
-                <input type="checkbox"ng-model="user.php"> Php
-             </label>
-           </div>
+        
 
           <button ng-click="save()" class="btn btn-success">Spara</button>
 
