@@ -11,14 +11,14 @@
   <div class="col-md-6">
     <img ng-src="php/{{ image }}" class= "profileImage" alt="Responsive image">
 
-    <button type="button" class="btn btn-default">Default</button>
-    <div class= "col-md-12">
+  <!--  <button type="button" class="btn btn-default">Default</button>-->
+
+  
+     <div class= "col-md-12">
      <h3>Beskrivning</h3>
-        <textarea class= "col-md-12" name="editprofiledescription" rows="5">  </textarea>
+        <textarea class= "col-md-12" name="editprofiledescription" rows="5">   {{ content }} </textarea>
     </div>    
-   
-     
-   
+      
    </div>
    <div class="col-md-6">
           <label for='firstname'>Ändra Namn</label>
@@ -72,7 +72,7 @@
             </div>
             
 
-          <button ng-click="save()" class="btn btn-success">Spara</button>
+         
         
       </div>
        </div>
@@ -87,7 +87,7 @@
        <div class="row">
      <div class="container">
      <div class="col-md-3 col-md-offset-3">
-          <button class="btn btn-warning" type="button" ng-href="editProfile">EDIT PROFILE</button>
+           <button ng-click="save()" class="btn btn-success">Spara</button>
           </div> 
       </div>
        </div> 
