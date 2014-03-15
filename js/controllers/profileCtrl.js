@@ -5,11 +5,7 @@ computenzControllers.controller('ProfileCtrl', ['$scope','$http','$location','$r
   $scope.currentUserProfile = decodeURIComponent(window.location.href.split('/').pop());
 
   $http({
-<<<<<<< HEAD
-  url: 'php/profile_person/' + encodeURIComponent(UserService.getUsername()),
-=======
-    url: 'php/profile_person/' + encodeURIComponent(UserService.getUsername()),
->>>>>>> 7246d84071ea95b32edb73ea7b62cb5bbe06b4d3
+url: 'php/profile_person/' + encodeURIComponent(UserService.getUsername()),
     method: 'GET',
     headers : {
       'Content-Type' : 'application/json; charset=UTF-8'
@@ -19,6 +15,7 @@ computenzControllers.controller('ProfileCtrl', ['$scope','$http','$location','$r
     $scope.content = data.content;
     $scope.image = data.image;
     $scope.experience = data.experience;
+    $scope.firstName= data.firstName;
    
   });
 
