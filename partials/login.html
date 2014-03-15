@@ -7,13 +7,13 @@
       <div class="modal-body">
           <form class="form col-md-12 center-block" name="loginForm" class="loginForm" novalidate>
             <div class="form-group">
-              <input type="text" class="form-control input-lg" placeholder="Användarnamn" name="username" ng-model="user.username" required><span ng-show="loginForm.username.$dirty && loginForm.username.$invalid">Please enter your username</span>
+              <input type="text" class="form-control input-lg" placeholder="Användarnamn" name="username" ng-model="username" required><span ng-show="loginForm.username.$dirty && loginForm.username.$invalid">Please enter your username</span>
             </div>
             <div class="form-group">
-              <input type="password" class="form-control input-lg" placeholder="Password" name="password" ng-model="user.password" ng-minlength="6"><span ng-show="loginForm.password.$dirty && loginForm.password.$invalid">Your password must be at least 6 characters</span>
+              <input type="password" class="form-control input-lg" placeholder="Password" name="password" ng-model="password" ng-minlength="6"><span ng-show="loginForm.password.$dirty && loginForm.password.$invalid">Your password must be at least 6 characters</span>
             </div>
             <div class="form-group">
-              <button class="btn btn-primary btn-lg btn-block" ng-click="loginForm.$valid && sendForm()">Logga in</button>
+              <button class="btn btn-primary btn-lg btn-block" ng-click="loginForm.$valid && sendForm(username,password)">Logga in</button>
             </div>
             <label><a href="register">registrera privatperson</a></label>
             <label><a href="register">registrera företag</a></label>

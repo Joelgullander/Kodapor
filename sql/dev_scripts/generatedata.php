@@ -14,8 +14,8 @@ require_once("DB.php");
 
 $db = new DB();
 
-$db->GenerateRandomData(1000);
 $db->GenerateTags();
 $db->GenerateCategories();
+$db->GenerateRandomData(1000);
 
 ?>
