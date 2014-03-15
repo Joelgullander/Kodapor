@@ -5,12 +5,14 @@ computenzControllers.controller('LoginCtrl', ['$scope','$http','$location', 'Use
   function($scope,$http,$location,UserService,LoginToggleService) {
 
     $scope.sendForm = function(username, password){
+     
       var requestData = {
         loginHandlerAction: 'login',
         password: password || $scope.password
       };
       
       $http.post('php/login/' + username || $scope.username, requestData).success(function(data){
+
         if(data != "false"){
           data.firstname = decodeURIComponent(data.firstname);
           data.name = decodeURIComponent(data.name);

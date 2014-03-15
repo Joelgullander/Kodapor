@@ -3,8 +3,12 @@
 computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', function($scope,$http, UserService) {
 
   $scope.user={};
+
+  var testData ={};
   // For getting current users registration data. We don't have routing for this yet, since user now only get to registration view
   // through login view when not logged in. 
+ 
+
   function getUserAccount(username){
     $http({
       url:'php/user_person/' + username,
@@ -18,34 +22,32 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
     });
   }
 
-  getUserAccount(UserService.getUsername());
-
   $scope.save = function() {
-    
-    console.log($scope.user);
+    testData = $scope.user;
+    handlePerson('POST', testData);
   };
+  function handlePerson(method, data) {
 
-  var testPerson = "KalleAndersson";
+    console.log(data);
+    //Add person to database!
+    $http({
+      url:'php/user_person/' + testData.username,
+      method: method,
+      data: data,
+      headers : {
+        'Content-Type' : 'application/json; charset=UTF-8'
+      }
+    }).success(function(data){
+      $scope.res = getUserAccount(testData.username);
+     
+    });
+  }
 
-  //CREATE - method: POST
-  $scope.addTestPerson = function(){
-    var testData = {
-      // Everything mandatory in this table.
-      // How to do with location - region and address??
-      "firstname": "Kalle",
-      "lastname": "Andersson",
-      "birthdate": "19860714-1234",     // Should we demand full or date only?
-      "company_tax": "1",               // = true  "Godkänd för F-skatt"
-      "company_name": "Kalles IT-Byrå",
-      "phone": "070912223",
-      "email": "kalle@gmail.com",
-      "password": "QWdfpe34F2"
-    };
-    handleTestPerson('POST', testData);
-  };
 
-  //UPDATE - method: PATCH
-  $scope.patchTestPerson = function(){
+}]);
+
+/*
+ $scope.patchTestPerson = function(){
     var testData = {
       "email": "carl@wallin-andersen.se",
       "firstname": "Carl",
@@ -69,18 +71,5 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
     handleTestPerson('DELETE');
   };
 
-  function handleTestPerson(method, data) {
-    $http({
-      url:'php/user_person/' + testPerson,
-      method: method,
-      data: data,
-      headers : {
-        'Content-Type' : 'application/json; charset=UTF-8'
-      }
-    }).success(function(data){
-      $scope.res = data || getUserAccount(testPerson);
-    });
-  }
+  */
 
-
-}]);
