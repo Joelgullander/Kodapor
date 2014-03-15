@@ -5,7 +5,11 @@ computenzControllers.controller('ProfileCtrl', ['$scope','$http','$location','$r
   $scope.currentUserProfile = decodeURIComponent(window.location.href.split('/').pop());
 
   $http({
+<<<<<<< HEAD
   url: 'php/profile_person/' + encodeURIComponent(UserService.getUsername()),
+=======
+    url: 'php/profile_person/' + encodeURIComponent(UserService.getUsername()),
+>>>>>>> 7246d84071ea95b32edb73ea7b62cb5bbe06b4d3
     method: 'GET',
     headers : {
       'Content-Type' : 'application/json; charset=UTF-8'

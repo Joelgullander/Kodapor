@@ -131,9 +131,9 @@
           }
           $sql .= "SELECT COUNT(u.username) as count, u.username as username, CONCAT(u.firstname,' ',u.lastname) as name, p.snippet as snippet, p.image as image FROM user_person u ".
                   "INNER JOIN profile_person p ON u.username = p.username ".
-                  "INNER JOIN map_tag_user mt ON p.username = mt.connect ".
+                  "INNER JOIN tag_user_map mt ON p.username = mt.connect ".
                   "INNER JOIN tag tg ON mt.base = tg.id ".
-                  "INNER JOIN map_category_user mc ON p.username = mc.connect ".
+                  "INNER JOIN category_user_map mc ON p.username = mc.connect ".
                   "INNER JOIN category c ON mc.base = c.id ".
                   "WHERE $ors AND $ands ".
                   "GROUP BY p.username $sqlBridge ";
@@ -147,9 +147,9 @@
           $ands = substr($COMands,0,-4);
           $sql .= "SELECT COUNT(u.username) as count, u.username as username, u.name as name, p.snippet as snippet, p.image as image FROM user_person u ".
                   "INNER JOIN profile_company p ON u.username = p.username ".
-                  "INNER JOIN map_tag_user mt ON p.username = mt.connect ".
+                  "INNER JOIN tag_user_map mt ON p.username = mt.connect ".
                   "INNER JOIN tag tg ON mt.base = tg.id ".
-                  "INNER JOIN map_category_user mc ON p.username = mc.connect ".
+                  "INNER JOIN category_user_map mc ON p.username = mc.connect ".
                   "INNER JOIN category c ON mc.base = c.id ".
                   "WHERE $ors AND $ands ".
                   "GROUP BY p.username ";  
@@ -366,8 +366,9 @@
     $sql;
     
     if (substr($target,0,4) == "user") { // DELETE user account
-      $sql = "DELETE FROM map_tag_user WHERE connect = '$id';";
-      $sql .= "DELETE FROM map_category_user WHERE connect = '$id';";
+      $sql = "DELETE FROM  WHERE connect = '$id';";
+      $sql .= "DELETE FROM category_user_map WHERE connect = '$id';";
+      $sql .= "DELETE FROM tag_user_map WHERE connect = '$id';";
       $sql .= "DELETE FROM advertisement WHERE username = '$id';"; // FIX orphan risk
       $sql .= "DELETE FROM profile_person WHERE username = '$id';";
       $sql .= "DELETE FROM profile_company WHERE username = '$id';";

@@ -20,7 +20,10 @@ CREATE TABLE user_person (
   username        VARCHAR(32) PRIMARY KEY,
   firstname       VARCHAR(32) NOT NULL,
   lastname        VARCHAR(32) NOT NULL,
-  birthdate       VARCHAR(16) NOT NULL, -- changed, but will not work until recreated database
+  personal_id     VARCHAR(16) NOT NULL, -- changed, but will not work until recreated database
+  street_address  VARCHAR(64) NOT NULL,
+  postal_code     VARCHAR(16) NOT NULL,
+  city            VARCHAR(32) NOT NULL,
   company_tax     BIT(1)      NOT NULL,
   company_name    VARCHAR(64),  
   phone           VARCHAR(64),
@@ -33,6 +36,11 @@ CREATE TABLE user_company (
 
   username        VARCHAR(32) PRIMARY KEY,
   name            VARCHAR(64) NOT NULL,
+  size            INT(11),
+  org_nr          VARCHAR(64) NOT NULL,
+  street_address  VARCHAR(64) NOT NULL,
+  postal_code     VARCHAR(16) NOT NULL,
+  city            VARCHAR(32) NOT NULL,
   contact_person  VARCHAR(64) NOT NULL,
   phone           VARCHAR(64),
 
@@ -43,8 +51,7 @@ CREATE TABLE user_company (
 
 CREATE TABLE profile_person (
 
-  id              INT(11) AUTO_INCREMENT PRIMARY KEY,
-  username        VARCHAR(32),
+  username        VARCHAR(32) PRIMARY KEY,
   active          BIT(1) NOT NULL DEFAULT b'0',
   visible         BIT(1) NOT NULL DEFAULT b'0',
   content         TEXT,
@@ -60,14 +67,12 @@ CREATE TABLE profile_person (
 
 CREATE TABLE profile_company (
 
-  id              INT(11) AUTO_INCREMENT PRIMARY KEY,
-  username        VARCHAR(32),
+  username        VARCHAR(32) PRIMARY KEY,
   active          BIT(1) NOT NULL DEFAULT b'0',
   visible         BIT(1) NOT NULL DEFAULT b'0',
   content         TEXT,
   snippet         TINYTEXT,
-  business_years  INT(11),
-  size            INT(11),
+  experience      INT(11),
   image_logo      VARCHAR(256), -- URL
   image_view      VARCHAR(256), -- URL
   image_contact   VARCHAR(256), -- URL
@@ -78,8 +83,9 @@ CREATE TABLE profile_company (
 
 CREATE TABLE advertisement (
 
-  id              INT(11) AUTO_INCREMENT PRIMARY KEY,
+  id              INT(11) AUTO_INCREMENT PRIMARY KEY, -- Need different key due to one-to-many relation to username
   username        VARCHAR(32),
+  profile         ENUM('profile_person','profile_company'),
   content         TEXT,
   snippet         VARCHAR(256),
   experience      VARCHAR(16),
@@ -99,7 +105,7 @@ CREATE TABLE tag (
 
 );
 
-CREATE TABLE map_tag_user (
+CREATE TABLE tag_user_map (
 
   map_id          INT(11) AUTO_INCREMENT PRIMARY KEY,
   base            INT(11),
@@ -111,7 +117,7 @@ CREATE TABLE map_tag_user (
 );
 
 
-CREATE TABLE map_tag_advertise (
+CREATE TABLE tag_advertise_map (
 
   map_id          INT(11) AUTO_INCREMENT PRIMARY KEY,
   base            INT(11),
@@ -131,7 +137,7 @@ CREATE TABLE category (
 
 );
 
-CREATE TABLE map_category_user (
+CREATE TABLE category_user_map (
   
   map_id          INT(11) AUTO_INCREMENT PRIMARY KEY,
   base            INT(11),
@@ -142,7 +148,7 @@ CREATE TABLE map_category_user (
 
 );
 
-CREATE TABLE map_catategory_advertise (
+CREATE TABLE category_advertise_map (
   
   map_id          INT(11) AUTO_INCREMENT PRIMARY KEY,
   base            INT(11),

@@ -1,17 +1,16 @@
 'use strict';
 
 // Controller for login view 
-computenzControllers.controller('LoginCtrl', ['$scope','$http','$location', 'UserService', 'LoginToggleService',
-  function($scope,$http,$location,UserService,LoginToggleService) {
-
+computenzControllers.controller('LoginCtrl', ['$scope','$http','$location', 'UserService', 'LoginToggleService', 'LoginService',
+  function($scope,$http,$location,UserService,LoginToggleService,LoginService) {
+/*
     $scope.sendForm = function(username, password){
-     
+      alert("sending");
       var requestData = {
-        loginHandlerAction: 'login',
-        password: password || $scope.password
+        password: password
       };
       
-      $http.post('php/login/' + username || $scope.username, requestData).success(function(data){
+      $http.post('php/login/' + username,{password:password}).success(function(data){
 
         if(data != "false"){
           data.firstname = decodeURIComponent(data.firstname);
@@ -25,6 +24,8 @@ computenzControllers.controller('LoginCtrl', ['$scope','$http','$location', 'Use
         }
       });
     };
+*/
+    $scope.sendForm = LoginService.sendForm;
 
     (function(){
       $http.get('php/testusers/', {

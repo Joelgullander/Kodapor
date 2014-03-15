@@ -5,7 +5,7 @@ class DB{
   private $con;
 
   function __construct() {
-    if(!$this->con = mysqli_connect("localhost", "sonix", "coders", "coderspool"))
+    if(!$this->con = mysqli_connect("localhost", "root", "", "coderspool"))
       $this->ThrowMySqlException();
     if (!$this->con->set_charset("utf8")) {
       printf("Error loading character set utf8: %s\n", $mysqli->error);
@@ -98,7 +98,8 @@ class DB{
       
       $this->AddAccount($Username, $Password, $Email, 'user_person');
       
-      $AppliersSql = "INSERT INTO user_person (username, firstname, lastname, company_tax, company_name, phone) VALUES ('".$Username."', '".$RandFirst."', '".$RandLast."', b'".$Tax."', '".$Company_name."','".$Phone."' ) ";
+      $AppliersSql = "INSERT INTO user_person (username, firstname, lastname, personal_id,street_address, postal_code, city, company_tax, company_name, phone) ".
+                     "VALUES ('".$Username."', '".$RandFirst."', '".$RandLast."','".$this->RandomNumber(10)."','Kvacksalvargränd 2b','123 45','Ankeborg', b'".$Tax."', '".$Company_name."','".$Phone."' ) ";
       $ApplierResult = mysqli_query($this->con, $AppliersSql);
       if(!$ApplierResult){
         //Something went wrong...
@@ -128,7 +129,8 @@ class DB{
       
       $this->AddAccount($Username, $Password, $Email, 'user_company');
       
-      $EmployeeSql = "INSERT INTO user_company (username, name, contact_person, phone) VALUES ('".$Username."', '".$Company."', '".$Contact."', '".$Phone."' ) ";
+      $EmployeeSql = "INSERT INTO user_company (username, name, org_nr, street_address, postal_code, city, contact_person, phone) ".
+                     "VALUES ('".$Username."', '".$Company."','".$this->RandomNumber(10)."-".$this->RandomNumber(6)."','Proffsgatan 17','543 21','Krämerfors','".$Contact."', '".$Phone."' ) ";
       $EmployeeResult = mysqli_query($this->con, $EmployeeSql);
       if(!$EmployeeResult){
         //Something went wrong...
@@ -143,7 +145,8 @@ class DB{
     
     $tags = array(
       // Languages
-      "JavaScript","php", "C", "C++", "Java", "Ruby", "Python", "Perl", "Ruby on rails", "Lisp", "Assembler", "Node.js", "Flash", "Pascal","Erlang", 
+      "JavaScript","php", "C", "C++", "Java", "Ruby", "Python", "Perl", "Ruby on rails", "Lisp", 
+      "Assembler", "Node.js", "Angular.js", "Flash", "Pascal","Erlang", ".NET", "C#", 
 
       // Databases
       "MySQL", "PostgreSQL", "MSSql", "Oracle", "SQLite", "NO Sql", "MariaDB",
@@ -158,7 +161,7 @@ class DB{
       "Adobe CS", "Illustrator", "Photoshop", "3D Studio", "Gimp", "Blender",
 
       // Concepts
-      "OOP", "Agile", "Scrum", "Extreme Programming", 
+      "OOP", "Agile", "Scrum", "Extreme Programming", "Design Patterns", "MVC",
 
       // Fields
       "Frontend", "Backend"
@@ -224,13 +227,74 @@ class DB{
     $image = "imageRepo/profiles/profile-pic-300x291.jpg";
     
 
-    $sql = "INSERT INTO profile_person (username, active, visible, content, snippet, experience, cv, image) VALUES('" . $username . "', b'" . $active . "', b'" . $visible . "', '" . $generator->getContent(150, 'txt') . "', '"  . $generator->getContent(30, 'txt') . "', '" . $exp . "', '". $cv ."', '" . $image . "');";
+    $sql = "INSERT INTO profile_person (username, active, visible, content, snippet, experience, cv, image) ".
+          "VALUES('" . $username . "', b'" . $active . "', b'" . $visible . "', '" . $generator->getContent(150, 'txt') . 
+          "', '"  . $generator->getContent(30, 'txt') . "', '" . $exp . "', '". $cv ."', '" . $image . "');";
 
     $sqlResult = mysqli_query($this->con, $sql);
     if(!$sqlResult){
       //Something went wrong...
       $this->ThrowMySqlException($sql);
     }
+
+
+    // Generate 1-3 categories
+    $nrCats = rand(1,4);
+    $cats = array();
+    $sql = "INSERT INTO category_user_map (base,connect) VALUES ";
+    for ($i = 0; $i < $nrCats; $i++) {
+      array_push($cats, rand(1,11)); // Just because we need it if generating advertisement soon
+      $sql .= "(".$cats[$i].",'$username')" . ($i + 1 == $nrCats ? "" : ",");
+    }
+    $sqlResult = mysqli_query($this->con, $sql);
+    if(!$sqlResult){
+      //Something went wrong...
+      $this->ThrowMySqlException($sql);
+    }
+
+    // Generate 1-8 tags
+    $nrTags = rand(1,8);
+    $tags = array();
+    $sql = "INSERT INTO tag_user_map (base,connect) VALUES ";
+    for ($i = 0; $i < $nrTags; $i++) {
+      array_push($tags, rand(1,48));
+      $sql .= "(".$tags[$i].",'$username')" . ($i + 1 == $nrTags ? "" : ",");
+    }
+    $sqlResult = mysqli_query($this->con, $sql);
+    if(!$sqlResult){
+      //Something went wrong...
+      $this->ThrowMySqlException($sql);
+    }
+
+    // generate ad for every company
+    
+      $sql = "INSERT INTO advertisement (username,profile,content,snippet,experience) VALUES ('".
+             "$username','profile_person','".$generator->getContent(150, 'txt')."','".$generator->getContent(30, 'txt')."','".$exp."');";
+      $sqlResult = mysqli_query($this->con, $sql);
+      $thisAd = mysqli_insert_id($this->con);
+      if(!$sqlResult){
+        //Something went wrong...
+        $this->ThrowMySqlException($sql);
+      }
+      $sql = "INSERT INTO category_advertise_map (base,connect) VALUES ";
+      for ($i = 0; $i < $nrCats; $i++) {
+        $sql .= "(".array_shift($cats).",$thisAd)" . ($i + 1 == $nrCats ? ";" : ",");
+      }
+      $sqlResult = mysqli_query($this->con, $sql);
+      if(!$sqlResult){
+        //Something went wrong...
+        $this->ThrowMySqlException($sql);
+      }
+      $sql = "INSERT INTO tag_advertise_map (base,connect) VALUES ";
+      for ($i = 0; $i < $nrTags; $i++) {
+        $sql .= "(".array_shift($tags).",$thisAd)" . ($i + 1 == $nrTags ? ";" : ",");
+      }
+      $sqlResult = mysqli_query($this->con, $sql);
+      if(!$sqlResult){
+        //Something went wrong...
+        $this->ThrowMySqlException($sql);
+      } 
+   
   }
 
   public function GenerateProfile_Inc($username){
@@ -257,12 +321,73 @@ class DB{
     $image_view = "imageRepo/views/corporate_culture.jpg";
     $image_contact = "imageRepo/profiles/profile-pic-300x291.jpg";
 
-    $sql = "INSERT INTO profile_company (username, active, visible, content, snippet, business_years, image_logo, image_view, image_contact) VALUES('" . $username . "', b'" . $active . "', b'" . $visible . "', '" . $generator->getContent(150, 'txt') . "', '"  . $generator->getContent(30, 'txt') . "', '" . $exp . "', '" . $image_logo . "', '" . $image_view . "', '" . $image_contact . "');";
+    $sql = "INSERT INTO profile_company (username, active, visible, content, snippet, experience, image_logo, image_view, image_contact) ".
+           "VALUES('" . $username . "', b'" . $active . "', b'" . $visible . "', '" . $generator->getContent(150, 'txt') . "', '"  .
+            $generator->getContent(30, 'txt') . "', '" . $exp . "', '" . $image_logo . "', '" . $image_view . "', '" . $image_contact . "');";
 
     $sqlResult = mysqli_query($this->con, $sql);
     if(!$sqlResult){
       //Something went wrong...
       $this->ThrowMySqlException($sql);
+    }
+
+    // Generate 1-4 categories
+    $nrCats = rand(1,4);
+    $cats = array();
+    $sql = "INSERT INTO category_user_map (base,connect) VALUES ";
+    for ($i = 0; $i < $nrCats; $i++) {
+      array_push($cats, rand(1,11)); // Just because we need it if generating advertisement soon
+      $sql .= "(".$cats[$i].",'$username')" . ($i + 1 == $nrCats ? "" : ",");
+    }
+    $sqlResult = mysqli_query($this->con, $sql);
+    if(!$sqlResult){
+      //Something went wrong...
+      $this->ThrowMySqlException($sql);
+    }
+
+    // Generate 1-8 tags
+    $nrTags = rand(1,8);
+    $tags = array();
+    $sql = "INSERT INTO tag_user_map (base,connect) VALUES ";
+    for ($i = 0; $i < $nrTags; $i++) {
+      array_push($tags, rand(1,48));
+      $sql .= "(".$tags[$i].",'$username')" . ($i + 1 == $nrTags ? "" : ",");
+    }
+    $sqlResult = mysqli_query($this->con, $sql);
+    if(!$sqlResult){
+      //Something went wrong...
+      $this->ThrowMySqlException($sql);
+    }
+
+    // generate some 200 advertisements
+    if (rand(0,100) < 20) { 
+      $sql = "INSERT INTO advertisement (username,profile,content,snippet,experience) VALUES ('".
+             "$username','profile_company','".$generator->getContent(150, 'txt')."','".$generator->getContent(30, 'txt')."','".$exp."');";
+      $sqlResult = mysqli_query($this->con, $sql);
+      $thisAd = mysqli_insert_id($this->con);
+
+      if(!$sqlResult){
+        //Something went wrong...
+        $this->ThrowMySqlException($sql);
+      }
+      $sql = "INSERT INTO category_advertise_map (base,connect) VALUES ";
+      for ($i = 0; $i < $nrCats; $i++) {
+        $sql .= "(".array_shift($cats).",$thisAd)" . ($i + 1 == $nrCats ? "" : ",");
+      }
+      $sqlResult = mysqli_query($this->con, $sql);
+      if(!$sqlResult){
+        //Something went wrong...
+        $this->ThrowMySqlException($sql);
+      }
+      $sql = "INSERT INTO tag_advertise_map (base,connect) VALUES ";
+      for ($i = 0; $i < $nrTags; $i++) {
+        $sql .= "(".array_shift($tags).",$thisAd)" . ($i + 1 == $nrTags ? "" : ",");
+      }
+      $sqlResult = mysqli_query($this->con, $sql);
+      if(!$sqlResult){
+        //Something went wrong...
+        $this->ThrowMySqlException($sql);
+      } 
     }
 
     $count++;

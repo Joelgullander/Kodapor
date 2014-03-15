@@ -4,6 +4,8 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
 
   $scope.user={};
 
+  $scope.table;
+
   var testData ={};
   // For getting current users registration data. We don't have routing for this yet, since user now only get to registration view
   // through login view when not logged in. 
@@ -31,7 +33,7 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
     console.log(data);
     //Add person to database!
     $http({
-      url:'php/user_person/' + testData.username,
+      url:'php/'+ $scope.table + testData.username,
       method: method,
       data: data,
       headers : {

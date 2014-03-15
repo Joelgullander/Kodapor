@@ -1,40 +1,17 @@
 <div class="flip"> 
         <div class="card"> 
             <div class="face front"> 
-<h3>Vill du leta jobb utefter din kunskap?</h3>
+<h3>Varför inte testa en sökning?</h3>
           <div class="circleL"></div>
 
             </div> 
             <div class="face back"> 
-              <form class="form-horizontal" role="form">
-                <h3>Registrering</h3>
-                <input type='text' name='namn' class="form-control" ng-model="user.name"  placeholder="Namn" maxlength="60" required />
-                <input type='text' name='email' class="form-control" ng-model="user.email"  placeholder="Email"maxlength="60" required />
-                <input type='text' name='användarnamn' class="form-control" ng-model="user.username"  placeholder="Användarnamn" maxlength="30" required />
-                <input type='password' name='lösenord' class="form-control" ng-model="user.password"  placeholder="Lösenord" maxlength="30" required />
-                <input type='lösenord' name='lösenord' class="form-control" placeholder="Repetera Lösenord" maxlength="30" required />
-        <div class="warning">
-        {{ message }}
-        </div>
-        <h3>Din Erfarenhet i år:</h3>
-        <select class="form-control">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-      </select>
+                <h3>Gör en sökning!</h3>
+                <fieldset class="browse">
+                 <input type="text" class="form-control" placeholder="sök fritext" ng-model="req.searchText">
+                     <button type="button" class="btn" ng-click="search()">Sök</button>
+                 </fieldset>
 
-    <h3>Kompetenser:</h3>
-    <!--SKa in fler checkboxes här-->
-            <input type="checkbox"ng-model="user.html5"> Html5
-            <input type="checkbox"ng-model="user.css3"> Css3
-            <input type="checkbox"ng-model="user.javascript"> JavaScript
-            <input type="checkbox"ng-model="user.php"> Php
-            <input type="checkbox"ng-model="user.mysql"> MySql
-            <input type="checkbox"ng-model="user.pyton"> Pyton
-            <input type="checkbox"ng-model="user.visualstudio"> .NET & Visual Studio
-              </form>
             </div> 
         </div> 
     </div> 
@@ -42,21 +19,11 @@
     <div class="flip"> 
         <div class="card"> 
             <div class="face front"> 
-          <h3>Vill du leta jobb utefter din kunskap?</h3>
+          <h3>Inte medlem? Bli det nu</h3>
           <div class="circleR"></div>
-                    <div class="circlecontainer"><div class="smallnavcircles" id="activenav" /><div class="smallnavcircles" /><div class="smallnavcircles" /></div>
             </div> 
-            <div class="face back"> 
-             <form class="form-horizontal" role="form">
-                <h3>Registrering</h3>
-                <input type='text' name='namn' class="form-control" ng-model="user.name"  placeholder="Namn" maxlength="60" required />
-                <input type='text' name='email' class="form-control" ng-model="user.email"  placeholder="Email"maxlength="60" required />
-                <input type='text' name='användarnamn' class="form-control" ng-model="user.username"  placeholder="Användarnamn" maxlength="30" required />
-                <input type='password' name='lösenord' class="form-control" ng-model="user.password"  placeholder="Lösenord" maxlength="30" required />
-                <input type='lösenord' name='lösenord' class="form-control" placeholder="Repetera Lösenord" maxlength="30" required />
-               <div class="warning">
-                 {{ message }}
-               </div>
+            <div class="face back">
+
             </div> 
         </div> 
     </div> 

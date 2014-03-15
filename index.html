@@ -12,6 +12,7 @@
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="#">Kodapor</a> 
+
         </div> 
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
               <span class="sr-only">Toggle navigation</span>
@@ -31,6 +32,8 @@
           <li><a ng-href="new_ad">Lägg till nytt annons</a></li>
           <li><a ng-href="show_ad"> Annonser </a></li>
         </ul>
+        <p class="navbar-text navbar-left"> {{ loginStatus() ? "Inloggad som " + getFullName() : "Inte inloggad" }} </p>
+
         <ul class="nav navbar-nav navbar-right">
           <form class="navbar-form navbar-right" role="form">
             <div class="form-group">
@@ -51,7 +54,7 @@
         
         <!-- go to login view if not already logged in, else logout and return to homepage -->
           
-          <!-- <p class="navbar-text navbar-right"> {{ loginStatus() ? "Inloggad som " + getFullName() : "Inte inloggad" }} </p> -->
+           
   <div class="container"></div>
     
       <div class="views" ng-view></div>

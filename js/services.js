@@ -50,6 +50,8 @@ computenzServices.service('UserService', function(){
 // Service used by main and login page to set login/logout-link and redirect
 // the user when clicking. Also has function for detecting if user is logged in.
 
+
+
 computenzServices.service('LoginToggleService', function() {
 
   var linkData = {
@@ -82,6 +84,26 @@ computenzServices.service('LoginToggleService', function() {
     },
   };
 
+});
+
+computenzServices.service('LoginService', function($http,$location,UserService,LoginToggleService) {
+  return {
+    sendForm: function(username,password){
+      alert("Sending from service");
+      $http.post('php/login/' + username,{password:password}).success(function(data){
+        if(data != "false"){
+          data.firstname = decodeURIComponent(data.firstname);
+          data.name = decodeURIComponent(data.name);
+          console.log(data);
+          UserService.setUser(data);
+          LoginToggleService.setLinkData(true);
+          $location.path('profile/' + UserService.getFullName());
+        }else{
+          return "Användarnamn eller lösenord felaktigt. Kunde inte logga in!";
+        }
+      });
+    }
+  }
 });
 
 computenzServices.service('MetaService', function() {
