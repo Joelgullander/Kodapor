@@ -1,24 +1,18 @@
 'use strict';
 
-computenzControllers.controller('ProfileCtrl', ['$scope','$http','$location','$routeParams','UserService', function($scope,$http,$location,$routeParams, UserService) {
+computenzControllers.controller('ProfileCtrl', ['$scope','$http','$location','$routeParams','UserService','CacheService',function($scope,$http,$location,$routeParams,UserService,CacheService) {
   
-  $scope.currentUserProfile = decodeURIComponent(window.location.href.split('/').pop());
-
-  $http({
-    url: 'php/profile_person/' + encodeURIComponent(UserService.getUsername()),
-    method: 'GET',
-    headers : {
-      'Content-Type' : 'application/json; charset=UTF-8'
+  //if (typeof ($scope.user = CacheService.retrieveLastDisplay()) == "undefined") {
+    var destination = decodeURIComponent(window.location.href.split('/').pop());
+    if (destination == "myprofile") {
+      $scope.user = UserService.getUser();
     }
-  }).success(function(data) {
-    $scope.data = data;
-    $scope.content = data.content;
-    $scope.image = data.image;
-    $scope.experience = data.experience;
-   
-  });
+    else {
+      $scope.user = CacheService.getProfile(destination);
+    }
+  //}
+  // CacheService.cacheLastDisplay($scope.user);
 
-  $scope.getFullName = UserService.getFullName;
   $scope.edit = function(){
     $location.path('profile/edit/'+UserService.getUsername());
   };
