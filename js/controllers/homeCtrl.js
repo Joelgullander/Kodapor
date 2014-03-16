@@ -10,5 +10,9 @@ $scope.sendForm = LoginService.sendForm;
     });
     return false;
   });
+
+  $(document).on("click","#registrera", function(){
+    window.location.href = 'register';
+  });
   
 }]);
