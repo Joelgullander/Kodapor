@@ -1,6 +1,6 @@
 'use strict';
 
-computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','CacheService','MetaService', function($scope,$http,$location,CacheService,MetaService) {
+computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','MetaService', function($scope,$http,$location,MetaService) {
 
   $scope.categories = MetaService.getCategories();
 	$scope.selectedCategories = [];
@@ -19,6 +19,7 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
 		categories: $scope.selectedCategories,
 		tags: $scope.selectedTags
   };
+  
 
   $scope.search = function(){
 
@@ -32,10 +33,6 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
     }).success(function(data){
       // Display data
       $scope.result = data;
-      // Cache data
-      var type = $scope.req.main;
-      console.log(type);
-      CacheService.cache(type, data);
     });
 	};
 

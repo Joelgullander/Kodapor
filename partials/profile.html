@@ -1,4 +1,4 @@
-{{ currentUserProfile }}
+
 
 <div class="row">
 
@@ -9,13 +9,13 @@
   <div class="row">
     <div class="container">
   <div class="col-md-6">
-    <img ng-src="php/{{ user.image || user.image_logo }}" class=" profileImage" alt="Responsive image">   
+    <img ng-src="php/{{ image }}" class=" profileImage" alt="Responsive image">   
    </div>
    <div class="col-md-6">
       <label for='namn'>Namn:</label>
-    <p>{{ user.name }}</p>    
+    <p>{{getFullName()}}</p>    
       <h4>Erfarenhet</h4>
-        <p>{{ user.experience }}</p>
+        <p>{{ experience }}</p>
          <h4>Competenser</h4>
         <ul class="tags">
         <li>Html5</li>
@@ -32,7 +32,7 @@
      <div class="col-md-8">
      <h3>Beskrivning</h3>
         <p>
-          {{ user.content }}
+          {{ content }}
         </p>
      </div>
        

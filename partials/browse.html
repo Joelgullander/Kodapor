@@ -62,9 +62,9 @@
   </fieldset>
 
   <hr>
- <!-- {{ req }} <br> --> 
+  {{ req }} <br>
   <ul>
-    <li class="browse" ng-repeat="post in result" ng-click="go(req.main + '/' + post.id)"><img class="browse" ng-src="php/{{ post.image || post.image_logo }}"> {{post.name}} <br><br> {{ post.snippet }} </li>
+    <li class="browse" ng-repeat="post in result" ng-click="go('profile/'+ post.username)"><img class="browse" ng-src="php/{{ post.image }}"> {{post.name}} <br><br> {{ post.snippet }}</li>
   </ul>
 
 </div>
