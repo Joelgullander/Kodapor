@@ -2,14 +2,23 @@
 
 computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','CacheService','MetaService', function($scope,$http,$location,CacheService,MetaService) {
 
+  $scope.req = CacheService.getSearchCriteria();
+  console.log("After recaching req: ", $scope.req, $scope.req ? 10 : 20);
+  $scope.result = CacheService.getSearchResult();
+  
   $scope.categories = MetaService.getCategories();
-  $scope.selectedCategories = [];
   $scope.tags = MetaService.getTags();
-  $scope.selectedTags = [];
   
-  $scope.selection = 1;
+  $scope.selectedCategories = $scope.req ? $scope.req.categories : [];
+  $scope.selectedTags = $scope.req ? $scope.req.tags : [];
   
-  $scope.req = {
+  // Ugly???  You bet!  :) Nöden har ingen lag...
+  $scope.selection = $scope.req ? CacheService.stupid($scope.req.users) : 1;
+  if ($scope.req) {
+    $('select[name="experience"]').val($scope.req.experience);
+  }
+
+  $scope.req = $scope.req || {
     main: ["advertisement"],
     users: ["profile_person","profile_company"],
     company_tax: false,
@@ -19,6 +28,9 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
     categories: $scope.selectedCategories,
     tags: $scope.selectedTags
   };
+  console.log($scope.req);
+
+
 
   $scope.search = function(){
 
@@ -32,12 +44,13 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
     }).success(function(data){
       // Display data
       $scope.result = data;
+      console.log(data);
       // Cache data
-      CacheService.cache(data);
+      CacheService.cacheCurrentSearch( $scope.req, data );
     });
   };
 
-  $scope.go = function(path){
+  $scope.go = function(path){  // When clicking on an item in the results 
     $location.path(path);
   };
 
@@ -52,7 +65,7 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
     $scope.selectedTags.splice(index,1);
     $(this).remove();
   });
-  
+
 }]);
 
 

@@ -75,11 +75,14 @@ computenzServices.service('LoginService', function($http,$location,UserService) 
       $http.post('php/login/' + username,{password:password}).success(function(data){
         if(data != "false"){
           if (data.user_table == "user_person") {
+            // Make string of full name easily accessible for person name
             data.name = data.firstname + ' ' + data.lastname;
           }
+          // Here the user object is set from the data received
           UserService.setUser(data);
-
+          // Link is changed from 'login' to 'logout'
           setLinkData(true);
+          // Redirect to the users own profile
           $location.path('myprofile');
         }else{
           return "Användarnamn eller lösenord felaktigt. Kunde inte logga in!";
@@ -91,15 +94,17 @@ computenzServices.service('LoginService', function($http,$location,UserService) 
     },
     logOut: function() {
       $http.delete('php/logout/').success(function(data){
+        // Delete the user object in the browser
         UserService.unsetUser();
+        // Set link back to 'login'
         setLinkData(false);
       });
     },
-    getLoginStatusApp: function(){
+    getLoginStatusApp: function(){  // If need to check loginstatus
       if (status)
         return true;
     },
-    getLoginStatusServer: function(){
+    getLoginStatusServer: function(){ // Check with server if user has an ongoing session, done on page reload
       $http.get('php/login/').success(function(data){
       if (data !== "false") {
         UserService.setUser(data);
@@ -115,10 +120,23 @@ computenzServices.service('LoginService', function($http,$location,UserService) 
 
 computenzServices.service('CacheService', function() {
 
+  // This service uses memory for retrieving as long as the app is not refreshed, 
+  // but stores tha cache also in localStorage (with totalStorage plugin for jQuery) 
+  // If refreshed the app retrieves its cache again through totalStorage
+
+  var searchIndex = 0;
+
+  // Cache object will beside these predefined properties contain the 
+  // id's of profiles and adverisements
   var cache = {
-    history : [], // Not implemented
-    searchHistory : [], // not implemented
-    reloadCache : undefined
+    history : [],
+    results: [],
+    criteria: []
+  };
+
+  var stupidComparison = { // The tale of the two tables
+    "profile_person": 3,
+    "profile_company": 2
   };
 
   return {
@@ -134,25 +152,32 @@ computenzServices.service('CacheService', function() {
     getProfile: function(username) {
       return cache[username];
     },
-    getLastSeach: function() {
-      return cache.searchHistory[0];
+    getSearchCriteria: function() {
+      console.log(cache);
+      return cache.criteria[searchIndex];
     },
-    cacheLastSearch: function(data) {
-      cache.searchHistory.unshift(data);
+    getSearchResult: function() {
+      return cache.results[searchIndex];
+    },
+    cacheCurrentSearch: function(criteria,result) {
+      cache.criteria.unshift(criteria);
+      cache.results.unshift(result);
+      console.log(cache);
       $.totalStorage('Kodapor',cache);
     },
     cacheLastDisplay: function(data) {
       cache.reloadCache = data;
       $.totalStorage('Kodapor',cache);
     },
-    retrieveLastDisplay: function(){
-      return cache.reloadCache;
-    },
     clear: function(){
       cache = {};
     },
+    stupid: function(obj) {
+      if (obj.length == 2) return 1;
+      else return stupidComparison[obj[0]];
+    },
     loadCache: function(){
-      if ($.totalStorage('Kodapor')) {
+      if ($.totalStorage('Kodapor').length) {
         cache = $.totalStorage('Kodapor');
       }
     }
