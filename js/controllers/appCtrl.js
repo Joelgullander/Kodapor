@@ -4,8 +4,8 @@
 // Here you can declare functions needed in navbars, sidebars, footer etc,
 // elements that are in common wherever the user navigates on the site. 
 
-computenzControllers.controller('appCtrl', ['$scope','$http','$location','UserService','LoginService', 'MetaService',
-  function($scope,$http,$location,UserService,LoginService,MetaService) {
+computenzControllers.controller('appCtrl', ['$scope','$http','$location','UserService','LoginService','CacheService','MetaService',
+  function($scope,$http,$location,UserService,LoginService,CacheService,MetaService) {
     
     $scope.updateLogin = function(linkData) {
       $scope.whereToGo = linkData;
@@ -35,12 +35,15 @@ computenzControllers.controller('appCtrl', ['$scope','$http','$location','UserSe
     // called in the index.html file like {{ function() }}. 
     // If you need other functions from the services you can just add more assignments here.
 
+    $scope.sendForm = LoginService.sendForm;
     $scope.loginStatus = LoginService.getLoginStatusApp;
     $scope.getFullName = UserService.getFullName;
     $scope.getUsername = UserService.getUsername;
 
     // This sets the login/logout link correctly at first load and each reload of the page.
     $scope.updateLogin(LoginService.getLinkData());
+    // This loads the local cache when page reloads
+    CacheService.loadCache();
 
     (function loadMetaData(){
         $http({

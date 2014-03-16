@@ -49,17 +49,18 @@ label.taglist {
   display: inline-block;
   margin-right: 20px;
   padding: 1px 5px;
-  
-}
-
-li.cat {
-  background: lightgreen;
-}
-
-li.tag {
-  background: orange;
+  cursor: pointer;
 }
 
 ul.taglist {
   display: inline;
 }
+
+.catcloud {
+  background: lightgreen;
+}
+
+.tagcloud {
+  background: orange;
+}
+

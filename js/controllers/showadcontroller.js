@@ -4,4 +4,5 @@ computenzControllers.controller('ShowAdController', ['$scope','CacheService', fu
 
   var currentAd = window.location.href.split('/').pop();
 	$scope.currentAd = CacheService.getAdvertisement(currentAd);
+
 }]);

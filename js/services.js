@@ -113,17 +113,18 @@ computenzServices.service('LoginService', function($http,$location,UserService) 
 
 computenzServices.service('CacheService', function() {
 
-  var cache = {};
-  var history = []; // Not implemented
-  var searchHistory = []; // not implemented
-  var reloadCache = undefined;
+  var cache = {
+    history : [], // Not implemented
+    searchHistory : [], // not implemented
+    reloadCache : undefined
+  };
 
   return {
-    cache: function(datatype, data) {
+    cache: function(data) {
       for (var i=0; i < data.length; i++) {
         cache[data[i]['id']] = data[i];
-        console.log("Caching: ", cache[data[i]['id']]);
       }
+      $.totalStorage('Kodapor',cache);
     },
     getAdvertisement: function(id) {
       return cache[id];
@@ -132,22 +133,27 @@ computenzServices.service('CacheService', function() {
       return cache[username];
     },
     getLastSeach: function() {
-      return searchHistory[0];
+      return cache.searchHistory[0];
     },
     cacheLastSearch: function(data) {
-      searchHistory.unshift(data);
+      cache.searchHistory.unshift(data);
+      $.totalStorage('Kodapor',cache);
     },
     cacheLastDisplay: function(data) {
-      reloadCache = data;
-      console.log(reloadCache);
+      cache.reloadCache = data;
+      $.totalStorage('Kodapor',cache);
     },
     retrieveLastDisplay: function(){
-      return reloadCache;
+      return cache.reloadCache;
     },
     clear: function(){
       cache = {};
+    },
+    loadCache: function(){
+      if ($.totalStorage('Kodapor')) {
+        cache = $.totalStorage('Kodapor');
+      }
     }
-
   };
 });
 

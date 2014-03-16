@@ -33,9 +33,7 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
       // Display data
       $scope.result = data;
       // Cache data
-      var type = $scope.req.main;
-      console.log(type);
-      CacheService.cache(type, data);
+      CacheService.cache(data);
     });
 	};
 
@@ -43,6 +41,17 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
 		$location.path(path);
 	};
 
+  $(document).on('click', '.catcloud', function(){
+    var index = $(this).parent().children().index(this);
+    $scope.selectedCategories.splice(index,1);
+    $(this).remove();
+  });
+
+  $(document).on('click','.tagcloud', function(){
+    var index = $(this).parent().children().index(this);
+    $scope.selectedTags.splice(index,1);
+    $(this).remove();
+  });
 	
 }]);
 

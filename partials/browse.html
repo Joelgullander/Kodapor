@@ -53,16 +53,16 @@
     <br><br>
     <hr>
     <label class="taglist">Valda kompetensområden: </label>
-      <ul class="taglist"><li class="cat" ng-repeat="cat in selectedCategories">{{cat}}</li></ul><br>
+      <ul class="taglist"><li class="catcloud" ng-repeat="cat in selectedCategories">{{cat}}</li></ul><br>
     <label class="taglist">Valda nyckelord: </label>
-      <ul class="taglist"><li class="tag" ng-repeat="tag in selectedTags">{{tag}}</li></ul><br>
+      <ul class="taglist"><li class="tagcloud" ng-repeat="tag in selectedTags">{{tag}}</li></ul><br>
     <hr>
     <button type="button" class="btn" ng-click="search()">Sök</button>
 
   </fieldset>
 
   <hr>
- <!-- {{ req }} <br> --> 
+ <!-- {{ req }} <br> -->  
   <ul>
     <li class="browse" ng-repeat="post in result" ng-click="go(req.main + '/' + post.id)"><img class="browse" ng-src="php/{{ post.image || post.image_logo }}"> {{post.name}} <br><br> {{ post.snippet }} </li>
   </ul>

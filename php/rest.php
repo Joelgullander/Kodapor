@@ -252,7 +252,7 @@
       }
       die("Not found");
     }
-
+/*
     if ($target == "profile") {  // READ profile (profile view)
       $id = urldecode($id);      // Complicated with two usertables. Probably not best solution here but need to get it to work...
       $sql = "SELECT user_table FROM account WHERE username = '$id';";
@@ -272,7 +272,7 @@
       $response['name'] = $name;
       die(json_encode($response));
     }
-
+*/
     if ($target == "meta") {
 
       $sql = "SELECT name FROM category";

@@ -20,6 +20,8 @@
     "loadOrderJS": [
         "less.js",
         "jquery.js",
+        "jquery-cookie.js",
+        "jquerytotal-storage.min.js",
         "angular.js",
         "angular-route.js",
         "app.js",
