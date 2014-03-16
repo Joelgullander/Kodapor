@@ -127,7 +127,7 @@
           $ands = substr($COMands,0,-4);
         }
         if ($input['main'] == "profile") { // Profile search
-          $sql .= "SELECT COUNT(u.username) as count, u.username as id, CONCAT(u.firstname,' ',u.lastname) as name, p.* FROM user_person u ".
+          $sql .= "SELECT COUNT(u.username) as count, u.username as id, CONCAT(u.firstname,' ',u.lastname) as name, p.*, NULL as placeholder FROM user_person u ".
                   "INNER JOIN profile_person p ON u.username = p.username ".
                   "INNER JOIN category_user_map cu ON u.username = cu.connect ".
                   "INNER JOIN category c ON cu.base = c.id ".
@@ -137,7 +137,7 @@
                   "GROUP BY p.username $sqlBridge ";
         }
         else { // Ad search
-          $sql .= "SELECT ad.id as id, COUNT(ad.id) as count, ad.username as username, ad.snippet as snippet, ad.content as content, CONCAT(u.firstname,' ',u.lastname) as name, p.image_logo as image FROM advertisement ad ".
+          $sql .= "SELECT ad.id as id, COUNT(ad.id) as count, ad.username as username, ad.snippet as snippet, ad.content as content, CONCAT(u.firstname,' ',u.lastname) as name, p.image as image FROM advertisement ad ".
                "INNER JOIN user_person u ON ad.username = u.username ".
                "INNER JOIN profile_person p ON u.username = p.username ".
                "INNER JOIN category_advertise_map ca ON ad.id = ca.connect ".
