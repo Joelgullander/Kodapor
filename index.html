@@ -37,12 +37,12 @@
         <ul class="nav navbar-nav navbar-right">
           <form class="navbar-form navbar-right" role="form">
             <div class="form-group">
-              <input type="text" name="username" ng-model="user.username" class="form-control" placeholder="Användarnamn" required>
+              <input type="text" name="username" ng-model="username" class="form-control" placeholder="Användarnamn" required>
             </div>
             <div class="form-group">
-              <input  type="password" name="password" ng-model="user.password" ng-minlength="6" class="form-control" placeholder="Lösenord"required>
+              <input  type="password" name="password" ng-model="password" ng-minlength="6" class="form-control" placeholder="Lösenord"required>
             </div>
-            <button ng-click="loginForm.$valid && sendForm()" class="btn btn-success">Logga in</button>
+            <button ng-click="sendForm(username,password)"  class="btn btn-success">Logga in</button>
             
           </form>
       </ul>
@@ -56,7 +56,8 @@
           
            
   <div class="container"></div>
-    
+    {{ username }}
+    {{ sendForm }}
       <div class="views" ng-view></div>
         <div class="navbar navbar-default myFooter">
             <p class="navbar-text">All rights reserved - Kodapor </p>

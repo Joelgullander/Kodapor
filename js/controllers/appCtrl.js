@@ -4,8 +4,9 @@
 // Here you can declare functions needed in navbars, sidebars, footer etc,
 // elements that are in common wherever the user navigates on the site. 
 
-computenzControllers.controller('appCtrl', ['$scope','$http','$location','UserService','LoginToggleService', 'MetaService',
-  function($scope,$http,$location,UserService,LoginToggleService,MetaService) {
+computenzControllers.controller('appCtrl', ['$scope','$http','$location','UserService','LoginToggleService', 'MetaService', 'LoginService',
+  function($scope,$http,$location,UserService,LoginToggleService,MetaService,LoginService) {
+    $scope.sendForm = LoginService.sendForm;
     
     $scope.updateLogin = function(linkData) {
       $scope.whereToGo = linkData;
