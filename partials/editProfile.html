@@ -22,10 +22,15 @@
    </div>
    <div class="col-md-6">
            
-
-          <label for='firstname'>Ändra Namn</label>
-          <input id="firstname" type='text'  class="form-control" ng-model="collectedData.firstname" placeholder="{{firstName}} " ng-minlexngth="3" ng-
+       <div class="control-group">
+        <label class="control-label" for='firstname'>Ändra Namn</label>
+        <div class="controls">
+          <input type="text" class="form-control"  ng-model="firstname" ng-disabled="!newUser" placeholder="firstname" ng-minlexngth="3" ng-
           maxlength="30" ng-pattern="/^[a-zA-Z]+$/" required/>
+        </div>
+      </div>
+
+         
 
            <label for='lastname'>Efternamn</label>
           <input type='text' name='lastname' class="form-control" ng-model="collectedData.lastname" placeholder="Efternamn" ng-minlexngth="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z]+$/" required/>
