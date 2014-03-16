@@ -26,11 +26,6 @@ computenzApp.config(['$routeProvider', function($routeProvider){
         templateUrl: 'partials/register.html',
         controller: 'RegCtrl'
       }).
-       when('/register/company', {
-        templateUrl: 'partials/registerCompany.html',
-        controller: 'RegCtrlComp'
-      }).
-
       when('/account', {
         templateUrl: 'partials/register.html',
         controller: 'RegCtrl'
@@ -39,15 +34,11 @@ computenzApp.config(['$routeProvider', function($routeProvider){
         templateUrl: 'partials/login.html',
         controller: 'LoginCtrl'
       }).
-      when('/myprofile', {
-        templateUrl: 'partials/profile.html',
-        controller: 'ProfileCtrl'
-      }).
       when('/profile/:userID', {
         templateUrl: 'partials/profile.html',
         controller: 'ProfileCtrl'
       }).
-      when('/profile/edit/:userID', {
+       when('/profile/edit/:userID', {
         templateUrl: 'partials/editProfile.html',
         controller: 'editProfileCtrl'
       }).
@@ -59,7 +50,7 @@ computenzApp.config(['$routeProvider', function($routeProvider){
         templateUrl: 'partials/new_ad.html',
         controller: 'NewAdController'
       }).
-      when('/advertisement/:adID', {
+      when('/show_ad', {
         templateUrl: 'partials/show_ad.html',
         controller: 'ShowAdController'
       }).

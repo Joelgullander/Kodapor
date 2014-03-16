@@ -7,7 +7,7 @@
  
 </div>
   <div class="row">
-    <div class="container" ng-controller="EditProfileCtrl">
+    <div class="container">
   <div class="col-md-6">
     <img ng-src="php/{{ image }}" class= "profileImage" alt="Responsive image">
 
@@ -16,27 +16,17 @@
   
      <div class= "col-md-12">
      <h3>Beskrivning</h3>
-        <textarea class= "col-md-12" name="editprofiledescription" ng-model="collectedData.content" rows="5">   {{ content }} </textarea>
+        <textarea class= "col-md-12" name="editprofiledescription" rows="5">   {{ content }} </textarea>
     </div>    
       
    </div>
    <div class="col-md-6">
-           
-       <div class="control-group">
-        <label class="control-label" for='firstname'>Ändra Namn</label>
-        <div class="controls">
-          <input type="text" class="form-control"  ng-model="firstname" ng-disabled="!newUser" placeholder="firstname" ng-minlexngth="3" ng-
-          maxlength="30" ng-pattern="/^[a-zA-Z]+$/" required/>
-        </div>
-      </div>
-
-         
-
+          <label for='firstname'>Ändra Namn</label>
+          <input type='text' name='firstname' class="form-control" ng-model="user.firstname" placeholder="Namn" ng-minlexngth="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z]+$/" required/>
            <label for='lastname'>Efternamn</label>
-          <input type='text' name='lastname' class="form-control" ng-model="collectedData.lastname" placeholder="Efternamn" ng-minlexngth="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z]+$/" required/>
-
+          <input type='text' name='lastname' class="form-control" ng-model="user.lastname" placeholder="Efternamn" ng-minlexngth="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z]+$/" required/>
       <h4>Erfarenhet</h4>
-        <label for='form-control'ng-model="collectedData.experience">Din Erfarenhet i år:</label>
+        <label for='form-control'ng-model="user.experience">Din Erfarenhet i år:</label>
         <select class="form-control">
           <option>1</option>
             <option>2</option>
@@ -48,36 +38,36 @@
         <h4>Kompetenser:</h4>
         <!--SKa in fler checkboxes här-->
          <div class="checkbox"><label>
-                <input type="checkbox"ng-model="collectedData.html5"> Html5
+                <input type="checkbox"ng-model="user.html5"> Html5
              </label>
           </div>
 
            <div class="checkbox"><label>
-                <input type="checkbox"ng-model="collectedData.css3"> Css3
+                <input type="checkbox"ng-model="user.css3"> Css3
              </label>
           </div>
 
            <div class="checkbox"><label>
-                <input type="checkbox"ng-model="collectedData.javascript"> JavaScript
+                <input type="checkbox"ng-model="user.javascript"> JavaScript
             </div>
 
            <div class="checkbox"><label>
-                <input type="checkbox"ng-model="collectedData.php"> Php
+                <input type="checkbox"ng-model="user.php"> Php
              </label>
            </div>
 
           <div class="checkbox"><label>
-                <input type="checkbox"ng-model="collectedData.mysql"> MySql
+                <input type="checkbox"ng-model="user.mysql"> MySql
              </label>
             </div>
 
           <div class="checkbox"><label>
-                <input type="checkbox"ng-model="collectedData.pyton"> Pyton
+                <input type="checkbox"ng-model="user.pyton"> Pyton
              </label>
             </div>
 
           <div class="checkbox"><label>
-                <input type="checkbox"ng-model="collectedData.visualstudio"> .NET & Visual Studio
+                <input type="checkbox"ng-model="user.visualstudio"> .NET & Visual Studio
              </label>
             </div>
             
@@ -105,5 +95,5 @@
 Data från GET request:
 <br>
 <br>
- {{ collectedData }} 
+{{ data }}
 

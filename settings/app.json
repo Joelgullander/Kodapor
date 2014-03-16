@@ -33,8 +33,7 @@
         "loginCtrl.js",
         "profileCtrl.js",
         "editProfileCtrl.js",
-        "regCtrl.js",
-        "regCtrlComp.js"
+        "regCtrl.js"
     ],
 
     "loadOrderCSS": [
