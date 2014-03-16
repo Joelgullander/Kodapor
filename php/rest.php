@@ -175,13 +175,13 @@
         }
       }
       $sql .= $sqlTail;    
-      //die($sql);
+     // die($sql);
       $q = $connection->prepare($sql);
       $q -> execute(); 
       $hits = $q -> fetchAll(PDO::FETCH_ASSOC);
       $response = array_slice($hits, 0, $input['amount']);
       $_SESSION["lastSearch"] = $hits;
-      die(json_encode($response));
+      die(json_encode($hits));
     }
     $q = $connection->prepare($sql);
     $q -> execute(); 
