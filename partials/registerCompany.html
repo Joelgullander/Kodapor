@@ -3,57 +3,54 @@
  <div class="row"> 
   <div class="container" ng-model="user_table" ng-value="user_company"> 
     <div class="col-md-10">
-      {{ user_table }}
-     <form role="form" name="regForm" ng-submit="updateRegForm()">
+      
+     <form role="form">
 
  
         <legend>Registrering</legend>
 
         <label for='name'>Företagsnamn</label>
-        <input type='text' name='name' class="form-control" ng-model="user.name" placeholder="Företagsnamn" maxlength="60"/>
+        <input type='text' name='name' class="form-control" ng-model="user.name" placeholder="Företagsnamn" ng-maxlength="60" required/>
+          <!--<div ng-show="form.name.$error.required">Fyll i företagsnamn.</div>-->
 
 
         <label for='contact_person'>Kontaktperson</label>
-        <input type='text' name='contact_person' class="form-control" ng-model="user.contact_person" placeholder="Kontaktperson" maxlength="30"/>
+        <input type='text' name='contact_person' class="form-control" ng-model="user.contact_person" placeholder="Kontaktperson" ng-maxlength="30" required/>
+          <!--<div ng-show="form.contact_person.$error.required">Fyll i kontaktperson.</div>-->
 
         
         <label for='org_nr'>Organisationsnummer</label>
-        <input type='org_nr' name='org_nr' class="form-control" ng-model="user.org_nr" placeholder="Organisationsnummer" ng-minlength="10" ng-maxlength="30"/>
-            <div ng-show="form.org_nr.$error.minlength">Fel organisationsnummer.</div>
-            <div ng-show="form.org_nr.$error.maxlength">Fel organisationsnummer</div>
-            <div ng-show="form.org_nr.$error.required">Fyll i organisationsnummer.</div>
+        <input type='org_nr' name='org_nr' class="form-control" ng-model="user.org_nr" placeholder="Organisationsnummer" ng-minlength="10" ng-maxlength="30" required/>
+          <!--<div ng-show="form.org_nr.$error.required">Fyll i organisationsnummer.</div>-->
 
 
         <label for='email'>Email</label>
-        <input type='text' name='email' class="form-control" ng-model="user.email" placeholder="Email" maxlength="60"/>
-
+        <input type='text' name='email' class="form-control" ng-model="user.email" placeholder="Email" maxlength="60" required/>
+          <!--<div ng-show="form.email.$error.required">Fyll i email.</div>-->
 
         <label for='phone'>Telefonnummer</label> 
-        <input type='phone' name='phone' class="form-control" ng-model="user.phone" placeholder="Telefonnummer" ng-minlength="10" ng-maxlength="16"/>
-            <div ng-show="form.phone.$error.minlength">Fel telefonnummer.</div>
-            <div ng-show="form.phone.$error.maxlength">Fel telefonnummer.</div>
-            <div ng-show="form.phone.$error.required">Fyll i telefonnummer.</div>
+        <input type='phone' name='phone' class="form-control" ng-model="user.phone" placeholder="Telefonnummer" ng-minlength="10" ng-maxlength="16" required/>
+          <!--<div ng-show="form.phone.$error.required">Fyll i telefonnummer.</div>-->
 
 
         <label for='användarnamn'>Användarnamn</label>
-        <input type='text' name='användarnamn' class="form-control" ng-model="user.username" placeholder="Användarnamn" maxlength="30"/>
+        <input type='text' name='användarnamn' class="form-control" ng-model="user.username" placeholder="Användarnamn" maxlength="30" required/>
+          <!--<div ng-show="form.username.$error.required">Fyll i användarnamn.</div>-->
 
 
         <label for='password'>Lösenord</label>
-        <input type='password' name='password' class="form-control" ng-model="user.password" maxlength="30"/>
-        
+        <input type='password' name='password' class="form-control" ng-model="user.password" maxlength="30" required/>
+          <!--<div ng-show="form.password.$error.required">Fyll i lönsenord.</div>-->
 
         <label for='repeat'>Repetera lösenord</label>
-        <input type='lösenord' name='repeat' class="form-control" ng-model="user.repeatPassword" ng-change="checkPassword()" required/><!--Ska fixas med bootstrap-->
+        <input type='password' name='repeat' class="form-control" ng-model="user.repeatPassword" ng-change="checkPassword()" required/><!--Ska fixas med bootstrap-->
 
-    
-
-        
-
-          <button ng-click="save()" class="btn btn-success">Spara</button>
+        <button ng-click="save()" class="btn btn-success">Spara</button>
 
 
       </form>
     </div> 
   </div> 
 </div> 
+
+{{ userData }}
