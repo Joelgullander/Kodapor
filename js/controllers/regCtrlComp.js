@@ -1,6 +1,6 @@
 'use strict';
 
-computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', function($scope,$http, UserService) {
+computenzControllers.controller('RegCtrlComp', ['$scope','$http', 'UserService', function($scope,$http, UserService) {
 
   $scope.user={};
 
@@ -21,7 +21,7 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
 
   $scope.save = function() {
     testData = $scope.user;
-    handlePerson('POST', testData);
+    checkPassword();
   };
   function handlePerson(method, data) {
 
@@ -39,6 +39,13 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
      
     });
   }
-
+ function checkPassword () {
+   if(testData.password !==testData.repeatPassword){
+      alert("password dont match");
+    }
+    else{
+      handlePerson('POST', testData);
+    }
+  };
 
 }]);

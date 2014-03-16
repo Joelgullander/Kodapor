@@ -25,7 +25,7 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
   $scope.save = function() {
     testData = $scope.user;
     checkPassword();
-    handlePerson('POST', testData);
+    
   };
   function handlePerson(method, data) {
 
@@ -44,8 +44,13 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
     });
   }
     
-  function checkPassword() {
-  $scope.registerForm.repeatPassword.$error.dontMatch = $scope.user.password !== $scope.user.repeatPassword;
+  function checkPassword () {
+   if(testData.password !==testData.repeatPassword){
+      alert("password dont match");
+    }
+    else{
+      handlePerson('POST', testData);
+    }
   };
 
 }]);
