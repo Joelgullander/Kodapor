@@ -24,7 +24,7 @@
       <div class="navbar-collapse collapse" id="navbar-main">
         <!-- go to login view if not already logged in, else logout and return to homepage -->
         <ul class="nav navbar-nav">
-          <li><a ng-href="{{ loginStatus() ? 'profile/'+getUsername() : '' }}">{{ loginStatus() ? "Min profil" : "" }}</a></li>
+          <li><a ng-href="{{ loginStatus() ? 'myprofile' : '' }}">{{ loginStatus() ? "Min profil" : "" }}</a></li>
           <li><a href="browse">Sök profiler</a></li>
           <li><a ng-href="{{whereToGo.link}}" ng-click="whereToGo.text == 'Logga ut' && logOut()"> {{ whereToGo.text }} </a></li>
 

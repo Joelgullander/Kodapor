@@ -55,14 +55,13 @@
         die("false");
       }
       $table = $r[0]['user_table'];
-      $name = $table == "user_person" ? "t.firstname, CONCAT(t.firstname,' ',t.lastname) as name" : "t.name";
-      $sql = "SELECT $name FROM $table t WHERE t.username = '$id'";
+      $profile = $table == "user_person" ? "profile_person" : "profile_company";
+      $sql = "SELECT * FROM $table t INNER JOIN $profile p ON t.username = p.username WHERE t.username = '$id'";
 
       $response = array();
       $q = $connection -> prepare($sql);  
       $q -> execute();
       $response = $q -> fetchAll(PDO::FETCH_ASSOC)[0];
-      $response["username"] = $id;
       $response["user_table"] = $table;
       // store the user in a session variable
       $_SESSION["LoginHandlerCurrentUser"] = json_encode($response);
@@ -94,88 +93,96 @@
     elseif ($target == "browse") { // CREATE match from search
       // The hard one...  
       $ors = "("; 
-      $COMands = "";
+      $COMands = "AND ";
 
       if ($input['inactive'] == "false") {
         $COMands .= "p.active = b'1' AND ";
       }
-      if (isset($input['experience'])) {
+      if ($input['experience'] > 0) {
         $COMands .= "p.experience >= ".$input['experience'] . " AND ";
       }
       foreach ($input['tags'] as $tag) {
-        $ors .= "tg.name = '$tag' OR "; 
+        $ors .= "t.name = '$tag' OR "; 
       };
       foreach ($input['categories'] as $cat) {
         $ors .= "c.name = '$cat' OR ";
       }
       $ors = substr($ors, 0,-4).")";
+      
+      $sql = $sqlPrologue = $sqlBridge = ""; // -The entrance to Sql-Hell
+      $sqlTail = "ORDER BY count DESC;"; 
 
-      if ($input['main'] == "profile") { // Profile search 
-
-        $sql = $sqlPrologue = $sqlBridge = "";
-        $sqlTail = "ORDER BY count DESC;"; 
-
-        if (count($input['users']) == 2) {
-          $sql = "SELECT * FROM (";
-          $sqlBridge = "UNION ALL ";
-          $sqlTail = ") combined ORDER BY count DESC;";
-        }
-        
-        $profile = array_shift($input['users']);
-        if ($profile == "profile_person") {
-          if ($input['company_tax'] == "true") {
-            $ands = $COMands . "t.company_tax = b'1'";
-          }
-          else {
-            $ands = substr($COMands,0,-4);
-          }
-          $sql .= "SELECT COUNT(u.username) as count, u.username as username, CONCAT(u.firstname,' ',u.lastname) as name, p.snippet as snippet, p.image as image FROM user_person u ".
-                  "INNER JOIN profile_person p ON u.username = p.username ".
-                  "INNER JOIN tag_user_map mt ON p.username = mt.connect ".
-                  "INNER JOIN tag tg ON mt.base = tg.id ".
-                  "INNER JOIN category_user_map mc ON p.username = mc.connect ".
-                  "INNER JOIN category c ON mc.base = c.id ".
-                  "WHERE $ors AND $ands ".
-                  "GROUP BY p.username $sqlBridge ";
-          if ($input['company_tax'] == 1) {
-            
-          }
-          $profile = array_shift($input['users']);
-        }
-
-        if ($profile == "profile_company") {
-          $ands = substr($COMands,0,-4);
-          $sql .= "SELECT COUNT(u.username) as count, u.username as username, u.name as name, p.snippet as snippet, p.image as image FROM user_person u ".
-                  "INNER JOIN profile_company p ON u.username = p.username ".
-                  "INNER JOIN tag_user_map mt ON p.username = mt.connect ".
-                  "INNER JOIN tag tg ON mt.base = tg.id ".
-                  "INNER JOIN category_user_map mc ON p.username = mc.connect ".
-                  "INNER JOIN category c ON mc.base = c.id ".
-                  "WHERE $ors AND $ands ".
-                  "GROUP BY p.username ";  
-        }    
-        // die($sql);
-        $q = $connection->prepare($sql);
-        $q -> execute(); 
-        $hits = $q -> fetchAll(PDO::FETCH_ASSOC);
-        $response = array_slice($hits, 0, $input['amount']);
-        $_SESSION["lastSearch"] = $hits;
-/*
-        $sql = "";
-        foreach ($firstRound as $username) {
-          $sql .= "SELECT t.username, $name, p.snippet, p.image FROM $table t INNER JOIN $profile p ON t.username = p.username WHERE t.username = '$username' UNION ";
-        }       
-        $sql = substr($sql, 0,-6).";";
-        
-        $q = $connection -> prepare($sql);
-
-        $q -> execute();
-        $response = $q -> fetchAll(PDO::FETCH_ASSOC);
-*/
+      if (count($input['users']) == 2) {
+        $sql = "SELECT * FROM (";
+        $sqlBridge = "UNION ALL ";
+        $sqlTail = ") combined ORDER BY count DESC;";
       }
+      
+      $profile = array_shift($input['users']);
+      if ($profile == "profile_person") {
+        if ($input['company_tax'] == "true") {
+          $ands = $COMands . "t.company_tax = b'1'";
+        }
+        else {
+          $ands = substr($COMands,0,-4);
+        }
+        if ($input['main'] == "profile") { // Profile search
+          $sql .= "SELECT COUNT(u.username) as count, u.username as id, CONCAT(u.firstname,' ',u.lastname) as name, p.* FROM user_person u ".
+                  "INNER JOIN profile_person p ON u.username = p.username ".
+                  "INNER JOIN category_user_map cu ON u.username = cu.connect ".
+                  "INNER JOIN category c ON cu.base = c.id ".
+                  "INNER JOIN tag_user_map tu ON u.username = tu.connect ".
+                  "INNER JOIN tag t ON tu.base = t.id ".
+                  "WHERE $ors $ands ".
+                  "GROUP BY p.username $sqlBridge ";
+        }
+        else { // Ad search
+          $sql .= "SELECT ad.id as id, COUNT(ad.id) as count, ad.username as username, ad.snippet as snippet, ad.content as content, CONCAT(u.firstname,' ',u.lastname) as name, p.image_logo as image FROM advertisement ad ".
+               "INNER JOIN user_person u ON ad.username = u.username ".
+               "INNER JOIN profile_person p ON u.username = p.username ".
+               "INNER JOIN category_advertise_map ca ON ad.id = ca.connect ".
+               "INNER JOIN category c ON ca.base = c.id ".
+               "INNER JOIN tag_advertise_map ta ON ad.id = ta.connect ".
+               "INNER JOIN tag t ON ta.base = t.id ".
+               "WHERE $ors $ands ".
+               "GROUP BY ad.id $sqlBridge ";  
+        }
+        $profile = array_shift($input['users']);
+      }
+
+      if ($profile == "profile_company") {
+        $ands = substr($COMands,0,-4);
+        if ($input['main'] == "profile") { // Profile search
+          $sql .= "SELECT COUNT(u.username) as count, u.username as id, u.name as name, p.* FROM user_company u ".
+                  "INNER JOIN profile_company p ON u.username = p.username ".
+                  "INNER JOIN category_user_map cu ON u.username = cu.connect ".
+                  "INNER JOIN category c ON cu.base = c.id ".
+                  "INNER JOIN tag_user_map tu ON u.username = tu.connect ".
+                  "INNER JOIN tag t ON tu.base = t.id ".
+                  "WHERE $ors $ands ".
+                  "GROUP BY u.username ";  
+        }
+        else { // Ad search
+          $sql .= "SELECT ad.id as id, COUNT(ad.id) as count, ad.username as username, ad.snippet as snippet, ad.content as content, u.name as name, p.image_logo as image FROM advertisement ad ".
+               "INNER JOIN user_company u ON ad.username = u.username ".
+               "INNER JOIN profile_company p ON ad.username = p.username ".
+               "INNER JOIN category_advertise_map ca ON ad.id = ca.connect ".
+               "INNER JOIN category c ON ca.base = c.id ".
+               "INNER JOIN tag_advertise_map ta ON ad.id = ta.connect ".
+               "INNER JOIN tag t ON ta.base = t.id ".
+               "WHERE $ors $ands ".
+               "GROUP BY ad.id ";
+        }
+      }
+      $sql .= $sqlTail;    
+      //die($sql);
+      $q = $connection->prepare($sql);
+      $q -> execute(); 
+      $hits = $q -> fetchAll(PDO::FETCH_ASSOC);
+      $response = array_slice($hits, 0, $input['amount']);
+      $_SESSION["lastSearch"] = $hits;
       die(json_encode($response));
     }
-
     $q = $connection->prepare($sql);
     $q -> execute(); 
   }
@@ -246,13 +253,23 @@
       die("Not found");
     }
 
-    if (substr($target,0,7) == "profile") {  // READ profile (profile view)
-
-      $id = urldecode($id);
-      $sql = "SELECT * FROM $target WHERE username = '$id';"; 
+    if ($target == "profile") {  // READ profile (profile view)
+      $id = urldecode($id);      // Complicated with two usertables. Probably not best solution here but need to get it to work...
+      $sql = "SELECT user_table FROM account WHERE username = '$id';";
+      $q = $connection->prepare($sql);
+      $q -> execute();
+      $profileTable = $q -> fetchAll(PDO::FETCH_COLUMN)[0] == "user_person" ? "profile_person" : "profile_company";
+      $sql = "SELECT * FROM $profileTable WHERE username = '$id';"; 
       $q = $connection->prepare($sql);
       $q -> execute();
       $response = $q -> fetchAll(PDO::FETCH_ASSOC)[0];
+    
+      $name = $profileTable == "profile_person" ? "CONCAT(firstname,' ',lastname) as name FROM user_person " : "name FROM user_company ";  
+      $sql = "SELECT $name WHERE username = '$id';";
+      $q -> prepare($sql);
+      $q -> execute();
+      $name = $q -> fetchAll(PDO::FETCH_COLUMN)[0];
+      $response['name'] = $name;
       die(json_encode($response));
     }
 

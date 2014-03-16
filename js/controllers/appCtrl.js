@@ -4,8 +4,8 @@
 // Here you can declare functions needed in navbars, sidebars, footer etc,
 // elements that are in common wherever the user navigates on the site. 
 
-computenzControllers.controller('appCtrl', ['$scope','$http','$location','UserService','LoginToggleService', 'MetaService',
-  function($scope,$http,$location,UserService,LoginToggleService,MetaService) {
+computenzControllers.controller('appCtrl', ['$scope','$http','$location','UserService','LoginService', 'MetaService',
+  function($scope,$http,$location,UserService,LoginService,MetaService) {
     
     $scope.updateLogin = function(linkData) {
       $scope.whereToGo = linkData;
@@ -20,40 +20,27 @@ computenzControllers.controller('appCtrl', ['$scope','$http','$location','UserSe
 
     // The following check with database if user has an active session
     // and if so keeps the user loginstatus active in app also
-    // when reloading from bookmark/link/subpage.
+    // when reloading from bookmark,link or subpage.
 
-    $http.get('php/login/').success(function(data){
-      if (data !== "false") {
-        UserService.setUser(data);
-        LoginToggleService.setLinkData(true);
-      }
-      else {
-        LoginToggleService.setLinkData(false);
-      }
-    });
+    LoginService.getLoginStatusServer();
 
     // This function will be called if user is logged in and clicks the
     // logout link. The $http.post-request is simply calling the logOut function in php.
     // After that the UserService is called to unset user from app, and the link is
     // restored to a 'login' link.
 
-    $scope.logOut = function() {
-      $http.delete('php/logout/').success(function(data){
-        UserService.unsetUser();
-        LoginToggleService.setLinkData(false);
-      });
-    };
+    $scope.logOut = LoginService.logOut;
 
     // These assignments make services available in the scope, so that they can be
     // called in the index.html file like {{ function() }}. 
     // If you need other functions from the services you can just add more assignments here.
 
-    $scope.loginStatus = LoginToggleService.getStatus;
+    $scope.loginStatus = LoginService.getLoginStatusApp;
     $scope.getFullName = UserService.getFullName;
     $scope.getUsername = UserService.getUsername;
 
     // This sets the login/logout link correctly at first load and each reload of the page.
-    $scope.updateLogin(LoginToggleService.getLinkData());
+    $scope.updateLogin(LoginService.getLinkData());
 
     (function loadMetaData(){
         $http({

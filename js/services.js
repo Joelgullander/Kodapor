@@ -29,9 +29,7 @@ computenzServices.service('UserService', function(){
       return user;
     },
     setUser: function(n){
-      console.log(n);
       user = n;
-      console.log(user);
     },
     unsetUser: function(){
       for (var prop in user) {
@@ -47,12 +45,9 @@ computenzServices.service('UserService', function(){
   };
 });
 
-// Service used by main and login page to set login/logout-link and redirect
-// the user when clicking. Also has function for detecting if user is logged in.
+// Service used by login forms
 
-
-
-computenzServices.service('LoginToggleService', function() {
+computenzServices.service('LoginService', function($http,$location,UserService) {
 
   var linkData = {
     link: 'login',
@@ -61,49 +56,99 @@ computenzServices.service('LoginToggleService', function() {
 
   var status = false;
 
-  return {
-    getLinkData: function(){
-      return linkData;
-    },
-    setLinkData: function(bool) {
-      if (bool) {
-        linkData.link = 'home';
-        linkData.text = 'Logga ut';
-        status = true;
-      }
-      else {
-        linkData.link = 'login';
-        linkData.text = 'Logga in';
-        status = false;
-      }
-    },
-    getStatus: function() {
-      if (status)
-        return true;
+  function setLinkData(bool) {
+    if (bool) {
+      linkData.link = 'home';
+      linkData.text = 'Logga ut';
+      status = true;
+    }
+    else {
+      linkData.link = 'login';
+      linkData.text = 'Logga in';
+      status = false;
+    }
+  }
 
-    },
-  };
-
-});
-
-computenzServices.service('LoginService', function($http,$location,UserService,LoginToggleService) {
   return {
     sendForm: function(username,password){
-      alert("Sending from service");
       $http.post('php/login/' + username,{password:password}).success(function(data){
         if(data != "false"){
-          data.firstname = decodeURIComponent(data.firstname);
-          data.name = decodeURIComponent(data.name);
-          console.log(data);
+          if (data.user_table == "user_person") {
+            data.name = data.firstname + ' ' + data.lastname;
+          }
           UserService.setUser(data);
-          LoginToggleService.setLinkData(true);
-          $location.path('profile/' + UserService.getFullName());
+          setLinkData(true);
+          $location.path('myprofile');
         }else{
           return "Användarnamn eller lösenord felaktigt. Kunde inte logga in!";
         }
       });
+    },
+    getLinkData: function(){
+      return linkData;
+    },
+    logOut: function() {
+      $http.delete('php/logout/').success(function(data){
+        UserService.unsetUser();
+        setLinkData(false);
+      });
+    },
+    getLoginStatusApp: function(){
+      if (status)
+        return true;
+    },
+    getLoginStatusServer: function(){
+      $http.get('php/login/').success(function(data){
+      if (data !== "false") {
+        UserService.setUser(data);
+        setLinkData(true);
+      }
+      else {
+        setLinkData(false);
+      }
+    });
     }
-  }
+  };
+});
+
+computenzServices.service('CacheService', function() {
+
+  var cache = {};
+  var history = []; // Not implemented
+  var searchHistory = []; // not implemented
+  var reloadCache = undefined;
+
+  return {
+    cache: function(datatype, data) {
+      for (var i=0; i < data.length; i++) {
+        cache[data[i]['id']] = data[i];
+        console.log("Caching: ", cache[data[i]['id']]);
+      }
+    },
+    getAdvertisement: function(id) {
+      return cache[id];
+    },
+    getProfile: function(username) {
+      return cache[username];
+    },
+    getLastSeach: function() {
+      return searchHistory[0];
+    },
+    cacheLastSearch: function(data) {
+      searchHistory.unshift(data);
+    },
+    cacheLastDisplay: function(data) {
+      reloadCache = data;
+      console.log(reloadCache);
+    },
+    retrieveLastDisplay: function(){
+      return reloadCache;
+    },
+    clear: function(){
+      cache = {};
+    }
+
+  };
 });
 
 computenzServices.service('MetaService', function() {
