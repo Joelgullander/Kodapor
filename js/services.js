@@ -30,6 +30,7 @@ computenzServices.service('UserService', function(){
     },
     setUser: function(n){
       user = n;
+      console.log(user);
     },
     unsetUser: function(){
       for (var prop in user) {
@@ -77,6 +78,7 @@ computenzServices.service('LoginService', function($http,$location,UserService) 
             data.name = data.firstname + ' ' + data.lastname;
           }
           UserService.setUser(data);
+
           setLinkData(true);
           $location.path('myprofile');
         }else{
