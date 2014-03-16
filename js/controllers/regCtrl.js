@@ -24,6 +24,7 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
 
   $scope.save = function() {
     testData = $scope.user;
+    checkPassword();
     handlePerson('POST', testData);
   };
   function handlePerson(method, data) {
@@ -42,7 +43,10 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
      
     });
   }
-
+    
+  function checkPassword() {
+  $scope.registerForm.repeatPassword.$error.dontMatch = $scope.user.password !== $scope.user.repeatPassword;
+  };
 
 }]);
 
@@ -70,6 +74,4 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
   $scope.deleteTestPerson = function(){
     handleTestPerson('DELETE');
   };
-
   */
-
