@@ -175,7 +175,7 @@
         }
       }
       $sql .= $sqlTail;    
-      //die($sql);
+     // die($sql);
       $q = $connection->prepare($sql);
       $q -> execute(); 
       $hits = $q -> fetchAll(PDO::FETCH_ASSOC);

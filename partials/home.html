@@ -7,11 +7,13 @@
             </div> 
             <div class="face back"> 
                 <h3>Gör en sökning!</h3>
-                <fieldset class="browse">
-                 <input type="text" class="form-control" placeholder="sök fritext" ng-model="req.searchText">
-                     <button type="button" class="btn" ng-click="search()">Sök</button>
-                 </fieldset>
-
+                <div class="CENTER">
+                
+                <div class="input-group input-group-lg">
+                  <input type="text" class="form-control" placeholder="sök fritext" ng-model="req.searchText">
+                </div>
+                     <button type="button" class="btn btn-default btn-lg btn-warning" ng-click="search()">Sök</button>
+</div>
             </div> 
         </div> 
     </div> 
@@ -24,6 +26,12 @@
             </div> 
             <div class="face back">
 
+              <h3>En ledande text till att registrera sig.....</h3>
+              <div class="CENTER">
+              <button type="button" class="btn btn-default btn-lg btn-warning" id="registrera">
+                <span class="glyphicon glyphicon-star"></span> Registrera!
+            </button>
+          </div>
             </div> 
         </div> 
     </div> 
