@@ -124,8 +124,10 @@ computenzServices.service('CacheService', function() {
   // but stores tha cache also in localStorage (with totalStorage plugin for jQuery) 
   // If refreshed the app retrieves its cache again through totalStorage
 
+  // To implement deeper search history
   var searchIndex = 0;
-
+  // for search pagination memory
+  var paginationIndex = 1;
   // Cache object will beside these predefined properties contain the 
   // id's of profiles and adverisements
   var cache = {
@@ -139,14 +141,33 @@ computenzServices.service('CacheService', function() {
     "profile_company": 2
   };
 
-  return {
-    cache: function(data) {
+  return { /*
+    cacheResult: function(data) {
       for (var i=0; i < data.length; i++) {
         cache[data[i]['id']] = data[i];
+        console.log("caching results:", data[i]['id']);
       }
       $.totalStorage('Kodapor',cache);
+    }, */
+    cacheDestination: function(post) {
+      cache[post.id] = post;
+      $.totalStorage('Kodapor',cache);
+    },
+    cacheCurrentSearch: function(criteria,result) {
+      cache.criteria.unshift(criteria);
+      cache.results.unshift(result);
+      console.log("caching search: ",cache);
+      $.totalStorage('Kodapor',cache);
+    },
+    cachePagination: function(page){
+      paginationIndex = page;
+      $.totalStorage('Kodapor',cache);
+    },
+    getPagination: function(){
+      return paginationIndex;
     },
     getAdvertisement: function(id) {
+      console.log("Cache: ", cache);
       return cache[id];
     },
     getProfile: function(username) {
@@ -159,22 +180,14 @@ computenzServices.service('CacheService', function() {
     getSearchResult: function() {
       return cache.results[searchIndex];
     },
-    cacheCurrentSearch: function(criteria,result) {
-      cache.criteria.unshift(criteria);
-      cache.results.unshift(result);
-      console.log(cache);
-      $.totalStorage('Kodapor',cache);
-    },
-    cacheLastDisplay: function(data) {
-      cache.reloadCache = data;
-      $.totalStorage('Kodapor',cache);
-    },
     clear: function(){
       cache = {};
     },
     stupid: function(obj) {
       if (obj.length == 2) return 1;
-      else return stupidComparison[obj[0]];
+      else {
+        return stupidComparison[obj[0]];
+      }
     },
     loadCache: function(){
       if ($.totalStorage('Kodapor').length) {

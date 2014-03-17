@@ -2,8 +2,9 @@
 
 computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','CacheService','MetaService', function($scope,$http,$location,CacheService,MetaService) {
 
+  var pageSize = 6;
+
   $scope.req = CacheService.getSearchCriteria();
-  console.log("After recaching req: ", $scope.req, $scope.req ? 10 : 20);
   $scope.result = CacheService.getSearchResult();
   
   $scope.categories = MetaService.getCategories();
@@ -11,11 +12,13 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
   
   $scope.selectedCategories = $scope.req ? $scope.req.categories : [];
   $scope.selectedTags = $scope.req ? $scope.req.tags : [];
-  
+
   // Ugly???  You bet!  :) Nöden har ingen lag...
   $scope.selection = $scope.req ? CacheService.stupid($scope.req.users) : 1;
   if ($scope.req) {
     $('select[name="experience"]').val($scope.req.experience);
+    var pageStart = CacheService.getPagination();
+    $scope.resultPage = $scope.result.slice(pageStart,pageSize);
   }
 
   $scope.req = $scope.req || {
@@ -28,9 +31,6 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
     categories: $scope.selectedCategories,
     tags: $scope.selectedTags
   };
-  console.log($scope.req);
-
-
 
   $scope.search = function(){
 
@@ -42,15 +42,54 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
         'Content-Type' : 'application/json; charset=UTF-8'
       }
     }).success(function(data){
-      // Display data
+      // Prepare and display data
       $scope.result = data;
-      console.log(data);
-      // Cache data
+      $scope.resultPage = data.slice(0,pageSize);
+      $scope.pagesCount = Math.floor(data.length / pageSize);
+      $scope.pages = [];
+      $scope.currentPage = 0;
+      makePagination();
+      makeResultHeader(0);
       CacheService.cacheCurrentSearch( $scope.req, data );
     });
   };
 
-  $scope.go = function(path){  // When clicking on an item in the results 
+  function makeResultHeader(pageStart){
+    if ($scope.result.length) {
+      $scope.resultHeader = "Visar resultat " + (pageStart) + " - " + (pageStart + pageSize) + " av " + $scope.result.length;
+    }
+  }
+  var paginationLength = 6;
+  function makePagination() {
+    
+    for (var i = 0; i < $scope.pagesCount && i < paginationLength; i++) {
+      $scope.pages.push(i+1);
+    }
+    if ($scope.pagesCount > $scope.pages.length) {
+      $scope.pageTail = "..." + $scope.pagesCount;
+    }
+  }
+
+  $scope.getResultPage = function(page){
+
+    $scope.currentPage = page;
+    var newPageStart = page*pageSize;
+    makeResultHeader(newPageStart);
+    $scope.resultPage = $scope.result.slice(newPageStart,newPageStart+pageSize);
+
+    var index;
+    while ((index = $scope.pages.indexOf(page)) >= 5) {
+      $scope.pages.shift();
+      $scope.pages.push(page + (paginationLength - index));
+    }
+    if (newPageStart+pageSize >= $scope.pagesCount - 1) {
+      $scope.pageTail = "";
+    }
+    CacheService.cachePagination(page);
+  };
+
+  $scope.go = function(path,post){  // When clicking on an item in the results 
+    CacheService.cacheDestination(post);
     $location.path(path);
   };
 

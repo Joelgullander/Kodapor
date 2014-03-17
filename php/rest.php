@@ -179,9 +179,9 @@
       $q = $connection->prepare($sql);
       $q -> execute(); 
       $hits = $q -> fetchAll(PDO::FETCH_ASSOC);
-      $response = array_slice($hits, 0, $input['amount']);
+      //$response = array_slice($hits, 0, $input['amount']);
       $_SESSION["lastSearch"] = $hits;
-      die(json_encode($response));
+      die(json_encode($hits));
     }
     $q = $connection->prepare($sql);
     $q -> execute(); 
@@ -252,9 +252,9 @@
       }
       die("Not found");
     }
-/*
+
     if ($target == "profile") {  // READ profile (profile view)
-      $id = urldecode($id);      // Complicated with two usertables. Probably not best solution here but need to get it to work...
+      $id = urldecode($id);      // The pitiful tale of the two towers..again
       $sql = "SELECT user_table FROM account WHERE username = '$id';";
       $q = $connection->prepare($sql);
       $q -> execute();
@@ -263,17 +263,10 @@
       $q = $connection->prepare($sql);
       $q -> execute();
       $response = $q -> fetchAll(PDO::FETCH_ASSOC)[0];
-    
-      $name = $profileTable == "profile_person" ? "CONCAT(firstname,' ',lastname) as name FROM user_person " : "name FROM user_company ";  
-      $sql = "SELECT $name WHERE username = '$id';";
-      $q -> prepare($sql);
-      $q -> execute();
-      $name = $q -> fetchAll(PDO::FETCH_COLUMN)[0];
-      $response['name'] = $name;
       die(json_encode($response));
     }
-*/
-    if ($target == "meta") {
+
+    if ($target == "meta") { // Send all category names and tag names 
 
       $sql = "SELECT name FROM category";
       $q = $connection -> prepare($sql);
@@ -284,6 +277,20 @@
       $q -> execute();
       $tags = $q -> fetchAll(PDO::FETCH_COLUMN);
       $response = array("categories" => $categories, "tags" => $tags);
+      die(json_encode($response));
+    }
+
+    if ($target == "meta_user") {
+      $response = array();
+      $response['tags'] = getTags($id, 'tag_user_map');
+      $response['categories'] = getCategories($id, 'category_user_map');
+      die(json_encode($response));
+    }
+
+    if ($target == "ad_meta") {
+      $response = array();
+      $response['tags'] = getTags($id, 'tag_advertise_map');
+      $response['categories'] = getCategories($id, 'category_advertise_map');
       die(json_encode($response));
     }
 
@@ -309,17 +316,17 @@
 
   }
 
-  function getTags($id) {
+  function getTags($id, $table) {
     global $connection;
-    $sql = "SELECT t.name FROM tag_user_map tm INNER JOIN tag t ON tm.base = t.id WHERE tm.connect = $id;";
+    $sql = "SELECT t.name FROM $table tm INNER JOIN tag t ON tm.base = t.id WHERE tm.connect = '$id';";
     $q = $connection -> prepare($sql);
     $q -> execute();
     return $q -> fetchAll(PDO::FETCH_COLUMN);
   }
 
-  function getCategories($id) {
+  function getCategories($id, $table) {
     global $connection;
-    $sql = "SELECT t.name FROM category_user_map cm INNER JOIN category c ON cm.base = c.id WHERE cm.connect = $id;";
+    $sql = "SELECT c.name FROM $table cm INNER JOIN category c ON cm.base = c.id WHERE cm.connect = '$id';";
     $q = $connection -> prepare($sql);
     $q -> execute();
     return $q -> fetchAll(PDO::FETCH_COLUMN);

@@ -64,3 +64,8 @@ ul.taglist {
   background: orange;
 }
 
+.resultHeader {
+  position: absolute;
+  left: 30%;
+  text-align: center;
+}

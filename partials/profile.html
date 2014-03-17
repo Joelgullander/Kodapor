@@ -14,15 +14,11 @@
    <div class="col-md-6">
       <label for='namn'>Namn:</label>
     <p>{{ user.name }}</p>    
-      <h4>Erfarenhet</h4>
-        <p>{{ user.experience }}</p>
-         <h4>Competenser</h4>
+      <h4>Brancherfarenhet</h4>
+        <p>{{ user.experience }} år </p>
+         <h4>Kompetenser</h4>
         <ul class="tags">
-        <li>Html5</li>
-         <li>java</li>
-         <li>c++</li>
-         <li>ActionScript</li>
-
+        <li ng-repeat="tag in tags"><span class="tag">{{tag}}</span></li>
         </ul>
       
       </div>
@@ -30,6 +26,7 @@
      <div class="row">
      <div class="container">
      <div class="col-md-8">
+    <h5>Kategorier: <ul class="taglist"><li class="catcloud" ng-repeat="cat in categories">{{ cat }}</li></h5>
      <h3>Beskrivning</h3>
         <p>
           {{ user.content }}
