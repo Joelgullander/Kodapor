@@ -190,7 +190,7 @@ computenzServices.service('CacheService', function() {
       }
     },
     loadCache: function(){
-      if ($.totalStorage('Kodapor').length) {
+      if ($.totalStorage('Kodapor') && $.totalStorage('Kodapor').length) {
         cache = $.totalStorage('Kodapor');
       }
     }

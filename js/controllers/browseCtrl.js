@@ -22,10 +22,10 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
   }
 
   $scope.req = $scope.req || {
-    main: ["advertisement"],
-    users: ["profile_person","profile_company"],
-    company_tax: false,
-    inactive: false,
+    main: "advertisement",
+    users: "both",
+    company_tax: 0,
+    inactive: 0,
     searchText: "",
     experience: 0,
     categories: $scope.selectedCategories,

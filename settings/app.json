@@ -24,6 +24,7 @@
         "jquerytotal-storage.min.js",
         "angular.js",
         "angular-route.js",
+        "ui-bootstrap-tpls-0.10.0.min.js",
         "app.js",
         "services.js",
         "...",

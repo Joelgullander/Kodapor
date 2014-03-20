@@ -11,14 +11,16 @@
     <br> 
     
     <input type="radio" name="profilecategory" ng-model="selection" value="1"
-      ng-click="req.users=['profile_person','profile_company']">Företag och privatpersoner</input>
+      ng-click="req.users='both'">Företag och privatpersoner</input>
     <input type="radio" name="profilecategory" ng-model="selection" value="2"
-      ng-click="req.users=['profile_company']">Endast företag</input> 
+      ng-click="req.users='company'">Endast företag</input> 
     <input type="radio" name="profilecategory" ng-model="selection" value="3"
-      ng-click="req.users=['profile_person']">Endast privatpersoner</input>
+      ng-click="req.users='person'">Endast privatpersoner</input>
     
-    <label class="checkbox"><input type="checkbox" ng-model="req.company_tax" value="">Visa endast personer med F-skatt</label>
-    <label class="checkbox"><input type="checkbox" ng-model="req.inactive" value=""> Visa även inaktiva profiler</label>
+    <label class="checkbox"><input type="checkbox" 
+      ng-model="req.company_tax" ng-true-value="1" ng-false-value="0" value="0">Visa endast personer med F-skatt</label>
+    <label class="checkbox"><input type="checkbox" 
+      ng-model="req.inactive" ng-true-value="1" ng-false-value="0" value="0"> Visa även inaktiva profiler</label>
     
     <br>
     
