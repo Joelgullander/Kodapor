@@ -1,102 +1,5 @@
 // Place your less here :D
-/*
- * Base structure
- */
 
-/* Move down content because we have a fixed navbar that is 50px tall */
-
-
-
-/*
- * Global add-ons
- */
-
-.sub-header {
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-      a {
-        margin-left: 16px;
-      }
-
-
-/*
- * Sidebar
- */
-
-/* Hide for mobile, show later */
-.sidebar {
-  display: none;
-}
-@media (min-width: 768px) {
-  .sidebar {
-    position: fixed;
-    top: 51px;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    display: block;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f5f5f5;
-    border-right: 1px solid #eee;
-  }
-}
-
-/* Sidebar navigation */
-.nav-sidebar {
-  margin-right: -21px; /* 20px padding + 1px border */
-  margin-bottom: 20px;
-  margin-left: -20px;
-}
-.nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
-}
-.nav-sidebar > .active > a {
-  color: #fff;
-  background-color: #428bca;
-}
-
-
-/*
- * Main content
- */
-
-.main {
-  padding: 20px;
-}
-@media (min-width: 768px) {
-  .main {
-    padding-right: 40px;
-    padding-left: 40px;
-  }
-}
-.main .page-header {
-  margin-top: 0;
-}
-
-
-/*
- * Placeholder dashboard ideas
- */
-
-.placeholders {
-  margin-bottom: 30px;
-  text-align: center;
-}
-.placeholders h4 {
-  margin-bottom: 0;
-}
-.placeholder {
-  margin-bottom: 20px;
-}
-.placeholder img {
-  display: inline-block;
-  border-radius: 50%;
-}
 
 h1, h2, h3 {text-align: center}
 .block {padding:10px 15px;}
@@ -134,4 +37,271 @@ border-radius: .25em;}
   width:150px;
   height:150px;
 
+}
+/* home.css */
+.line {
+  width:5px;
+  height:100%;
+  border: 2px solid black;
+}
+.rightcol{
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.container{
+
+}
+.jumbotron{
+  padding-top:0;
+}
+
+.circleL, .circleR {
+  background-image: -webkit-radial-gradient(45px 45px, circle cover, gray, black);
+  background-image: -moz-radial-gradient(45px 45px, circle cover, gray, black);
+  background-image: -o-radial-gradient(45px 45px, circle cover, gray, black);
+  background-image: radial-gradient(45px 45px, circle cover, gray, black);
+
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px; 
+  padding:40px;
+
+  -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
+  -moz-box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
+
+  margin: 0 auto;
+
+  color:White;
+}
+
+.circlecontainer{
+  
+}
+.smallnavcircles {
+  -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
+  -moz-box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
+
+  border-radius: 50%;
+  background-color:gray;
+  width: 13px;
+  height: 13px; 
+  display:inline-block;
+}
+
+#activenav {
+  background-color:black;
+}
+
+.flip {
+  display:inline-block;
+  -webkit-perspective: 800;
+  -moz-perspective: 800;
+  -ms-perspective: 800;
+  perspective: 800;
+   width: 49%;
+   height: 600px;
+   font-size: 5px;
+    position: relative;
+    margin: 0 auto;
+    padding-left:20px;
+}
+.flip .card.flipped {
+  -webkit-transform: rotateX(-180deg);
+  -moz-transform: rotateX(-180deg);
+  -ms-transform: rotateX(-180deg);
+  -o-transform: rotateX(-180deg);
+  transform: rotateX(-180deg);
+}
+.flip .card {
+  width: 100%;
+  height: 100%;
+
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+.flip .card .face {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  
+  -webkit-backface-visibility: hidden ;
+  -moz-backface-visibility: hidden ;
+  -o-backface-visibility: hidden ;
+  backface-visibility: hidden ;
+
+  z-index: 2;
+    font-family: Georgia;
+    font-size: 3em;
+    line-height: 200px;
+}
+.flip .card .front {
+  position: absolute;
+  z-index: 1;
+    background: white;
+    color: black;
+    cursor: pointer;
+}
+.flip .card .back {
+  -webkit-transform: rotateX(-180deg);
+  -moz-transform: rotateX(-180deg);
+  -ms-transform: rotateX(-180deg);
+  -o-transform: rotateX(-180deg);
+  transform: rotateX(-180deg);
+    background: blue;
+    background: white;
+    color: black;
+    cursor: pointer;
+}
+
+.regform
+{
+  height:10px;
+}
+
+.CENTER{
+  text-align:center;
+}
+
+/* log in */
+
+
+.loginForm {
+  width:550px;
+}
+
+.loginForm label {
+  width: 130px;
+  margin-right: 15px;
+  text-align: right;
+}
+
+.loginForm input {
+  margin-bottom: 15px;
+}
+
+.loginForm button {
+  /*float: right;*/
+}
+
+.warning {
+  color: red;
+  margin-bottom: 10px;
+}
+
+#testpersoner {
+  width: 450px;
+  margin-top: 30px;
+  border: 1px solid gray;
+  padding: 15px 25px;
+}
+
+#testpersoner h5 {
+  font-weight: bold;
+}
+
+#testpersoner p {
+  font-size: 16px;
+}
+
+#testpersoner span {
+  width: 100px;
+  float: right;
+  text-align: left;
+}
+
+#testpersoner td {
+  width: 200px;
+}
+
+#testpersoner button {
+  float: right;
+}
+.heading {
+  margin: 5px 0;
+  font-weight: bold;
+}
+ /* browse */
+ img.browse {
+  margin-right: 20px;
+  float: left;
+  height: 100px;
+  width: auto;
+}
+
+li.browse {
+  height: 130px;
+  margin-bottom: 10px;
+  padding: 15px;
+  border: 1px solid gray;
+}
+
+a {
+  text-decoration: none;
+}
+
+li.browse:hover {
+  background: gray;
+}
+
+fieldset.browse {
+  margin-bottom: 30px;
+}
+
+.tagcontainer {
+  position: relative;
+  display: inline-block;
+}
+
+select.tags {
+
+  width: 200px; 
+  text-align: center;
+  vertical-align: middle;
+  margin-left: 30px;
+  margin-right: 30px;
+
+}
+
+label.taglist {
+  width:170px;
+  margin-right: 20px;
+  text-align: right;
+}
+
+.taglist li {
+  display: inline-block;
+  margin-right: 20px;
+  padding: 1px 5px;
+  cursor: pointer;
+}
+
+ul.taglist {
+  display: inline;
+}
+
+.catcloud {
+  background: lightgreen;
+}
+
+.tagcloud {
+  background: orange;
+}
+
+.resultHeader {
+  position: absolute;
+  left: 30%;
+  text-align: center;
 }
