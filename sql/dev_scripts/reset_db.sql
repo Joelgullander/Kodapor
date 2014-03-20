@@ -165,9 +165,7 @@ CREATE TABLE category_advertise_map (
 
 DELIMITER $$
 
-DROP PROCEDURE IF EXISTS search;
-
-CREATE PROCEDURE search
+CREATE OR REPLACE PROCEDURE search
 (
   main          VARCHAR(16),
   ptable        VARCHAR(8),
