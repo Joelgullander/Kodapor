@@ -1,6 +1,6 @@
 'use strict';
 
-computenzControllers.controller('NewAdController', 
+computenzControllers.controller('NewAdController',
 	['$scope','$http', function($scope,$http) {
 	
 }]);

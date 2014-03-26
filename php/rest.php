@@ -40,101 +40,73 @@
 
   if ($method == "POST") {
 
-    if ($target == "login"){ // CREATE session
+    switch ($target) {
 
-      $sql = "SELECT COUNT(*) as count, user_table FROM account WHERE username = '$id' && password = '".$input['password']."'";
-      $q = $connection -> prepare($sql); 
+      case 'login':
 
-      // check if login is ok
-      $q -> execute();
-      $r = $q -> fetchAll();
+        $q = $connection -> prepare("CALL login(?,?)");
+        $q -> execute($input['logindata']);
+        
+        $response = json_encode($q -> fetchAll(PDO::FETCH_ASSOC)[0]);
+        
+        if($response != [0]){
+          $_SESSION["LoginHandlerCurrentUser"] = $response;
+        }
 
-      if($r[0]["count"] == 0){
-        // combination of username and password does not exist
-        // so no go
-        die("false");
-      }
-      $table = $r[0]['user_table'];
-      $profile = $table == "user_person" ? "profile_person" : "profile_company";
-      $sql = "SELECT * FROM $table t INNER JOIN $profile p ON t.username = p.username WHERE t.username = '$id'";
+        exit($response);
+      
+      case 'search':
 
-      $response = array();
-      $q = $connection -> prepare($sql);  
-      $q -> execute();
-      $response = $q -> fetchAll(PDO::FETCH_ASSOC)[0];
-      $response["user_table"] = $table;
-      // store the user in a session variable
-      $_SESSION["LoginHandlerCurrentUser"] = json_encode($response);
-     
-      die(json_encode($response));
-    }
-    if ($target == "user_person") { // CREATE account user_person 
-      checkIfOccupied($target, $id);
-      $sql = "INSERT INTO account (username,email,password,user_table) VALUES ('".$id."','".$input['email']."','".$input['password']."','".$target."');". 
-        "INSERT INTO $target (username,firstname,lastname,birthdate,company_tax,company_name,phone) VALUES "."('".$id."','".$input['firstname']."','".
-        $input['lastname']."','".$input['birthdate']."','".$input['company_tax']."','".$input['company_name']."','".$input['phone']."');"; 
-    }
-    elseif ($target == "user_company") { // CREATE account user_company 
-      checkIfOccupied($target, $id);
-      $sql = "INSERT INTO account (username,email,password,user_table) VALUES ('".$id."','".$input['email']."','".$input['password']."','".$target."');".
-        "INSERT INTO $target (username,name,contact_person,phone) VALUES ('".$id."','".$input['name']."','".$input['contact_person'].$input['phone']."');";
-    }
-    elseif (substr($target,0,7) == "profile") { // CREATE profile (person or company)
-      createMetadata('username', $input['username']);
-      $sql = "INSERT INTO $target (";
-      $values = " VALUES ('";
-      foreach ($input as $key => $value) {
-        $sql .= $key . ",";
-        $values .= $value . "','";
-      }
-      $sql = substr($sql,0,-1) . ")";
-      $values = substr($sql, 0,-2) . ");";
-    }
-    elseif ($target == "browse") { // CREATE match from search
+        $q = $connection -> prepare("CALL search(?,?,?,?,?,?,?,?)");
+        $q -> execute($input['criteria']);
+        
+        $hits = $q -> fetchAll(PDO::FETCH_ASSOC);
+        exit(json_encode($hits));
 
-      $categories = "('" . implode("','", $input['categories']) . "')";
-      $tags = "('" . implode("','", $input['tags']) . "')";
-      $q = $connection -> prepare("CALL search(?,?,?,?,?,?,?)");
-      $q -> execute(array($input['main'],$input['users'],$categories,$tags,$input['inactive'],$input['company_tax'],$input['experience']));
-      $hits = $q -> fetchAll(PDO::FETCH_ASSOC);
-      //$_SESSION["lastSearch"] = $hits;
-      die(json_encode($hits));
+      case 'account':
 
-    }
-    $q = $connection->prepare($sql);
-    $q -> execute(); 
+        $q = $connection -> prepare("CALL create_account(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        $q -> execute($input['userdata']);
+
+        exit;
+
+      case 'advertisement':
+        
+        $get_id = "SELECT LAST_INSERT_ID() INTO @created_id;";
+        $id = "@created_id";
+
+        /* Fall-through:
+        *  Advertisements and profiles can share the SQL statements for creating entries, since the code need only to loop through 
+        *  the user-supplied fields for respective table. But since the advertisement table's primary key is autoincremented,
+        *  it will be created with the insert statement below and need to be retrieved for twofold use in connecting the metadata 
+        *  (tags and categories). The profile table will share it's primary key (content_id) with the account and user 
+        *  tables (user_id), and therefore it's value already exists and is supplied as the user_id of the url.  
+        */ 
+
+      case 'profile':
+      
+        $sql = $get_id ? "INSERT INTO $target (" : "INSERT INTO $target (content_id,";
+        $values = $get_id ? " VALUES ('" : " VALUES ('$id','";
+
+        foreach ($input as $key => $value) {
+          $sql .= $key . ",";
+          $values .= $value . "','";
+        }
+        $sql = substr($sql,0,-1) . ")" . substr($values, 0,-2) . ");" . $get_id;
+        
+        if(isset($input['categories'])) {
+          $sql .= "INSERT INTO category_".$target."_map (base,connect) SELECT category_id,".$id." FROM category WHERE category_id IN(".$input['categories'].");";
+        }
+        if(isset($input['tags'])) {
+          $sql .= "INSERT INTO tag_".$target."_map (base,connect) SELECT tag_id,".$id." FROM tag WHERE tag_id IN(".$input['tags'].");";
+        }
+        
+        $q = $connection->prepare($sql);
+        $q -> execute(); 
+        exit;
+    } 
   }
 
-  function checkIfOccupied($table, $username) {
-    global $connection;
-    $q = $connection -> prepare(
-      "SELECT COUNT(*) as count FROM $table ".
-      "WHERE username = '$username' "
-    );
-    $q -> execute();
-    $r = $q -> fetchAll();
-    if($r[0]["count"] != 0){
-      // user exists so no go
-      die("Användarnamnet är upptaget. Försök igen med annat namn!");
-    }
-  }  
-
-  function createMetadata($bindMe) {
-    global $connection, $input;
-    if(!isset($input['meta'])) return null;
-
-    $keyOffset = array_search('meta', array_keys($input));
-    $meta = array_values(array_splice($meta, $keyOffset, 1));
-
-    foreach ($meta as $table => $content) {
-      $base = substr($table, 0, strpos($table, '_'));
-      foreach ($content as $name) {
-        $sql = "INSERT INTO $table (base,connect) VALUES ((SELECT id FROM $base WHERE name = '$name'), $bindMe);";
-        $q->prepare($sql);
-        $q->execute();
-      }
-    }
-  }
 
                   /***************************************
                   *                                      *
@@ -142,114 +114,64 @@
                   *                                      *
                   ***************************************/
 
-  if ($method == "GET") {
+  elseif ($method == "GET") {
+
+    switch ($target) { 
+
+      case "login":    // Check if there is a current login session, and if so return user account data
+     
+        if (!isset($_SESSION["LoginHandlerCurrentUser"])){
+          exit("false"); 
+        }
+        exit($_SESSION["LoginHandlerCurrentUser"]);
     
-    if ($target == "login") { // READ if there is a current login session
-      if (!isset($_SESSION["LoginHandlerCurrentUser"])){
-        die("false"); 
-      }
-      die($_SESSION["LoginHandlerCurrentUser"]);
-    }
 
-    $response = array();    
+      case "meta": // Fetch and send to webbapp all category names and tag names + two-way-mappings name->id,id->name. 
+                   // pseudo JSON created by stored procedure in db will contain for evaluation:
+                   // "{ 
+                   //   'category_map': {'cat_name-1':'cat_id-1(primary key)','cat_id-1':'cat_name-1','cat_name-2':'cat_id-2'...}, 
+                   //   'categories':   ['cat_name-1','cat_name-2',...],
+                   //   'tag_map':      {...as for categories...},
+                   //   'tags':         [...as for categories...]
+                   // }" 
+        
+        $q = $connection->prepare("CALL fetch_meta_items();");
+        $q -> execute();
+        exit(json_encode($q->fetchAll(PDO::FETCH_ASSOC)[0]));
 
-    if (substr($target,0,4) == "user") {  // READ user account (registration view)
-      
-      $id = urldecode($id);
-      $sql = "SELECT * FROM account WHERE username = '$id';";// 
-      $q = $connection->prepare($sql);
-      $q -> execute();
-      $response = $q -> fetchAll(PDO::FETCH_ASSOC)[0];
-      if ($response !== false) {
-        $sql = "SELECT * FROM " . $target . " WHERE username = '$id';";
+      case "advertisements": // OBS! Pluralis. Get all of a users advertisements - compared to user_id
+        $q = $connection->prepare("SELECT * FROM advertisement WHERE user_id = $id;");
+        $q -> execute();
+        exit(json_encode($q->fetchAll(PDO::FETCH_ASSOC)));
+
+      case "advertisement": // OBS Singularis. Get single advertisement - compared to ads content_id
+      case "profile": 
+
+        $q = $connection->prepare("SELECT * FROM $target WHERE content_id = $id;");
+        $q -> execute();
+        exit(json_encode($q->fetchAll(PDO::FETCH_ASSOC)[0]));
+
+      case "testusers": 
+
+        // Only for developement stage and testing. Retrieves names and passwords of 5 persons and 5 companies
+        // to be displayed on the login page with a button for direct login 
+        $response = array();
+        function setTableRow ($username,$password) {
+          return array($username,$password);
+        }
+        $sql = "SELECT a.username,a.password FROM account a INNER JOIN user u ON a.user_id=u.user_id WHERE u.company_tax=b'0' LIMIT 5;";
         $q = $connection->prepare($sql);
         $q -> execute();
-        $response['password'] = "It's a secret."; // slice away this..
-        $response = array_merge($response, $q -> fetchAll(PDO::FETCH_ASSOC)[0]);
-        die(json_encode($response));
-      }
-      die("Not found");
-    }
+        $response = $q -> fetchAll(PDO::FETCH_FUNC, 'setTableRow');
+        $sql = "SELECT a.username,a.password FROM account a INNER JOIN user u ON a.user_id=u.user_id WHERE u.company_type='Aktiebolag' LIMIT 5;";
+        $q = $connection->prepare($sql);
+        $q -> execute();
+        $response = array_merge($response, $q -> fetchAll(PDO::FETCH_FUNC, 'setTableRow'));
 
-    if ($target == "profile") {  // READ profile (profile view)
-      $id = urldecode($id);      // The pitiful tale of the two tsbles..again
-      $sql = "SELECT user_table FROM account WHERE username = '$id';";
-      $q = $connection->prepare($sql);
-      $q -> execute();
-      $profileTable = $q -> fetchAll(PDO::FETCH_COLUMN)[0] == "user_person" ? "profile_person" : "profile_company";
-      $sql = "SELECT * FROM $profileTable WHERE username = '$id';"; 
-      $q = $connection->prepare($sql);
-      $q -> execute();
-      $response = $q -> fetchAll(PDO::FETCH_ASSOC)[0];
-      die(json_encode($response));
-    }
-
-    if ($target == "meta") { // Send all category names and tag names 
-
-      $sql = "SELECT name FROM category";
-      $q = $connection -> prepare($sql);
-      $q -> execute();
-      $categories = $q -> fetchAll(PDO::FETCH_COLUMN);
-      $sql = "SELECT name FROM tag";
-      $q = $connection -> prepare($sql);
-      $q -> execute();
-      $tags = $q -> fetchAll(PDO::FETCH_COLUMN);
-      $response = array("categories" => $categories, "tags" => $tags);
-      die(json_encode($response));
-    }
-
-    if ($target == "meta_user") {
-      $response = array();
-      $response['tags'] = getTags($id, 'tag_user_map');
-      $response['categories'] = getCategories($id, 'category_user_map');
-      die(json_encode($response));
-    }
-
-    if ($target == "ad_meta") {
-      $response = array();
-      $response['tags'] = getTags($id, 'tag_advertise_map');
-      $response['categories'] = getCategories($id, 'category_advertise_map');
-      die(json_encode($response));
-    }
-
-    if ($target == "testusers") { 
-
-      // Only for developement stage and testing. Puts name-passwd of 5 persons and 5 companies
-      // to login page with button for direct login 
-      $response = array();
-      function setTableRow ($username,$password) {
-        return array($username,$password);
-      }
-      $sql = "SELECT username,password FROM account WHERE user_table = 'user_person' LIMIT 5;";
-      $q = $connection->prepare($sql);
-      $q -> execute();
-      $response = $q -> fetchAll(PDO::FETCH_FUNC, 'setTableRow');
-      $sql = "SELECT username,password FROM account WHERE user_table = 'user_company' LIMIT 5;";
-      $q = $connection->prepare($sql);
-      $q -> execute();
-      $response = array_merge($response, $q -> fetchAll(PDO::FETCH_FUNC, 'setTableRow'));
-
-      die(json_encode($response));
-    }
-
+        exit(json_encode($response));
+    } 
+    
   }
-
-  function getTags($id, $table) {
-    global $connection;
-    $sql = "SELECT t.name FROM $table tm INNER JOIN tag t ON tm.base = t.id WHERE tm.connect = '$id';";
-    $q = $connection -> prepare($sql);
-    $q -> execute();
-    return $q -> fetchAll(PDO::FETCH_COLUMN);
-  } 
-
-  function getCategories($id, $table) {
-    global $connection;
-    $sql = "SELECT c.name FROM $table cm INNER JOIN category c ON cm.base = c.id WHERE cm.connect = '$id';";
-    $q = $connection -> prepare($sql);
-    $q -> execute();
-    return $q -> fetchAll(PDO::FETCH_COLUMN);
-  }
-
 
                   /***************************************
                   *                                      *
@@ -257,38 +179,51 @@
                   *                                      *
                   ***************************************/
 
-  if ($method == "PUT" || $method == "PATCH") {
+  elseif ($method == "PUT" || $method == "PATCH") {
+
+    switch($target) {
+      case "account":
+        $primaryKey = "user_id";
+        update('user');
+        break;
+      default: 
+        $primaryKey = "content_id";
+    };
 
     update($target);
-
-    if (substr($target,0,4) == "user") {
-      update('account');
-    }
-  }
-
-  function update ($table) {
-    global $connection, $input, $method, $id;
-    $sql = "DESCRIBE $table;";// "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'coderspool' AND TABLE_NAME = '$table';";
-    $q = $connection->prepare($sql);
-    $q->execute();
-    $keys = $q->fetchAll(PDO::FETCH_COLUMN);
-    $sql = "UPDATE $table SET ";
-
-    foreach ($keys as $key) {
-      if (isset($input[$key])) {
-        $sql .= $key . " = '" . $input[$key] . "',";
-      }
-      elseif ($method == "PUT") {
-        $sql .= $key . " = NULL,";
-      }
-    }
-    $sql = substr($sql,0,-1) . " WHERE username = '$id';";
-
-    $q = $connection->prepare($sql);
-    $q -> execute();
-
-    // Should make error check if any column set to NOT NULL
   
+    function update ($table) {
+      
+      global $connection, $input, $method, $primaryKey, $id;
+      
+      $sql = "DESCRIBE $table;";// "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'coderspool' AND TABLE_NAME = '$table';";
+      $q = $connection->prepare($sql);
+      $q->execute();
+      
+      $keys = $q->fetchAll(PDO::FETCH_COLUMN);
+     
+      $sql = "UPDATE $table SET ";
+      $setStatements = "";
+      foreach ($keys as $key) {
+        
+        if (isset($input[$key])) 
+          $setStatements .= $key . " = '" . $input[$key] . "',";
+       
+        elseif ($method == "PUT") 
+          $setStatements .= $key . " = NULL,";
+        
+      }
+      if (strlen($setStatements) == 0) {
+        return;
+      }
+
+      $sql = substr($sql.$setStatements,0,-1) . " WHERE $primaryKey = '$id';";
+
+      $q = $connection->prepare($sql);
+      $q -> execute();
+      
+      // Should make error check if any column set to NOT NULL?
+    }
   }
                   /***************************************
                   *                                      *
@@ -296,35 +231,25 @@
                   *                                      *
                   ***************************************/
 
-  if ($method == "DELETE") {
+  elseif ($method == "DELETE") {
 
-    if ($target == "logout") { // DELETE session
-      // delete user from session variables
-      unset($_SESSION["LoginHandlerCurrentUser"]);
-      // return true to show that we succeeded
-      die("true");
-    }
+    switch($target) {
 
-    $sql;
+      case "logout":  // DELETE session
+        
+        unset($_SESSION["LoginHandlerCurrentUser"]);
+        // return true to show that we succeeded
+        exit("true");
     
-    if (substr($target,0,4) == "user") { // DELETE user account
-      $sql = "DELETE FROM  WHERE connect = '$id';";
-      $sql .= "DELETE FROM category_user_map WHERE connect = '$id';";
-      $sql .= "DELETE FROM tag_user_map WHERE connect = '$id';";
-      $sql .= "DELETE FROM advertisement WHERE username = '$id';"; // FIX orphan risk
-      $sql .= "DELETE FROM profile_person WHERE username = '$id';";
-      $sql .= "DELETE FROM profile_company WHERE username = '$id';";
-      $sql .= "DELETE FROM $target WHERE username = '$id';";
-      $sql .= "DELETE FROM account WHERE username = '$id';";
-    }
-    
-    if (substr($target,0,7) == "profile") { // DELETE profile data, preserving account
-      $sql = "DELETE FROM profile_person WHERE username = '$id';";
-      $sql .= "DELETE FROM profile_company WHERE username = '$id';";
-    }
+      case "advertisements":
+      case "advertisement":
+      case "profile":
+      case "user":
 
-    $q = $connection->prepare($sql);
-    $q -> execute();
+        $q = $connection -> pepare("CALL delete_entry(?,?)");
+        $q -> execute(array($target,$id));
+        break;
+    }
   }
 
   

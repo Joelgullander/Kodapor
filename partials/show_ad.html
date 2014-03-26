@@ -6,19 +6,28 @@
     <!-- <p style='color: red'>här vill jag också har filters.</p> -->
     <div class="col-md-7 col-md-offset-2">
       <table id="searchTextResults">
-          <h4>Annonsör: <a ng-href="profile/{{currentAd.username}}">{{ currentAd.name }}</a></h4>
+          
+          <h2>{{ currentAd.heading }}</h2>
+
+          <h4>Annonsör: <a ng-click="go('/profile/'+currentAd.user_id)">{{ currentAd.display_name }}</a></h4>
+          
           <h5>Kategorier: <ul class="taglist"><li class="catcloud" ng-repeat="cat in categories">{{ cat }}</li></h5>
-          <span>Annons id:{{ currentAd.id }}</span> 
+          
+          <span>Annons id:{{ currentAd.content_id }}</span> 
+          <span>Publiceringsdatum: {{ currentAd.date_publish }}</span>
+          <span>{{ showIfExists(currentAd.date_updated,"Uppdaterad: ") }} </span>
+          <span>{{ showIfExists(currentAd.date_expire,"Svara senast: ") }} </span>
           
           <p class="descr">{{ currentAd.content }}</p>
+
           <!-- Some of this should be implemented, but is not yet in database or should be supplied with annonse text? 
           <p>Ort: Malmö{{ project.location }}</p>
           <p>Kontakt uppgiftgivare: 070-5677443{{ project.contract }}</p>
-          <p>Placeringsdatum: 11/11/2014{{ project.startDate }}</p>
-          <p>Sista datum: 11/12/2014{{ project.finishDate }}</p>
-          <p class='salary'>Budget: 10.000 sek{{ project.price }}</p> -->   
+          -->   
+
       </table>
     </div>
+
     <div class="col-md-3">
       <div class="tags">
         <h5>Tag cloud:</h5>

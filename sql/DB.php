@@ -43,14 +43,16 @@ class DB{
     return $randomString; //cheat ftw
   }
 
-  private function AddAccount($username, $password, $email, $table){
+  private function AddAccount($username, $password, $email){
     //Account stuff
-      $AccountSql = "INSERT INTO account (username, email, password, user_table) VALUES ('".$username."', '".$email."', '".$password."', '".$table."');"; 
+      $AccountSql = "INSERT INTO account (username, email, password) VALUES ('".$username."', '".$email."', '".$password."');"; 
       $AccountResult = mysqli_query($this->con, $AccountSql);
+      $User_id = mysqli_insert_id($this->con);
       if(!$AccountResult){
         //Something went wrong...
         $this->ThrowMySqlException($AccountSql);
       }
+      return $User_id;
   }
 
   private function DoesUserNameExists($username){
@@ -82,37 +84,47 @@ class DB{
         $RandFirst = $FirstNames[array_rand($FirstNames, 1)];
         $RandLast = $LastNames[array_rand($LastNames, 1)];
         $Username = $RandFirst.$RandLast;
+        $Personal_id = "19" . $this->RandomNumber(8);
       } while ($this->DoesUserNameExists($Username));
         
       $Password = $this->RandomString(10);
       $Email = strtolower($RandFirst.'.'.$RandLast)."@gmail.com";
-      $Phone = "070".$this->RandomNumber(6);
+      $Cell = "070".$this->RandomNumber(7);
+      $Phone = "0".$this->RandomNumber(8);
       $Tax = $businessRatio[array_rand($businessRatio,1)];
-      if ($Tax === 1) {
-        $Company_name = $RandLast . "s IT";
+      if ($Tax == 1) {
+        $Company_type = 'Enskild firma';
+        $Company_name = $RandLast . "s IT-byrå";
+        $org_nr = $Personal_id;
+        $Company_size = 1;
       }
       else {
+        $Company_type = "NULL";
         $Company_name = "NULL";
+        $org_nr = "NULL";
+        $Company_size = "NULL";
         $Tax = 0;
       }     
       
-      $this->AddAccount($Username, $Password, $Email, 'user_person');
+      $User_id = $this->AddAccount($Username, $Password, $Email);
       
-      $AppliersSql = "INSERT INTO user_person (username, firstname, lastname, personal_id,street_address, postal_code, city, company_tax, company_name, phone) ".
-                     "VALUES ('".$Username."', '".$RandFirst."', '".$RandLast."','".$this->RandomNumber(10)."','Kvacksalvargränd 2b','123 45','Ankeborg', b'".$Tax."', '".$Company_name."','".$Phone."' ) ";
+      $AppliersSql = "INSERT INTO user (user_id, firstname,lastname,personal_id,street_address,postal_code,city,phone,cell_phone,company_tax,company_type,company_name,org_nr,company_size) ".
+                     "VALUES ('".$User_id."','".$RandFirst."','".$RandLast."','".$Personal_id."','Kvacksalvargränd 2b','123 45','Ankeborg','".$Phone."','".$Cell."',".$Tax.",'".$Company_type."','".$Company_name."','".$org_nr."','".$Company_size."')";
       $ApplierResult = mysqli_query($this->con, $AppliersSql);
       if(!$ApplierResult){
         //Something went wrong...
-        $this->ThrowMySqlException($ApplersSql);
+        $this->ThrowMySqlException($AppliersSql);
       }
 
-      $this->GenerateProfile_Pers($Username);
+      $this->GenerateProfile_Pers($User_id, $RandFirst.' '.$RandLast);
 
       $i++;
     }
       
 
-    $Companies = array("Microsoft", "Dell", "HP", "Apple", "Telia", "Sony", "Ikea", "Yellowfish", "Softlayer", "Sydsvenskan", "Aftonbladet", "Metro", "Dynamicdog", "SVT", "Nintendo", "Ica", "Statoil", "Portendo", "Altran", "Samport", "Sandå", "SunannåProductions", "Babybjörn", "Addici", "Irisgruppen", "Exova", "Finansportalen", "Metria", "Mediatec", "Medison", "Transcom", "DragonGate", "Activia", "Cint", "CDON", "Swedpower", "Millhouse");
+    $Companies = array("Microsoft", "Dell", "HP", "Apple", "Telia", "Sony", "Ikea", "Yellowfish", "Softlayer", "Sydsvenskan", "Aftonbladet", "Metro", "Dynamicdog", "SVT", "Nintendo", "Ica",
+     "Statoil", "Portendo", "Altran", "Samport", "Sandå", "SunannåProductions", "Babybjörn", "Addici", "Irisgruppen", "Exova", "Finansportalen", "Metria", "Mediatec", "Medison", "Transcom", 
+     "DragonGate", "Activia", "Cint", "CDON", "Swedpower", "Millhouse");
     foreach ($Companies as $key => $value) {
       
       // user_inc stuff
@@ -125,24 +137,29 @@ class DB{
       $Password = $this->RandomString(10);
       $Email = lcfirst($RandFirst) .'.'. lcfirst($RandLast) . "@" . lcfirst($Company) . ".se";   
       $Contact = $RandFirst." ".$RandLast;
-      $Phone = "070".$this->RandomNumber(6);
+      $Phone = "888-".$this->RandomNumber(6);
+      $Cell = "070-".$this->RandomNumber(6);
       
-      $this->AddAccount($Username, $Password, $Email, 'user_company');
+      $User_id = $this->AddAccount($Username, $Password, $Email);
       
-      $EmployeeSql = "INSERT INTO user_company (username, name, org_nr, street_address, postal_code, city, contact_person, phone) ".
-                     "VALUES ('".$Username."', '".$Company."','".$this->RandomNumber(10)."-".$this->RandomNumber(6)."','Proffsgatan 17','543 21','Krämerfors','".$Contact."', '".$Phone."' ) ";
+      $EmployeeSql = "INSERT INTO user (user_id, firstname, lastname, personal_id, street_address, postal_code, city, phone, cell_phone, company_tax,company_type,company_name,org_nr,company_size) ".
+                     "VALUES ('".$User_id."', '".$RandFirst."','".$RandLast."','".$this->RandomNumber(10)."','Proffsgatan 17','543 21','Krämerfors','".$Phone."','".$Cell."',b'1','Aktiebolag','".$Company.
+                      "','".$this->RandomNumber(10)."-".$this->RandomNumber(6)."','".rand(10,150)."')";
       $EmployeeResult = mysqli_query($this->con, $EmployeeSql);
       if(!$EmployeeResult){
         //Something went wrong...
         $this->ThrowMySqlException($EmployeeSql);
       }
 
-      $this->GenerateProfile_Inc($Username);
+      $this->GenerateProfile_Inc($User_id,$Company);
     }
   }
 
   public function GenerateTags(){
     
+    // If adding or deleting to this array, don't forget to change the range of random generator
+    // in generateProfile functions below..
+
     $tags = array(
       // Languages
       "JavaScript","php", "C", "C++", "Java", "Ruby", "Python", "Perl", "Ruby on rails", "Lisp", 
@@ -181,14 +198,19 @@ class DB{
 
   public function GenerateCategories(){
     
+    // If adding or deleting to this array, don't forget to change the range of random generator
+    // in generateProfile functions below..
+
     $categories = array(
       "Systemutveckling", "Mobila plattformar", "Inbyggda system", "Webbutveckling", "Project management", "Spelutveckling", "Reklam", "Design", "Sociala medier", "Multimedia", "Databasadministration"
     );
 
     $sql = "INSERT INTO category (name) VALUES('" . array_shift($categories) . "')";
-    foreach( $categories as $key => $value ){
+
+    foreach( $categories as $key => $value ) {
       $sql .= ",('" . $value . "')";
     }
+
     $sql .= ";";
     $sqlResult = mysqli_query($this->con, $sql);
     if(!$sqlResult){
@@ -197,9 +219,34 @@ class DB{
     }
   }
 
-  public function GenerateProfile_Pers($username){
+  public function GenerateProfile_Pers($User_id, $Name){
     
     $generator = new LoremIpsumGenerator;
+
+    // Generate 1-3 categories and prepare SQL
+    $nrCats = rand(1,4);
+    $cats = array();
+    $tmp;
+    $catsql = "INSERT INTO category_profile_map (base,connect) VALUES ";
+    for ($i = 0; $i < $nrCats; $i++) {
+      do {
+        $tmp = rand(1,11);
+      } while (in_array($tmp, $cats));
+      array_push($cats, $tmp); // Just because we need it if generating advertisement soon
+      $catsql .= "(".$cats[$i].",'$User_id')" . ($i + 1 == $nrCats ? "" : ",");
+    }
+    
+    // Generate 1-8 tags and prepare SQL
+    $nrTags = rand(1,8);
+    $tags = array();
+    $tagsql = "INSERT INTO tag_profile_map (base,connect) VALUES ";
+    for ($i = 0; $i < $nrTags; $i++) {
+      do {
+        $tmp = rand(1,48);
+      } while (in_array($tmp, $tags));
+      array_push($tags, $tmp);
+      $tagsql .= "(".$tags[$i].",'$User_id')" . ($i + 1 == $nrTags ? "" : ",");
+    }
 
     // Generate random active/visible statuses
     $ratio = array(1,1,1,1,1,1,1,0,0,0);
@@ -227,9 +274,9 @@ class DB{
     $image = "imageRepo/profiles/profile-pic-300x291.jpg";
     
 
-    $sql = "INSERT INTO profile_person (username, active, visible, content, snippet, experience, cv, image) ".
-          "VALUES('" . $username . "', b'" . $active . "', b'" . $visible . "', '" . $generator->getContent(150, 'txt') . 
-          "', '"  . $generator->getContent(30, 'txt') . "', '" . $exp . "', '". $cv ."', '" . $image . "');";
+    $sql = "INSERT INTO profile (content_id,active_out,visible,display_name,content,snippet,categories,tags,experience,cv,portrait) ".
+          "VALUES('" . $User_id . "',b'" . $active . "',b'" . $visible . "','" . $Name . "','" . $generator->getContent(150, 'txt') . 
+          "','"  . $generator->getContent(30, 'txt') . "','".implode(',',$cats)."','".implode(',',$tags)."','" . $exp . "','". $cv ."','" . $image . "');";
 
     $sqlResult = mysqli_query($this->con, $sql);
     if(!$sqlResult){
@@ -237,76 +284,85 @@ class DB{
       $this->ThrowMySqlException($sql);
     }
 
+    // Profile exists, now insert meta data mappings
 
-    // Generate 1-3 categories
-    $nrCats = rand(1,4);
-    $cats = array();
-    $sql = "INSERT INTO category_user_map (base,connect) VALUES ";
-    for ($i = 0; $i < $nrCats; $i++) {
-      array_push($cats, rand(1,11)); // Just because we need it if generating advertisement soon
-      $sql .= "(".$cats[$i].",'$username')" . ($i + 1 == $nrCats ? "" : ",");
-    }
-    $sqlResult = mysqli_query($this->con, $sql);
+    $sqlResult = mysqli_query($this->con, $catsql);
     if(!$sqlResult){
       //Something went wrong...
-      $this->ThrowMySqlException($sql);
+      $this->ThrowMySqlException($catsql);
     }
 
-    // Generate 1-8 tags
-    $nrTags = rand(1,8);
-    $tags = array();
-    $sql = "INSERT INTO tag_user_map (base,connect) VALUES ";
-    for ($i = 0; $i < $nrTags; $i++) {
-      array_push($tags, rand(1,48));
-      $sql .= "(".$tags[$i].",'$username')" . ($i + 1 == $nrTags ? "" : ",");
-    }
-    $sqlResult = mysqli_query($this->con, $sql);
+    $sqlResult = mysqli_query($this->con, $tagsql);
     if(!$sqlResult){
       //Something went wrong...
-      $this->ThrowMySqlException($sql);
+      $this->ThrowMySqlException($tagsql);
     }
 
-    // generate ad for every company
-    
-      $sql = "INSERT INTO advertisement (username,profile,content,snippet,experience) VALUES ('".
-             "$username','profile_person','".$generator->getContent(150, 'txt')."','".$generator->getContent(30, 'txt')."','".$exp."');";
+    // Create an ad per 20% of personal users
+
+    if (rand(0,100)<20) {
+      $Content_type = rand(0,100)>50 ? "job_offer" : "service";
+      $Heading = $Content_type = "job_offer" ? "Sökes: duktiga programmerare inom " : "Duktig programmerare inom "; 
+      $sql = "INSERT INTO advertisement (content_type,user_id,heading,content,snippet,categories,tags,active) VALUES ('".$Content_type."','".
+             "$User_id','".$Heading."','".$generator->getContent(150, 'txt')."','".$generator->getContent(30, 'txt')."','".implode(',',$cats)."','".implode(',',$tags)."',b'1');";
       $sqlResult = mysqli_query($this->con, $sql);
       $thisAd = mysqli_insert_id($this->con);
       if(!$sqlResult){
         //Something went wrong...
         $this->ThrowMySqlException($sql);
       }
-      $sql = "INSERT INTO category_advertise_map (base,connect) VALUES ";
+      $sql = "INSERT INTO category_advertisement_map (base,connect) VALUES ";
       for ($i = 0; $i < $nrCats; $i++) {
-        $sql .= "(".array_shift($cats).",$thisAd)" . ($i + 1 == $nrCats ? ";" : ",");
+        $sql .= "(".$cats[$i].",$thisAd)" . ($i + 1 == $nrCats ? ";" : ",");
       }
       $sqlResult = mysqli_query($this->con, $sql);
       if(!$sqlResult){
         //Something went wrong...
         $this->ThrowMySqlException($sql);
       }
-      $sql = "INSERT INTO tag_advertise_map (base,connect) VALUES ";
+      $sql = "INSERT INTO tag_advertisement_map (base,connect) VALUES ";
       for ($i = 0; $i < $nrTags; $i++) {
-        $sql .= "(".array_shift($tags).",$thisAd)" . ($i + 1 == $nrTags ? ";" : ",");
+        $sql .= "(".$tags[$i].",$thisAd)" . ($i + 1 == $nrTags ? ";" : ",");
       }
       $sqlResult = mysqli_query($this->con, $sql);
       if(!$sqlResult){
         //Something went wrong...
         $this->ThrowMySqlException($sql);
       } 
-   
+    }
   }
 
-  public function GenerateProfile_Inc($username){
+  public function GenerateProfile_Inc($User_id, $Name){
     
-    static $count = 1;
+    static $count = 1; // For reusing the 25 logos...
     if ($count > 25) $count = 1;
 
     $generator = new LoremIpsumGenerator;
 
-    // Generate random active/visible statuses
-    $active = 1;
-    $visible = 1;
+    // Generate 1-4 categories
+    $nrCats = rand(1,4);
+    $cats = array();
+    $tmp;
+    $catsql = "INSERT INTO category_profile_map (base,connect) VALUES ";
+    for ($i = 0; $i < $nrCats; $i++) {
+      do {
+        $tmp = rand(1,11);
+      } while (in_array($tmp, $cats));
+      array_push($cats, $tmp); // Just because we need it if generating advertisement soon
+      $catsql .= "(".$cats[$i].",'$User_id')" . ($i + 1 == $nrCats ? "" : ",");
+    }
+
+    // Generate 1-8 tags
+    $nrTags = rand(1,8);
+    $tags = array();
+    $tagsql = "INSERT INTO tag_profile_map (base,connect) VALUES ";
+    for ($i = 0; $i < $nrTags; $i++) {
+      do {
+        $tmp = rand(1,48);
+      } while (in_array($tmp, $tags));
+      array_push($tags, $tmp);
+      $tagsql .= "(".$tags[$i].",'$User_id')" . ($i + 1 == $nrTags ? "" : ",");
+    }
 
     // Generate random experience (business_years)
     $exp = rand(0,25);
@@ -319,11 +375,11 @@ class DB{
 
     $image_logo = "imageRepo/logos/logo" . $count . ".png";
     $image_view = "imageRepo/views/corporate_culture.jpg";
-    $image_contact = "imageRepo/profiles/profile-pic-300x291.jpg";
+    $portrait = "imageRepo/profiles/profile-pic-300x291.jpg";
 
-    $sql = "INSERT INTO profile_company (username, active, visible, content, snippet, experience, image_logo, image_view, image_contact) ".
-           "VALUES('" . $username . "', b'" . $active . "', b'" . $visible . "', '" . $generator->getContent(150, 'txt') . "', '"  .
-            $generator->getContent(30, 'txt') . "', '" . $exp . "', '" . $image_logo . "', '" . $image_view . "', '" . $image_contact . "');";
+    $sql = "INSERT INTO profile (content_id,active_out,display_name,content,snippet,categories,tags,experience,portrait,image_logo,image_view) ".
+           "VALUES('" . $User_id . "',b'1','" .$Name. "','" . $generator->getContent(150, 'txt') . "','"  . $generator->getContent(30, 'txt') . 
+           "','".implode(',',$cats)."','".implode(',',$tags)."','" . $exp . "','" . $portrait . "','" . $image_logo . "','" . $image_view . "');";
 
     $sqlResult = mysqli_query($this->con, $sql);
     if(!$sqlResult){
@@ -331,38 +387,25 @@ class DB{
       $this->ThrowMySqlException($sql);
     }
 
-    // Generate 1-4 categories
-    $nrCats = rand(1,4);
-    $cats = array();
-    $sql = "INSERT INTO category_user_map (base,connect) VALUES ";
-    for ($i = 0; $i < $nrCats; $i++) {
-      array_push($cats, rand(1,11)); // Just because we need it if generating advertisement soon
-      $sql .= "(".$cats[$i].",'$username')" . ($i + 1 == $nrCats ? "" : ",");
-    }
-    $sqlResult = mysqli_query($this->con, $sql);
+    // Run SQL cats and tags
+    $sqlResult = mysqli_query($this->con, $catsql);
     if(!$sqlResult){
       //Something went wrong...
-      $this->ThrowMySqlException($sql);
+      $this->ThrowMySqlException($catsql);
     }
 
-    // Generate 1-8 tags
-    $nrTags = rand(1,8);
-    $tags = array();
-    $sql = "INSERT INTO tag_user_map (base,connect) VALUES ";
-    for ($i = 0; $i < $nrTags; $i++) {
-      array_push($tags, rand(1,48));
-      $sql .= "(".$tags[$i].",'$username')" . ($i + 1 == $nrTags ? "" : ",");
-    }
-    $sqlResult = mysqli_query($this->con, $sql);
+    $sqlResult = mysqli_query($this->con, $tagsql);
     if(!$sqlResult){
       //Something went wrong...
-      $this->ThrowMySqlException($sql);
+      $this->ThrowMySqlException($tagsql);
     }
 
-    // generate some 200 advertisements
-    if (rand(0,100) < 20) { 
-      $sql = "INSERT INTO advertisement (username,profile,content,snippet,experience) VALUES ('".
-             "$username','profile_company','".$generator->getContent(150, 'txt')."','".$generator->getContent(30, 'txt')."','".$exp."');";
+    // generate 3 advertisements per company
+    for ($loop = 0; $loop < 3; $loop++) {
+      $Content_type = rand(0,100)>50 ? "job_offer" : "service";
+      $Heading = $Content_type = "job_offer" ? "Vi söker nu kompetenta medarbetare inom " : "Vi erbjuder tjänster inom "; 
+      $sql = "INSERT INTO advertisement (content_type,user_id,heading,content,snippet,categories,tags,active) VALUES ('".$Content_type."','".
+             "$User_id','".$Heading."','".$generator->getContent(150, 'txt')."','".$generator->getContent(30, 'txt')."','".implode(',',$cats)."','".implode(',',$tags)."',b'1');";
       $sqlResult = mysqli_query($this->con, $sql);
       $thisAd = mysqli_insert_id($this->con);
 
@@ -370,18 +413,18 @@ class DB{
         //Something went wrong...
         $this->ThrowMySqlException($sql);
       }
-      $sql = "INSERT INTO category_advertise_map (base,connect) VALUES ";
+      $sql = "INSERT INTO category_advertisement_map (base,connect) VALUES ";
       for ($i = 0; $i < $nrCats; $i++) {
-        $sql .= "(".array_shift($cats).",$thisAd)" . ($i + 1 == $nrCats ? "" : ",");
+        $sql .= "(".$cats[$i].",$thisAd)" . ($i + 1 == $nrCats ? "" : ",");
       }
       $sqlResult = mysqli_query($this->con, $sql);
       if(!$sqlResult){
         //Something went wrong...
         $this->ThrowMySqlException($sql);
       }
-      $sql = "INSERT INTO tag_advertise_map (base,connect) VALUES ";
+      $sql = "INSERT INTO tag_advertisement_map (base,connect) VALUES ";
       for ($i = 0; $i < $nrTags; $i++) {
-        $sql .= "(".array_shift($tags).",$thisAd)" . ($i + 1 == $nrTags ? "" : ",");
+        $sql .= "(".$tags[$i].",$thisAd)" . ($i + 1 == $nrTags ? "" : ",");
       }
       $sqlResult = mysqli_query($this->con, $sql);
       if(!$sqlResult){

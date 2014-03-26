@@ -33,10 +33,35 @@ border-radius: .25em;}
 
 /*-----------------Herbert CSS-------------*/
 
+.images {
+  height: 350px;
+  padding: 10px;
+}
+
 .profileImage{
+  position: absolute;
+  top:140px;
+  left:0px;
   width:150px;
   height:150px;
+  opacity: 0.8;
+  z-index:10;
+}
 
+.imageView  {
+  position: absolute;
+  top: 0;
+  width:750px;
+  height:auto;
+  z-index: 0;
+  margin-bottom: 50px;
+}
+
+.profileInfo {
+  position: relative;
+  top: 140px;
+  background: white;
+  opacity: 0.8;
 }
 /* home.css */
 .line {

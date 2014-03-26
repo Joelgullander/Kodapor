@@ -13,12 +13,11 @@
       "snippet": "lorem ipsum...", // Short text. Max length: 255 characters  
       "experience": "3",
   
-      // Only for persons
       "cv": "" ,  // binary data            
       "image": "", // binary data
       
       "meta" : {
-        "category_user_map": "Webbutveckling",
+        "categories": ["Systemutveckling","Webbutveckling"],
         "tag_user_map": ["JavaScript","Angular.js","Scrum","FrontEnd","Social Media"]
       }
   };
@@ -32,16 +31,13 @@
       "content": "lorem ipsum...",  // Long text    
       "snippet": "lorem ipsum...",  // Short text. Max length: 255 characters       
       "experience": "34",           // For companies this means "years in business"
-      
-      
-      // Only for companies
-      "size": "3000",     // Number of employees, nationwide or worldwide            
+                  
       "image_logo": "" ,  // binary data,
       "image_view": "" ,  // binary data,
       "image_contact": "", // binary data,
 
       "meta": {
-        "category_user_map": "Systemutveckling",
+        "categories": ["Systemutveckling","Webbutveckling"],
         "tag_user_map": ["C++","C#","Windows8","MSSql","Silverlight",".NET","VB"]
       }
   };

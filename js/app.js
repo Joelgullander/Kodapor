@@ -54,6 +54,10 @@ computenzApp.config(['$routeProvider', function($routeProvider){
         templateUrl: 'partials/new_ad.html',
         controller: 'NewAdController'
       }).
+      when('/editAd/:adID', {
+        templateUrl: 'partials/new_ad.html',
+        controller: 'NewAdController'
+      }).
       when('/advertisement/:adID', {
         templateUrl: 'partials/show_ad.html',
         controller: 'ShowAdController'

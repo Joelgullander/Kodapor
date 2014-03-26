@@ -1,5 +1,6 @@
 'use strict';
 
+var decoded;
 /* Services */
 
 // If you inject this service you can access the contained user data.
@@ -23,19 +24,20 @@ computenzServices.service('UserService', function(){
     },
     getFullName: function(){
       if (user.username !== null)
-        return user.name;
+        return user.display_name;
     },
     getUser: function(){
       return user;
     },
     setUser: function(n){
       user = n;
-      console.log(user);
     },
     unsetUser: function(){
+      user = {};
+      /*
       for (var prop in user) {
         user[prop] = null;
-      }
+      }*/
     },
     call: function(prop,val){
       if(val){
@@ -71,13 +73,10 @@ computenzServices.service('LoginService', function($http,$location,UserService) 
   }
 
   return {
-    sendForm: function(username,password){
-      $http.post('php/login/' + username,{password:password}).success(function(data){
-        if(data != "false"){
-          if (data.user_table == "user_person") {
-            // Make string of full name easily accessible for person name
-            data.name = data.firstname + ' ' + data.lastname;
-          }
+    sendForm: function(identifier,password){
+      console.log("sendForm args: ", identifier,password);
+      $http.post('php/login/', { logindata: [identifier,password] }).success(function(data){
+        if(data[0] != 0){
           // Here the user object is set from the data received
           UserService.setUser(data);
           // Link is changed from 'login' to 'logout'
@@ -85,7 +84,7 @@ computenzServices.service('LoginService', function($http,$location,UserService) 
           // Redirect to the users own profile
           $location.path('myprofile');
         }else{
-          return "Användarnamn eller lösenord felaktigt. Kunde inte logga in!";
+          console.log("Användarnamn eller lösenord felaktigt. Kunde inte logga in!");
         }
       });
     },
@@ -104,16 +103,16 @@ computenzServices.service('LoginService', function($http,$location,UserService) 
       if (status)
         return true;
     },
-    getLoginStatusServer: function(){ // Check with server if user has an ongoing session, done on page reload
+    getLoginStatusServer: function(){ // Check with server if user has an ongoing session, done on every page reload
       $http.get('php/login/').success(function(data){
-      if (data !== "false") {
-        UserService.setUser(data);
-        setLinkData(true);
-      }
-      else {
-        setLinkData(false);
-      }
-    });
+        if (data != "false") {
+          UserService.setUser(data);
+          setLinkData(true);
+        }
+        else {
+          setLinkData(false);
+        }
+      });
     }
   };
 });
@@ -122,89 +121,56 @@ computenzServices.service('CacheService', function() {
 
   // This service uses memory for retrieving as long as the app is not refreshed, 
   // but stores tha cache also in localStorage (with totalStorage plugin for jQuery) 
-  // If refreshed the app retrieves its cache again through totalStorage
+  // If refreshed, the app retrieves its cache again through totalStorage
 
-  // To implement deeper search history
-  var searchIndex = 0;
-  // for search pagination memory
-  var paginationIndex = 1;
-  // Cache object will beside these predefined properties contain the 
-  // id's of profiles and adverisements
-  var cache = {
-    history : [],
-    results: [],
-    criteria: []
-  };
+  var cache = {};
 
-  var stupidComparison = { // The tale of the two tables
-    "profile_person": 3,
-    "profile_company": 2
-  };
-
-  return { /*
-    cacheResult: function(data) {
-      for (var i=0; i < data.length; i++) {
-        cache[data[i]['id']] = data[i];
-        console.log("caching results:", data[i]['id']);
+  return {
+    call: function(prop,val){
+      if(val){
+        cache[prop] = val;
+        $.totalStorage('Kodapor',cache);
+      }
+      else {
+        console.log("Returning cache...");
+        return cache[prop];
+      }
+    },
+    // If a partial needs to store multiple entities it can bundle them in an object
+    // and call this function instead of individual calls to the function above.
+    storeWithObject: function(data){
+      for(var name in data){
+        if (data.hasOwnProperty(name)) {
+          cache[name] = data[name];
+        }
       }
       $.totalStorage('Kodapor',cache);
-    }, */
-    cacheDestination: function(post) {
-      cache[post.id] = post;
-      $.totalStorage('Kodapor',cache);
     },
-    cacheCurrentSearch: function(criteria,result) {
-      cache.criteria.unshift(criteria);
-      cache.results.unshift(result);
-      console.log("caching search: ",cache);
-      $.totalStorage('Kodapor',cache);
-    },
-    cachePagination: function(page){
-      paginationIndex = page;
-      $.totalStorage('Kodapor',cache);
-    },
-    getPagination: function(){
-      return paginationIndex;
-    },
-    getAdvertisement: function(id) {
-      console.log("Cache: ", cache);
-      return cache[id];
-    },
-    getProfile: function(username) {
-      return cache[username];
-    },
-    getSearchCriteria: function() {
-      console.log(cache);
-      return cache.criteria[searchIndex];
-    },
-    getSearchResult: function() {
-      return cache.results[searchIndex];
+    all: function(){
+      return cache;
     },
     clear: function(){
       cache = {};
-    },
-    stupid: function(obj) {
-      if (obj.length == 2) return 1;
-      else {
-        return stupidComparison[obj[0]];
-      }
+      $.totalStorage('Kodapor',cache);
     },
     loadCache: function(){
-      if ($.totalStorage('Kodapor') && $.totalStorage('Kodapor').length) {
-        cache = $.totalStorage('Kodapor');
-      }
+      cache = $.totalStorage('Kodapor');
     }
   };
 });
 
 computenzServices.service('MetaService', function() {
 
+    var category_map = {};
     var categories = [];
+    var tag_map = {};
     var tags = [];
 
   return {
     installData: function(data){
+      decoded = category_map = data.category_map;
       categories = data.categories;
+      tag_map = data.tag_map;
       tags = data.tags;
     },
     getCategories: function(){
@@ -212,6 +178,26 @@ computenzServices.service('MetaService', function() {
     },
     getTags: function(){
       return tags;
+    },
+    askCategoryMap: function(key){
+      return category_map[key];
+    },
+    askTagMap: function(key) {
+      return tag_map[key];
+    },
+    convertCategories: function(source) {
+      if (typeof source == "string") {
+        return source.split(',').map(function(item){return category_map[item];});
+      } else {
+        return source.map(function(item){return category_map[item];});
+      }
+    },
+    convertTags: function(source) {
+      if (typeof source == "string") {
+        return source.split(',').map(function(item){return tag_map[item];});
+      } else {
+        return source.map(function(item){return tag_map[item];});
+      }
     }
   };
 });

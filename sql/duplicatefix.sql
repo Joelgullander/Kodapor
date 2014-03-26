@@ -1,3 +1,7 @@
+
+-- This file is no longer needed in new db schema. Dual PK doesn't allow duplicates so datagenerating script was modified instead.
+-- Keeping this for reference only. 
+
 USE coderspool;
 
 delete from category_user_map using category_user_map, category_user_map cu where category_user_map.map_id > cu.map_id and category_user_map.connect = cu.connect and category_user_map.base = cu.base;

@@ -18,7 +18,7 @@ computenzControllers.controller('appCtrl', ['$scope','$http','$location','UserSe
     var redirect = window.location.href.split(document.baseURI)[1];
     $location.path(decodeURIComponent(redirect));
 
-    // The following check with database if user has an active session
+    // The following will check with database if user has an active session
     // and if so keeps the user loginstatus active in app also
     // when reloading from bookmark,link or subpage.
 
@@ -40,7 +40,7 @@ computenzControllers.controller('appCtrl', ['$scope','$http','$location','UserSe
     $scope.getFullName = UserService.getFullName;
     $scope.getUsername = UserService.getUsername;
 
-    // This sets the login/logout link correctly at first load and each reload of the page.
+    // This function call sets the login/logout link correctly at first load and each reload of the page.
     $scope.updateLogin(LoginService.getLinkData());
     // This loads the local cache when page reloads
     CacheService.loadCache();
@@ -50,10 +50,10 @@ computenzControllers.controller('appCtrl', ['$scope','$http','$location','UserSe
             method: "GET",
             url: "php/meta/",
             headers : {
-        'Content-Type' : 'application/json; charset=UTF-8'
+        'Content-Type' : 'Application/json; charset=UTF-8'
       }
         }).success(function(data){
-            MetaService.installData(data);
+            MetaService.installData(eval('('+data.meta_items+')'));
         });
     }());
     

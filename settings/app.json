@@ -40,8 +40,7 @@
     "loadOrderCSS": [
         "meyerReset.css",
         "...",
-        "css.css",
-        "css.less"
+        "css.css"
     ],  
 
     "/* based on the Nodebite siteTemplate v 1.5          */" : ""
