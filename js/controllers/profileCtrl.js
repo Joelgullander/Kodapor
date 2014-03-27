@@ -9,7 +9,6 @@ computenzControllers.controller('ProfileCtrl', ['$scope','$http','$location','$r
     // This means the user is currently logged in and clicked on the "Min profil"-link.
     // Profile data can be retrieved from UserService
     $scope.user = UserService.getUser();
-    alert($scope.user.portrait);
   }
   else {
     // This means we was redirected here from search or advertisement page. Before redirection
