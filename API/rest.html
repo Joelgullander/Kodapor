@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Services</title>
+    <style>
+      body {
+        background: lightblue;
+      }
+      #API-content {
+        position: relative;
+        background: white;
+        opacity: 0.9;
+        padding: 50px;
+        width:800px;
+        margin: 0px auto;
+      }
+      ul > li > span {
+        position: absolute;
+        left: 250px;
+        text-align: left;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="API-content">   
+        <h2>Viktigt om REST</h2>
+        <p>Funktionerna för att skapa/ändra/ta bort i databasen är testade på php nivå och fungerar. Har inte hunnit testa att anropa från javascript, men det bör fungera utan problem om ni skickar rätt data. Annars får vi felsöka tillsammans.
+
+        <p>När ni gör en request till servern skickar ni med minimum en metod och en url. För att skapa eller uppdatera måste data också skickas med.</p>
+        <p><em>Viktigt om kodexemplen nedan: user_id och content_id är namnet på egenskaper i det objekt som ni arbetar med. Ni har antagligen det sparat i controllern som $scope.user eller $scope.profileData och då måste ni använda hela identifieraren, ex. $scope.user.user_id när ni anger url. <br><br> Skillnaden mellan user_id och content_id är främst viktig när ni jobbar med annonser som har båda värdena, då det gäller att välja rätt beroende på vad man ska göra. Profile har bara content_id och user har bara user_id, men för samma användare är värdet på dessa desamma, så har ni dem lagrade i en mellanvariabel är de utbytbara i url-en. Försök dock använda det namn som hör ihop med requesten för läsbarhetens skull. </em></p>
+        <h3>CREATE</h2> Generellt om ni skapar något, en ny profil/annons, så ska ni använda metoden 'POST' till rätt url för det ni vill skapa. </p>
+        
+          <code>$http&#40;&#123;<br>&nbsp;&nbsp;method:'POST',<br>&nbsp;&nbsp;url:'php/rest.php/profile/' + user_id,<br>&nbsp;&nbsp;data:$scope.profileData<br>&#125;&#41;;</code>
+          <br><br>
+          <code>$http&#40;&#123;<br>&nbsp;&nbsp;method:'POST',<br>&nbsp;&nbsp;url:'php/rest.php/advertisement/' + user_id,<br>&nbsp;&nbsp;data:$scope.adData<br>&#125;&#41;;</code>
+
+        <h3>UPDATE</h3>
+        <p>När ni gör en uppdatering av befintlig profil/annons/användar-konto så ska ni inte göra en 'POST' utan någon av 'PUT' eller 'PATCH'. Skillnaden är viktig. En PUT-request kommer att uppdatera tabellens alla columner oavsett om ni skickar värden för dem eller ej. Det betyder att om ni inte skickat med värde för ex. 'content', då användaren gör en ändring av sin rubrik, så kommer 'content' att raderas. Om ni vill göra denna uppdatering med PUT så måste ni alltså skicka med alla fält, även de som inte har ändrats. Alternativet är att skicka endast de data som ändrats, och i så fall sätta method till 'PATCH', men det kan eventuellt vara lättast för er med den lite mer oekonomiska PUT, då ni redan har allt samlat i ett objekt.</p><p> Notera skillnaden för profiler/annonser att när de skapas (POST) så skickas user_id med i URL, medan det vid uppdatering (PUT/PATCH) är profilens/annonsens eget id, content_id som skickas med.</p> 
+
+          <code>$http&#40;&#123;<br>&nbsp;&nbsp;method:'PATCH',<br>&nbsp;&nbsp;url:'php/rest.php/profile/' + content_id,<br>&nbsp;&nbsp;data:$scope.profileData<br>&#125;&#41;;</code>
+          <br><br>
+          <code>$http&#40;&#123;<br>&nbsp;&nbsp;method:'PUT',<br>&nbsp;&nbsp;url:'php/rest.php/advertisement/' + content_id,<br>&nbsp;&nbsp;data:$scope.newAd<br>&#125;&#41;;</code>
+        <h3>DELETE</h3>
+        <p>När användaren klicka 'Ta bort'/'Radera' profil/annons/användarkonto, så gör ni en request med method 'DELETE'. Url är för användarkonto:</p><code> $http({method:'DELETE',url:'php/rest.php/account/' + user_id});</code><p> Detta kommer att ta bort all användardata, profil, annonser,taggar etc. från databasen för denna användare.</p>
+        
+        <p>För profil (Url kan även anges med user_id, då de innehåller samma nummer..):</p><code> $http({method:'DELETE',url:'php/rest.php/profile/' + content_id});</code>  
+        <p>För annons:</p><code> $http({method:'DELETE',url:'php/rest.php/advertisement/' + content_id});</code>
+        <p>För en användares alla annonser (notera s-et i advertisements i URL:en och att du här måste ange user_id, inte annonsens eget content_id då de är flera..):</p><code> $http({method:'DELETE',url:'php/rest.php/advertisements/' + user_id});</code>
+    </div>
+  </body>
+</html>

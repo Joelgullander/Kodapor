@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Services</title>
+    <style>
+      body {
+        background: lightblue;
+      }
+      #API-content {
+        position: relative;
+        background: white;
+        opacity: 0.9;
+        padding: 50px;
+        width:800px;
+        margin: 0px auto;
+      }
+      ul > li > span {
+        position: absolute;
+        left: 250px;
+        text-align: left;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="API-content">
+      <h2>Services</h2>
+      <h4>UserService</h4>
+        Denna service är <em>endast</em> användbar när ni hanterar inloggad användare. Vid lyckad login läggs all data från tabellerna account,user och profile för den inloggade i ett privat objekt i UserService. Vill du hämta ut hela objektet så använder du:</p><code>$scope.minLokalaVariabel = UserService.getUser();</code><p>Behöver ni bara hämta ut ett enskilt värde, ex. 'username' så använder ni servicens call-funktion:</p><code>$scope.username = UserService.call('username');</code><p>Behöver ni spara/ändra ett värde skriver ni ex:</p><code>$scope.username = UserService.call('username','Bolibompa');</code><p>Kom ihåg att detta endast sparar lokalt på appen, så vid ändringar som ska in i databas är det $http-request som gäller. </p><p>Profildatan lagrar nu en post som heter 'display_name'. Istället för en egen funktion getFullName(), så kan vi alltså byta ut det mot  UserService.call('display_name'), men jag låter de gamla funktionerna ligga kvar tills vidare.
+        <h4>CacheService</h4>
+        <p>Denna service ger dig möjligheten att spara data, exempelvis vid övergången från en partial till en annan, så att samma data finns tillgänglig på nya destinationen. Detta kan du göra så:</p><code>CacheService.call('nameToStoreAS', data)</code><p>Denna data återfås genom:</p><code>var sameDataInNewPartial = CacheService.call('nameToStoreAs');</code><p>
+        CacheServicen gör också att man vid en sidomladdning kan spara sidans tillstånd och direkt få tillbaka de data som browsern annars rensar bort. Detta är viktigt exempelvis på edit/create-sidorna så användaren inte behöver göra om allt om han/hon oavsiktligt trycker Ctrl-R. I controllern behöver ni alltså tänka kring att när ni programmerar den ni inte vet om den körs från att användaren länkas dit eller tryckt på refresh.</p>
+        <p>Logiken ni behöver lösa är att avgöra om data ska laddas in från UserService/$http eller från CacheService. Det är i grunden enkelt. Om du inte sparat ngt i CacheService får du tillbaka värdet undefined. Detta kan du använda i en OR-sats
+
+        såhär:</p><code>$scope.editAd = CacheService('editAd') || $http({ ..code to fetch from database.. });</code><p>
+        Första gången sidan laddas finns inget i cache och $http requesten genomförs. Om sidan reloadas nu så finns data i cache (med de ändringar som användaren gjort) så $scope.editAd tar emot denna data istället för att hämta från databasen.</p>
+        <p>För att detta ska funka så måste du naturligtvis ha sparat data till cache först, och det gör du direkt efter föregående rad med:</p><code> CacheService.call('editAd',$scope.editAd);</code>
+
+        <p>Det problem som är kvar att lösa är att om alla ändringar ska behållas även vid reload, så måste varje ändring i formuläret utlösa föregående kommando på nytt. Det ska finnas i Angular funktionerna $scope.$watch(...) och $scope.$watchCollection(..), med hjälp av vilken ni kan registrera det objekt ni arbetar med (ex. $scope.editAd eller $scope.profileData) så att den utför en av er definierad funktion vid varje förändring av ert objekt. Det kan hända att ni måste lista elementens namn eller ng-model-attribut. Googla och se om ni kan använda det. Kom ihåg att ni kommer att behöva en knapp för 'Återställ formulär', och antagligen också 'Rensa formulär' så att användaren <em>kan</em> komma till ett tomt formulär och börja om på nytt om han/hon vill, utan att för hand behöva ta bort text.</p>
+
+        <p>I instruktionerna nedan har jag utelämnat just dessa aspekter av caching, och ni kan börja med att få det att fungera på basic nivå, och sedan gå tillbaka till denna del och lösa cachingen.</p> 
+
+        <h4>MetaService</h4>
+        <p>Denna service är relaterad till hantering av kategorier och taggar. Hur den används går jag igenom sist på sidan om profiler och annonser i ett eget avsnitt för dessa data.</p>
+    </div>
+  </body>
+</html>
