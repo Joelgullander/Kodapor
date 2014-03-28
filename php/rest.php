@@ -181,17 +181,6 @@
 
   elseif ($method == "PUT" || $method == "PATCH") {
 
-    switch($target) {
-      case "account":
-        $primaryKey = "user_id";
-        update('user');
-        break;
-      default: 
-        $primaryKey = "content_id";
-    };
-
-    update($target);
-  
     function update ($table) {
       
       global $connection, $input, $method, $primaryKey, $id;
@@ -224,6 +213,17 @@
       
       // Should make error check if any column set to NOT NULL?
     }
+    
+    switch($target) {
+      case "account":
+        $primaryKey = "user_id";
+        update('user');
+        break;
+      default: 
+        $primaryKey = "content_id";
+    };
+
+    update($target);
   }
                   /***************************************
                   *                                      *
