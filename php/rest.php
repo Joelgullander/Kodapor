@@ -213,7 +213,7 @@
       
       // Should make error check if any column set to NOT NULL?
     }
-    
+
     switch($target) {
       case "account":
         $primaryKey = "user_id";
@@ -225,6 +225,7 @@
 
     update($target);
   }
+  
                   /***************************************
                   *                                      *
                   *               DELETE                 *

@@ -40,7 +40,7 @@
     "loadOrderCSS": [
         "meyerReset.css",
         "...",
-        "css.css"
+        "bootstrap-theme.css"
     ],  
 
     "/* based on the Nodebite siteTemplate v 1.5          */" : ""

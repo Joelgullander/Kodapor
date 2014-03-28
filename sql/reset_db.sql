@@ -468,8 +468,8 @@ CREATE PROCEDURE delete_entry(
 
 BEGIN
 
-  IF target = "advertisement" OR target = "account" THEN
-    IF target = "account" THEN
+  IF target LIKE "advertise%" OR target = "account" THEN
+    IF target = "account" OR target = "advertisements" THEN
       DELETE FROM category_advertisement_map WHERE connect IN(SELECT content_id FROM advertisement WHERE user_id = entry);
       DELETE FROM tag_advertisement_map WHERE connect IN(SELECT content_id FROM advertisement WHERE user_id = entry);
       DELETE FROM advertisement WHERE user_id = entry;

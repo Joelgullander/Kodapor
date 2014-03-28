@@ -2,12 +2,22 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>PHP-test</title>
+    <script src="../js/libs/jquery.js"></script>
+    <script>
+      $.ajax({
+        method: 'GET',
+        url: '../php/rest.php/meta/',
+        success: function(data){
+          console.log(data);
+        }
+      });
+    </script>
   </head>
 
   <body>
   <p>Testplatta för php-satser</p>
   <?php
-  
+  /*
     $host = "localhost";
     $db = "coderspool";
     try {
@@ -147,7 +157,7 @@
       echo "<br><br>";
       echo(json_encode($sql));
 */
-    
+/*    
     $q = $connection->prepare($sql);
     $q -> execute();
     
