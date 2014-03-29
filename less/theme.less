@@ -5,7 +5,7 @@
 
 @import "variables.less";
 @import "mixins.less";
-
+@import "../myTheme.less";
 /*
 
 //
@@ -347,9 +347,7 @@ border-radius: .25em;}
   height: 120px; 
   padding:40px;
 
-  -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
-  -moz-box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
+  .box-shadow(0 3px 8px rgba(0, 0, 0, .3));
 
   margin: 0 auto;
 
@@ -360,9 +358,8 @@ border-radius: .25em;}
   
 }
 .smallnavcircles {
-  -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
-  -moz-box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
+
+  .box-shadow(0 3px 8px rgba(0, 0, 0, .3));
 
   border-radius: 50%;
   background-color:gray;
@@ -377,10 +374,7 @@ border-radius: .25em;}
 
 .flip {
   display:inline-block;
-  -webkit-perspective: 800;
-  -moz-perspective: 800;
-  -ms-perspective: 800;
-  perspective: 800;
+  .perspective(800);
    width: 49%;
    height: 600px;
    font-size: 5px;
@@ -388,13 +382,11 @@ border-radius: .25em;}
     margin: 0 auto;
     padding-left:20px;
 }
+
 .flip .card.flipped {
-  -webkit-transform: rotateX(-180deg);
-  -moz-transform: rotateX(-180deg);
-  -ms-transform: rotateX(-180deg);
-  -o-transform: rotateX(-180deg);
-  transform: rotateX(-180deg);
+  .rotateX(-180deg);
 }
+
 .flip .card {
   width: 100%;
   height: 100%;
@@ -404,26 +396,22 @@ border-radius: .25em;}
   -o-transform-style: preserve-3d;
   transform-style: preserve-3d;
 
-  -webkit-transition: 0.5s;
-  -moz-transition: 0.5s;
-  -o-transition: 0.5s;
-  transition: 0.5s;
+  .transition(0.5s);
 }
+
 .flip .card .face {
   width: 100%;
   height: 100%;
   position: absolute;
   
-  -webkit-backface-visibility: hidden ;
-  -moz-backface-visibility: hidden ;
-  -o-backface-visibility: hidden ;
-  backface-visibility: hidden ;
+  .backface-visibility(hidden);
 
   z-index: 2;
     font-family: Georgia;
     font-size: 3em;
     line-height: 200px;
 }
+
 .flip .card .front {
   position: absolute;
   z-index: 1;
@@ -431,12 +419,9 @@ border-radius: .25em;}
     color: black;
     cursor: pointer;
 }
+
 .flip .card .back {
-  -webkit-transform: rotateX(-180deg);
-  -moz-transform: rotateX(-180deg);
-  -ms-transform: rotateX(-180deg);
-  -o-transform: rotateX(-180deg);
-  transform: rotateX(-180deg);
+  .rotateX(-180deg);
     background: blue;
     background: white;
     color: black;
