@@ -1,12 +1,12 @@
 
-
-<!--här ska jag ha en form KANSKE? -->
- <div class="row"> 
-  <div class="container"> 
-    <div class="col-md-10">
-{{ user_table }}
-     <form role="form" class="form col-md-12 center-block" name="regForm" ng-submit="updateRegForm()">
-        <legend>Registrering</legend>
+ <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+         <h1 class="text-center">Registrera</h1>
+      </div>
+      {{ user_table }}
+      <form role="form" class="form col-md-12 center-block" name="regForm" ng-submit="updateRegForm()">
+        
           <div class="modal-body">
 
           <label for='username'>Användarnamn</label>
