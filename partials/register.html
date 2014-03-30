@@ -10,55 +10,54 @@
         
           
 
-            <div class="form-group"> 
             <label for='username'>Användarnamn</label>
             <input type='text' name='username' class="form-control" ng-model="user.username" placeholder="Användarnamn" ng-minlength="3" maxlength="30" required/>
-            </div>
+           
 
-            <div class="form-group">
+           
             <label for='email'>Email</label>
             <input type='email' name='email' class="form-control" ng-model="user.email" placeholder="Email" ng-minlexngth=3 ng-maxlength="60" required/>
-            </div>
+          
             
-            <div class="form-group">
             <label for='password'>Lösenord</label>
             <input type='password' name='password' class="form-control" placeholder="Lösenord" ng-model="user.password" maxlength="30" required/>
-            </div>
-
-            <div class="form-group">
+           
+            
             <label for='repeat'>Repetera lösenord</label>
             <input type='password' name='repeat' class="form-control" placeholder="Repetera lösenord" ng-model="user.repeatPassword" maxlength="30" required/>
-            </div>
+         
             
-             <div class="form-group">
+             
             <label for='firstname'>Namn</label>
             <input type='text' name='firstname' class="form-control" ng-model="user.firstname" placeholder="Namn" ng-minlexngth="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z]+$/" required/>
-            </div>
            
-             <div class="form-group">
+           
+           
             <label for='lastname'>Efternamn</label>
             <input type='text' name='lastname' class="form-control" ng-model="user.lastname" placeholder="Efternamn" ng-minlexngth="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z]+$/" required/>
-            </div>
+
+            <label for='personnr'>Personnummer</label>
+            <input type='text' name='personnr' class="form-control" ng-model="user.personal_id" placeholder="Personnummer" ng-minlexngth="3" ng-maxlength="30" ng-pattern="/^[1-9]+$/" required/>
+         
             
-             <div class="form-group">
+             
             <label for='address'>Adress</label>
             <input type='address' name='adress' class="form-control" ng-model="user.street_address" placeholder="Adress" ng-minlength="10" ng-maxlength="12" required/>
-            </div>
+         
             
-             <div class="form-group">
+          
             <label for='post'>Postnummer</label>
             <input type='post' name='post' class="form-control" ng-model="user.postal_code" placeholder="Postadress" ng-minlength="10" ng-maxlength="12" required/>
-            </div>
+           
             
-             <div class="form-group">
+          
             <label for='stad'>Stad</label>
             <input type='stad' name='stad' class="form-control" ng-model="user.city" placeholder="Stad" ng-minlength="10" ng-maxlength="12" required/>
-            </div>
-
-            <div class="form-group">
+          
+            
             <label for='phone'>Telefonnummer</label>
             <input type='phone' name='phone' class="form-control" ng-model="user.phone" placeholder="Telefonnummer" ng-minlength="10" ng-maxlength="16" required/>
-            </div>
+            
               <br>
           <!--Behövs inte, annat exemplel bara
            <div class="checkbox"><label>
@@ -66,7 +65,7 @@
              </label>
           </div>
          *******************************-->
-            <div class="form-group"> 
+          
             <select ng-model="isEnabled" ng-options="choice == 'Företag' as choice for choice in ['Företag', 'Privat']"></select><br>
 
 
@@ -77,8 +76,7 @@
             <input type='text' ng-model="user.org_nr" class="form-control" placeholder="Org nummer" ng-readonly="!isEnabled" ng-class="{ disabled: !isEnabled }"><br>
 
             <button ng-click="save()" class="btn btn-success">Spara</button>
-            </div>
-
+          
             </form>
           </div><!--modal body-->
          
