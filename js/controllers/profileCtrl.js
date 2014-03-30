@@ -29,8 +29,8 @@ computenzControllers.controller('ProfileCtrl', ['$scope','$http','$location','$r
       'Content-Type' : 'application/json; charset=UTF-8'
     }
   }).success(function(data){
-      $scope.user.advertisements = data;
-  });
+     $scope.user.advertisements = data;
+   });
 
 
   // Save profila data to cache so the user can come back after leaving or reloading page

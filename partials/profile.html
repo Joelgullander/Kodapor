@@ -1,13 +1,14 @@
 
 
-<div class="row">
 
-  <h1>Profile</h1>
-  <hr>
- 
-</div>
 
-<div class="row">
+<div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h1 class="text-center">PROFILE</h1>
+      </div>
+  <div class="modal-body">
+         <div class="row">
   <div class="container">
     <div class="col-md-6 images">
       <img ng-show="user.image_view != null" ng-src="php/{{user.image_view}}" class="imageView"></img>
@@ -21,11 +22,9 @@
       <p>{{ user.experience }} år </p>
     </div>
   </div>
-  
-  <div class="row">
+    <div class="row">
     <div class="container">
       <div class="col-md-8">
-
         <h5>Kategorier: <ul class="taglist"><li class="catcloud" ng-repeat="cat in categories">{{ cat }}</li></h5>
         <h5>Kompetenser: <ul class="taglist"><li class="tagcloud" ng-repeat="tag in tags">{{tag}}</li></ul>
         <h3>Beskrivning</h3>
@@ -33,29 +32,32 @@
           {{ user.content }}
         </p>
       </div>
-        <div class="col-md-4">
-   <div class=" panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">ANONSER</h3>
-  </div>
- <ul>
-   <li ng-repeat"user.advertisements">{{user.advertisements}}</li>
-</ul>
-  
 
-</div>
-  </div>
+      <div class="col-md-4">
+        <div class=" panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">ANONSER</h3>
+          </div>
+          <div class="panel-body">
+            <ul>
+             <li ng-repeat="ad in user.advertisements"> {{ ad.date_publish}} {{ ad.content_id }}  {{ ad.publish_date }} </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
     </div>
-
-    
+  </div>  
+  
   <div class="row">
-    <div class="container" >
-      
-      <div class="col-md-3 col-md-offset-3">
-        <button class="btn btn-warning" type="button"  ng-show="destination == 'myprofile' "    ng-click="edit()">EDIT PROFILE</button>
+    <div class="container">
+      <div class="col-md-3 col-md-offset-3" >
+        <button class="btn btn-warning" ng-show="destination ==='myprofile'" type="button" ng-click="edit()">EDIT PROFILE</button>
       </div> 
-    
     </div>
   </div> 
-
+ </div>
+  </div>
+ </div>
   {{user.advertisements}}
+
