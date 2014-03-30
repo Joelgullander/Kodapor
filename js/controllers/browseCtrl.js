@@ -81,7 +81,7 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
       }
     }).success(function(data){
       $('.cards').addClass('flipped');
-      $('.flips .cards .back').css({'display':'block'});
+      $('.flips .cards .back').css({'display':'block', 'margin-bottom':0});
       // Thank you jQuery!!!
       resultHeight = resultHeight || $('.back').height();
       $('body').css({'height':resultHeight+500});
@@ -150,10 +150,9 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
   };
 
   $scope.newSearch = function() {
-    //$('.flips .cards .back').css({'display':'none'});
+    $('.flips .cards .back').css({'display':'none'});
     $('.cards').removeClass('flipped');
     $('body').css({'height':'auto'});
-    alert($('.back').height());
   };
 
   // Eventhandlers for selected categories and tags. 

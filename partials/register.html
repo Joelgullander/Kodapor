@@ -1,63 +1,46 @@
 
- <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-         <h1 class="text-center">Registrering</h1>
-      </div>
-        
-        <div class="modal-body">
-          <form class="form col-md-12 center-block" name="regForm" novalidate>
-        
-          
+<div class="container">
+         
+        <div class="row">
 
+          <form class="form col-md-8 center-block wrapper" name="regForm" novalidate>
+            <h1 class="text-center">Registrering</h1>
             <label for='username'>Användarnamn</label>
             <input type='text' name='username' class="form-control" ng-model="user.username" placeholder="Användarnamn" ng-minlength="3" maxlength="30" required/>
-           
-
-           
+                   
             <label for='email'>Email</label>
-            <input type='email' name='email' class="form-control" ng-model="user.email" placeholder="Email" ng-minlexngth=3 ng-maxlength="60" required/>
-          
-            
+            <input type='email' name='email' class="form-control" ng-model="user.email" placeholder="Email" ng-minlexngth="3" ng-maxlength="60" required/>
+                    
             <label for='password'>Lösenord</label>
             <input type='password' name='password' class="form-control" placeholder="Lösenord" ng-model="user.password" maxlength="30" required/>
-           
-            
+                      
             <label for='repeat'>Repetera lösenord</label>
             <input type='password' name='repeat' class="form-control" placeholder="Repetera lösenord" ng-model="user.repeatPassword" maxlength="30" required/>
-         
-            
-             
+                  
             <label for='firstname'>Namn</label>
-            <input type='text' name='firstname' class="form-control" ng-model="user.firstname" placeholder="Namn" ng-minlexngth="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z]+$/" required/>
-           
-           
+            <input type='text' name='firstname' class="form-control" ng-model="user.firstname" placeholder="Namn" ng-minlength="2" ng-maxlength="30" ng-pattern="/^[a-zA-Z]+$/" required/>
            
             <label for='lastname'>Efternamn</label>
-            <input type='text' name='lastname' class="form-control" ng-model="user.lastname" placeholder="Efternamn" ng-minlexngth="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z]+$/" required/>
+            <input type='text' name='lastname' class="form-control" ng-model="user.lastname" placeholder="Efternamn" ng-minlength="2" ng-maxlength="30" required/>
 
             <label for='personnr'>Personnummer</label>
-            <input type='text' name='personnr' class="form-control" ng-model="user.personal_id" placeholder="Personnummer" ng-minlexngth="3" ng-maxlength="30" ng-pattern="/^[1-9]+$/" required/>
-         
-            
-             
+            <input type='text' name='personnr' class="form-control" ng-model="user.personal_id" placeholder="Personnummer" ng-minlength="10" ng-maxlength="30"  required/>
+                   
             <label for='address'>Adress</label>
-            <input type='address' name='adress' class="form-control" ng-model="user.street_address" placeholder="Adress" ng-minlength="10" ng-maxlength="12" required/>
-         
-            
-          
+            <input type='address' name='adress' class="form-control" ng-model="user.street_address" placeholder="Adress"  required/>
+              
             <label for='post'>Postnummer</label>
-            <input type='post' name='post' class="form-control" ng-model="user.postal_code" placeholder="Postadress" ng-minlength="10" ng-maxlength="12" required/>
-           
-            
-          
+            <input type='post' name='post' class="form-control" ng-model="user.postal_code" placeholder="Postadress"  ng-maxlength="12" required/>
+               
             <label for='stad'>Stad</label>
-            <input type='stad' name='stad' class="form-control" ng-model="user.city" placeholder="Stad" ng-minlength="10" ng-maxlength="12" required/>
-          
-            
+            <input type='stad' name='stad' class="form-control" ng-model="user.city" placeholder="Stad"  required/>
+                 
             <label for='phone'>Telefonnummer</label>
-            <input type='phone' name='phone' class="form-control" ng-model="user.phone" placeholder="Telefonnummer" ng-minlength="10" ng-maxlength="16" required/>
+            <input type='phone' name='phone' class="form-control" ng-model="user.phone" placeholder="Telefonnummer" ng-minlength="7" ng-maxlength="32" required/>
             
+            <label for='phone'>Mobiltelefon</label>
+            <input type='phone' name='phone' class="form-control" ng-model="user.cell_phone" placeholder="Mobiltelefon" ng-minlength="0" ng-maxlength="32" required/>
+
               <br>
           <!--Behövs inte, annat exemplel bara
            <div class="checkbox"><label>
@@ -65,28 +48,29 @@
              </label>
           </div>
          *******************************-->
-          
-            <select ng-model="isEnabled" ng-options="choice == 'Företag' as choice for choice in ['Företag', 'Privat']"></select><br>
 
+            <select ng-model="isEnabled">
+              <option value=""><span id="companySelect">Registrera företag</span></option>
+              <option value="Aktiebolag">Aktiebolag</option>
+              <option value="Enskild firma">Enskild firma</option>
+              <option value="Handelsbolag">Handelsbolag</option>
+              <option value="Ekonomisk förening">Ekonomisk förening</option>
+            </select><br>
 
             <label for='companyname'>Företagsnamn</label>
             <input type='text' name='companyname' class="form-control" placeholder="Företagsnamn" ng-model="user.company_name" ng-readonly="!isEnabled" ng-class="{ disabled: !isEnabled }">
 
             <label for='orgnumber'>Organisationsnummer</label>
-            <input type='text' ng-model="user.org_nr" class="form-control" placeholder="Org nummer" ng-readonly="!isEnabled" ng-class="{ disabled: !isEnabled }"><br>
+            <input type='text' ng-model="user.org_nr" class="form-control" placeholder="Org nummer" ng-readonly="!isEnabled" ng-class="{ disabled: !isEnabled }">
+
+            <label for='orgnumber'>Antal anställda</label>
+            <input type='text' ng-model="user.company_size" class="form-control" placeholder="Antal anställda" ng-readonly="!isEnabled" ng-class="{ disabled: !isEnabled }"><br>
 
             <button ng-click="save()" class="btn btn-success">Spara</button>
           
             </form>
-          </div><!--modal body-->
+      </div><!--row-->
+</div>
          
-        <div class="modal-footer">
-      
-        </div>
+ 
 
-        
-      
-  </div> 
-</div> 
-
-{{ userData }}

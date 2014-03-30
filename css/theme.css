@@ -2,7 +2,7 @@ body {
   min-height: 800px;
   position: relative;
 }
-.content {
+.cont {
   display: block;
   height: auto;
   overflow: auto;
@@ -11,6 +11,7 @@ body {
   background-color: white;
   padding-top: 20px;
   padding-bottom: 20px;
+  margin-bottom: 100px;
   -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
 }
@@ -359,7 +360,7 @@ input {
   opacity: 0.8;
   z-index: 10;
 }
-.imageView {
+.image_View {
   position: absolute;
   top: 0;
   width: auto;
@@ -370,8 +371,6 @@ input {
 }
 .profileInfo {
   position: relative;
-  top: 20px;
-  height:130px;
   background: white;
   opacity: 0.8;
 }
