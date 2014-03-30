@@ -1,105 +1,65 @@
 
-<h1>Registrering Anställd</h1>
-<!--här ska jag ha en form KANSKE? -->
- <div class="row"> 
-  <div class="container" ng-model="user_table" ng-value="user_person"> 
-    <div class="col-md-10">
-{{ user_table }}
-     <form role="form" name="regForm" ng-submit="updateRegForm()">
-        <legend>Registrering</legend>
+ <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+         <h1 class="text-center">Registrera</h1>
+      </div>
+      {{ user_table }}
+      <form role="form" class="form col-md-12 center-block" name="regForm" ng-submit="updateRegForm()">
+        
+          <div class="modal-body">
+
+          <label for='username'>Användarnamn</label>
+          <input type='text' name='username' class="form-control" ng-model="user.username" placeholder="Användarnamn" ng-minlength="3" maxlength="30" required/>
+           
+          <label for='email'>Email</label>
+          <input type='email' name='email' class="form-control" ng-model="user.email" placeholder="Email" ng-minlexngth=3 ng-maxlength="60" required/>
+            
+          <label for='password'>Lösenord</label>
+          <input type='password' name='password' class="form-control" placeholder="Lösenord" ng-model="user.password" maxlength="30" required/>
+
+          <label for='repeat'>Repetera lösenord</label>
+          <input type='password' name='repeat' class="form-control" placeholder="Repetera lösenord" ng-model="user.repeatPassword" maxlength="30" required/>
+           
           <label for='firstname'>Namn</label>
           <input type='text' name='firstname' class="form-control" ng-model="user.firstname" placeholder="Namn" ng-minlexngth="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z]+$/" required/>
-            <div ng-show="form.name.$error.required">Fyll i namn.</div>
+           
 
           <label for='lastname'>Efternamn</label>
           <input type='text' name='lastname' class="form-control" ng-model="user.lastname" placeholder="Efternamn" ng-minlexngth="3" ng-maxlength="30" ng-pattern="/^[a-zA-Z]+$/" required/>
-            <div ng-show="form.lastname.$error.required">Fyll i efternamn.</div>
-          
-
-          <label for='birthdate'>Personnummer</label>
-          <input type='birthdate' name='birthdate' class="form-control" ng-model="user.birthdate" placeholder="Personnummer" ng-minlength="10" ng-maxlength="12"/>
-            <div ng-show="form.birthdate.$error.minlength">Fel personnummer.</div>
-            <div ng-show="form.birthdate.$error.maxlength">Fel personnummer</div>
-            <div ng-show="form.birthdate.$error.required">Fyll i personnummer.</div>
-
-          <label for='email'>Email</label>
-          <input type='email' name='email' class="form-control" ng-model="user.email" placeholder="Email" ng-minlexngth=3 ng-maxlength="60"/>
-            <div ng-show="form.email.$error.minlength">Email måste vara mer än 3 bokstäver</div>
-            <div ng-show="form.email.$error.required">Fyll i email.</div>
-
-          <label for='phone'>Telefonnummer</label>
-          <input type='phone' name='phone' class="form-control" ng-model="user.phone" placeholder="Telefonnummer" ng-minlength="10" ng-maxlength="16"/>
-            <div ng-show="form.phone.$error.minlength">Fel telefonnummer.</div>
-            <div ng-show="form.phone.$error.maxlength">Fel telefonnummer.</div>
-            <div ng-show="form.phone.$error.required">Fyll i telefonnummer.</div>
-
-
-
-          <label for='username'>Användarnamn</label>
-          <input type='text' name='username' class="form-control" ng-model="user.username" placeholder="Användarnamn" ng-minlength="3" maxlength="30"/>
-            <div ng-show="form.username.$error.minlength">Användarnamn måste vara mer än 3 bokstäver</div>
-            <div ng-show="form.username.$error.required">Fyll i användarnamn.</div>
-        
-          <label for='password'>Lösenord</label>
-          <input type='password' name='password' class="form-control" placeholder="Lösenord" ng-model="user.password" maxlength="30"/>
-
-          <label for='repeat'>Repetera lösenord</label>
-          <input type='password' name='repeat' class="form-control" placeholder="Repetera lösenord"  maxlength="30"/><!--Ska fixas med bootstrap-->
-
-        <div class="warning ng-binding">
-        {{ message }}
-      </div>
-
-        <label for='form-control'ng-model="user.experience">Din Erfarenhet i år:</label>
-        <select class="form-control">
-          <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-    </select>
-
-    <div class="block">
-        <h4>Kompetenser:</h4>
-        <!--SKa in fler checkboxes här-->
-         <div class="checkbox"><label>
-                <input type="checkbox"ng-model="user.html5"> Html5
-             </label>
-          </div>
-
-           <div class="checkbox"><label>
-                <input type="checkbox"ng-model="user.css3"> Css3
-             </label>
-          </div>
-
-           <div class="checkbox"><label>
-                <input type="checkbox"ng-model="user.javascript"> JavaScript
-            </div>
-
-           <div class="checkbox"><label>
-                <input type="checkbox"ng-model="user.php"> Php
-             </label>
-           </div>
-
-          <div class="checkbox"><label>
-                <input type="checkbox"ng-model="user.mysql"> MySql
-             </label>
-            </div>
-
-          <div class="checkbox"><label>
-                <input type="checkbox"ng-model="user.pyton"> Pyton
-             </label>
-            </div>
-
-          <div class="checkbox"><label>
-                <input type="checkbox"ng-model="user.visualstudio"> .NET & Visual Studio
-             </label>
-            </div>
             
+          <label for='address'>Adress</label>
+          <input type='address' name='adress' class="form-control" ng-model="user.street_address" placeholder="Adress" ng-minlength="10" ng-maxlength="12" required/>
+            
+          <label for='post'>Postnummer</label>
+          <input type='post' name='post' class="form-control" ng-model="user.postal_code" placeholder="Postadress" ng-minlength="10" ng-maxlength="12" required/>
+            
+          <label for='stad'>Stad</label>
+          <input type='stad' name='stad' class="form-control" ng-model="user.city" placeholder="Stad" ng-minlength="10" ng-maxlength="12" required/>
+            
+          <label for='phone'>Telefonnummer</label>
+          <input type='phone' name='phone' class="form-control" ng-model="user.phone" placeholder="Telefonnummer" ng-minlength="10" ng-maxlength="16" required/>
+            <div ng-show="form.phone.$error.required">Fyll i telefonnummer.</div>
+            <br>
+          <!--Behövs inte, annat exemplel bara
+           <div class="checkbox"><label>
+                <input type="checkbox" ng-click="checkReg()"ng-model="user.company">Företag
+             </label>
+          </div>
+         *******************************-->
+
+          <select ng-model="isEnabled" ng-options="choice == 'Företag' as choice for choice in ['Företag', 'Privat']"></select><br>
+
+
+          <label for='companyname'>Företagsnamn</label>
+          <input type='text' name='companyname' class="form-control" placeholder="Företagsnamn" ng-model="user.company_name" ng-readonly="!isEnabled" ng-class="{ disabled: !isEnabled }">
+
+          <label for='orgnumber'>Organisationsnummer</label>
+          <input type='text' ng-model="user.org_nr" class="form-control" placeholder="Org nummer" ng-readonly="!isEnabled" ng-class="{ disabled: !isEnabled }"><br>
 
           <button ng-click="save()" class="btn btn-success">Spara</button>
 
-
+          </div>
       </form>
     </div> 
   </div> 
