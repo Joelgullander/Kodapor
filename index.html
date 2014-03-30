@@ -9,54 +9,57 @@
     <script src="modernizr.custom.js"></script>
   </head>
   <body ng-controller="appCtrl">
-    <div class="navbar navbar-default navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">Kodapor</a> 
+    
+      <div class="navbar navbar-default navbar-static-top">
+        <div class="container">
 
-        </div> 
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-          </button>
-        </div><!--.navbar-header-->
-      <div class="navbar-collapse collapse" id="navbar-main">
-        <!-- go to login view if not already logged in, else logout and return to homepage -->
-        <ul class="nav navbar-nav">
-          <li><a ng-href="{{ loginStatus() ? 'myprofile' : '' }}">{{ loginStatus() ? "Min profil" : "" }}</a></li>
-          <li><a href="browse">Sök profiler</a></li>
-          <li><a ng-href="{{whereToGo.link}}" ng-click="whereToGo.text == 'Logga ut' && logOut()"> {{ whereToGo.text }} </a></li>
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Kodapor</a>  
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+            </button>
+          </div><!--.navbar-header-->
 
-          <li class="divider"></li>
-          <li><a ng-href="new_ad">Lägg till nytt annons</a></li>
-        </ul>
-        <p class="navbar-text navbar-left"> {{ loginStatus() ? "Inloggad som " + getFullName() : "Inte inloggad" }} </p>
-
-        <ul class="nav navbar-nav navbar-right">
-          <form class="navbar-form navbar-right" role="form">
-            <div class="form-group">
-              <input type="text" name="username" ng-model="username" class="form-control" placeholder="Användarnamn" required>
-            </div>
-            <div class="form-group">
-              <input  type="password" name="password" ng-model="password" ng-minlength="6" class="form-control" placeholder="Lösenord"required>
-            </div>
-            <button ng-click="sendForm(username,password)"  class="btn btn-success">Logga in</button>
+          <div class="navbar-collapse collapse" id="navbar-main">
             
-          </form>
-      </ul>
-      </div><!--.navbar-collapse-->
-    </div><!--.container-->
-    </div><!--.navbar-->
+            <!-- go to login view if not already logged in, else logout and return to homepage -->
+            <ul class="nav navbar-nav">
+              <li><a ng-href="{{ loginStatus() ? 'myprofile' : '' }}">{{ loginStatus() ? "Min profil" : "" }}</a></li>
+              <li><a href="browse">Sök profiler</a></li>
+              <li><a ng-href="{{whereToGo.link}}" ng-click="whereToGo.text == 'Logga ut' && logOut()"> {{ whereToGo.text }} </a></li>
 
-        <!-- go to login view if not already logged in, else logout and return to homepage -->    
-  
-    <div class="views" ng-view></div>
+              <li class="divider"></li>
+              <li><a ng-href="new_ad">Lägg till nytt annons</a></li>
+            </ul>
 
-    <div class="navbar navbar-default navbar-static-bottom myFooter">
-      <p class="navbar-text">All rights reserved - Kodapor </p>
-    </div>
+            <p class="navbar-text navbar-left"> {{ loginStatus() ? "Inloggad som " + getFullName() : "Inte inloggad" }} </p>
+
+            <ul class="nav navbar-nav navbar-right">
+              <form class="navbar-form navbar-right" role="form">
+                <div class="form-group">
+                  <input type="text" name="username" ng-model="username" class="form-control" placeholder="Användarnamn" required>
+                </div>
+                <div class="form-group">
+                  <input  type="password" name="password" ng-model="password" ng-minlength="6" class="form-control" placeholder="Lösenord"required>
+                </div>
+                <button ng-click="sendForm(username,password)"  class="btn btn-success">Logga in</button>
+                
+              </form>
+            </ul>
+          </div><!--.navbar-collapse-->
+        </div><!--.container-->
+      </div><!--.navbar-->
+
+          <!-- go to login view if not already logged in, else logout and return to homepage -->    
+    
+      <div class="views" ng-view></div>
+
+      <div class="navbar navbar-default navbar-static-bottom myFooter">
+        <p class="navbar-text">All rights reserved - Kodapor </p>
+      </div>
 
   </body>
 </html>
