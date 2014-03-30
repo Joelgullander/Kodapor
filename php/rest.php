@@ -67,7 +67,7 @@
 
         $q = $connection -> prepare("CALL create_account(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         $q -> execute($input['userdata']);
-
+        exit(json_encode($q->fetchAll(PDO::FETCH_ASSOC)));
         exit;
 
       case 'advertisement':

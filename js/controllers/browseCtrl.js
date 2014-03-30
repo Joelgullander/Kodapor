@@ -4,6 +4,7 @@ var ctype,bits;
 computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','CacheService','MetaService', function($scope,$http,$location,CacheService,MetaService) {
 
   var pageSize = 6;
+  var resultHeight;
 
   console.log("cache: ", CacheService.all(), " totalStorage: ",$.totalStorage('Kodapor'));
 
@@ -81,6 +82,9 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
     }).success(function(data){
       $('.cards').addClass('flipped');
       $('.flips .cards .back').css({'display':'block'});
+      // Thank you jQuery!!!
+      resultHeight = resultHeight || $('.back').height();
+      $('body').css({'height':resultHeight+500});
       // Prepare and display data
       $scope.result = data;
       $scope.resultPage = data.slice(0,pageSize);
@@ -143,6 +147,13 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
   $scope.go = function(path,post){
     CacheService.call("destination",post);
     $location.path(path);
+  };
+
+  $scope.newSearch = function() {
+    //$('.flips .cards .back').css({'display':'none'});
+    $('.cards').removeClass('flipped');
+    $('body').css({'height':'auto'});
+    alert($('.back').height());
   };
 
   // Eventhandlers for selected categories and tags. 

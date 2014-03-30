@@ -1,3 +1,7 @@
+body {
+  min-height: 800px;
+  position: relative;
+}
 .content {
   display: block;
   height: auto;
@@ -12,6 +16,11 @@
 }
 .my-hidden {
   display: none !important;
+}
+.nysk {
+  float: right;
+  position: relative;
+  top: 20px;
 }
 .center-block {
   float: none;
@@ -39,6 +48,11 @@
 .navbar-fixed-top,
 .navbar-fixed-bottom {
   border-radius: 0;
+}
+.navbar-static-bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 .navbar-form {
   margin-bottom: 10px;

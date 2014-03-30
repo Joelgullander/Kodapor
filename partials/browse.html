@@ -1,6 +1,6 @@
 
 <div class="container">
-  <div class="col-sm-10 flips">
+  <div class="col-sm-9 flips">
     <div class="cards">
       <div class="col-sm-12 wrapper face front">
           <div class="row">
@@ -130,6 +130,7 @@
             <div class="col-sm-10 col-sm-offset-1" >
               <span class="resultHeader">{{ resultHeader }}</span>
               <hr>
+              <button type="button" class="btn btn-default btn-sm btn-warning nysk" ng-click="newSearch()"><span class="glyphicon glyphicon-search"></span>Ny sökning</button>
               <ul class="pagination">
                 <li class="disabled"><a href="">«</a></li> <!-- out of scope, fix  page-1 -->
                 <li class="active" ng-repeat="page in pages"><a ng-click="getResultPage(page-1)">{{page}}</a></li>
@@ -155,6 +156,7 @@
           <div class="row">
             <div class="col-sm-10 col-sm-offset-1" >
               <hr>
+              <button type="button" class="btn btn-default btn-sm btn-warning nysk" ng-click="newSearch()"><span class="glyphicon glyphicon-search"></span>Ny sökning</button>
               <ul class="pagination">
                 <li class="disabled"><a href="#">«</a></li> <!-- out of scope, fix  page-1 -->
                 <li class="active" ng-repeat="page in pages"><a ng-click="getResultPage(page-1)">{{page}}</a></li>
@@ -170,7 +172,7 @@
 
   </div> <!-- row flips -->
 
-    <div class="col-sm-2 wrapper">
+    <div class="col-sm-2">
       <h5 class="center-block">Sökkriterier</h5>
       <label class="taglist">Kompetensområden: </label><br>
         <ul class="taglist"><li class="catcloud" ng-repeat="cat in selectedCategories">{{cat}}</li></ul><br>

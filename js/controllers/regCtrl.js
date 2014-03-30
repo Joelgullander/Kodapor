@@ -40,7 +40,7 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
     $http({
       url:'php/rest.php/account/',
       method: method,
-      data: resultArray ,
+      data: {'userdata':resultArray} ,
       headers : {
         'Content-Type' : 'application/json; charset=UTF-8'
       }
@@ -58,7 +58,7 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
     }
     else{
 
-    resultArray.push("Andreas","ab@live.se","123","Andreas","Benatti","790512","Torggatan 34","23361","Bara","0736211454",null,null,null,null,null,null);//l,testData.password,testData.firstname,testData.lastname,testdata.personal_id,testData.street_adress,testData.postal_code,testData.city,testData.phone,null,null,null,testData.company_name,restData.org_nr,null);//,$scope.user.email,$scope.user.password,$scope.user.firstname,$scope.user.lastname, ,$scope.user.street_address,$scope.user.postal_code,$scope.user.city,$scope.user.phone, , , ,$scope.user.company_name,$scope.user.org_nr,...);
+    resultArray.push("Andreas","ab@live.se","123456","Andreas","Benatti","790512","Torggatan 34","23361","Bara","0736211454",null,0,null,null,null,null);//l,testData.password,testData.firstname,testData.lastname,testdata.personal_id,testData.street_adress,testData.postal_code,testData.city,testData.phone,null,null,null,testData.company_name,restData.org_nr,null);//,$scope.user.email,$scope.user.password,$scope.user.firstname,$scope.user.lastname, ,$scope.user.street_address,$scope.user.postal_code,$scope.user.city,$scope.user.phone, , , ,$scope.user.company_name,$scope.user.org_nr,...);
           
       /*
       var obj = testData;
