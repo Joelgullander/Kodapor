@@ -23,30 +23,31 @@
   </head>
 
   <body>
-    <h3>Registreringssidan</h3>
-    <p>För denna sida har gränssnittet mot php ändrats. SQL hanteringen ligger nu i själva databasen i en stored procedure, och php förväntar sig en array med värdena arrangerade i en specifik ordning, som den bara skickar vidare till MySQL. Ordningen listas nedan:</p>
-    <ul>
-      -- Parameters for account table --
-      <li>username<span>VARCHAR(32)</li>
-      <li>email<span>VARCHAR(64)</span></li>
-      <li>password<span>VARCHAR(32)</span></li>
-
-      -- Parameters for user table --
-      <li>firstname<span>VARCHAR(32)</span></li>
-      <li>lastname<span>VARCHAR(32)</span></li>
-      <li>personal_id<span>VARCHAR(16)</span></li>
-      <li>street_address<span>VARCHAR(64)</span></li>
-      <li>postal_code<span>VARCHAR(16)</span></li>
-      <li>city<span>VARCHAR(32)</span></li>
-      <li>phone<span>VARCHAR(64)</span></li>
-      <li>cell_phone<span>VARCHAR(64)</span></li>
-      <li>company_tax<span>TINYINT</span></li>
-      <li>company_type<span>VARCHAR(32)</span></li>
-      <li>company_name<span>VARCHAR(64)</span></li>
-      <li>org_nr<span>VARCHAR(32)</span></li>
-      <li>company_size<span>INT(11)</span></li>
-    </ul>
-    <p>När du samlat ihop värdena i ett objekt, ex $scope.userData så ska de alltså omvandlas till en enel array med bara värdena i denna ordning. Detta kan man lätt göra med array-metoden .map(), så som det är gjort på söksidan som använder samma modell, så slipper du använda [$scope.userData.username,$scope.userData.email,...]</p>
-    <code>$http({<br>&nbsp;&nbsp;method:'POST',<br>&nbsp;&nbsp;url:'account',&nbsp;&nbsp;data:{'userdata':<br>&nbsp;&nbsp;&nbsp;&nbsp;['username','email','password','firstname',...,'org_nr','company_size']<br>&nbsp;&nbsp;&nbsp;&nbsp;.map(function(item){<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return $scope.userData[item];<br>&nbsp;&nbsp;&nbsp;&nbsp;})<br>&nbsp;&nbsp;}<br>});</code>
+    <div id="API-content">
+      <h3>Registreringssidan</h3>
+      <p>För denna sida har gränssnittet mot php ändrats. SQL hanteringen ligger nu i själva databasen i en stored procedure, och php förväntar sig en array med värdena arrangerade i en specifik ordning, som den bara skickar vidare till MySQL. Ordningen listas nedan:</p>
+      <ul>
+        -- Parameters for account table --
+        <li>username<span>VARCHAR(32)</li>
+        <li>email<span>VARCHAR(64)</span></li>
+        <li>password<span>VARCHAR(32)</span></li>
+        -- Parameters for user table --
+        <li>firstname<span>VARCHAR(32)</span></li>
+        <li>lastname<span>VARCHAR(32)</span></li>
+        <li>personal_id<span>VARCHAR(16)</span></li>
+        <li>street_address<span>VARCHAR(64)</span></li>
+        <li>postal_code<span>VARCHAR(16)</span></li>
+        <li>city<span>VARCHAR(32)</span></li>
+        <li>phone<span>VARCHAR(64)</span></li>
+        <li>cell_phone<span>VARCHAR(64)</span></li>
+        <li>company_tax<span>TINYINT</span></li>
+        <li>company_type<span>VARCHAR(32)</span></li>
+        <li>company_name<span>VARCHAR(64)</span></li>
+        <li>org_nr<span>VARCHAR(32)</span></li>
+        <li>company_size<span>INT(11)</span></li>
+      </ul>
+      <p>När du samlat ihop värdena i ett objekt, ex $scope.userData så ska de alltså omvandlas till en enkel array med bara värdena i denna ordning. Detta kan man lätt göra med array-metoden .map(), så som det är gjort på söksidan som använder samma modell, så slipper du använda [$scope.userData.username,$scope.userData.email,...]</p>
+      <code>$http({<br>&nbsp;&nbsp;method:'POST',<br>&nbsp;&nbsp;url:'account',<br>&nbsp;&nbsp;data:{'userdata':<br>&nbsp;&nbsp;&nbsp;&nbsp;['username','email','password','firstname',...,'org_nr','company_size']<br>&nbsp;&nbsp;&nbsp;&nbsp;.map(function(item){<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return $scope.userData[item];<br>&nbsp;&nbsp;&nbsp;&nbsp;})<br>&nbsp;&nbsp;}<br>});</code>
+    </div>
   </body>
 </html>

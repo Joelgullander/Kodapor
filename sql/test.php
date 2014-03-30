@@ -4,12 +4,11 @@
     <title>PHP-test</title>
     <script src="../js/libs/jquery.js"></script>
     <script>
-      $.ajax({
-        method: 'GET',
-        url: '../php/rest.php/meta/',
-        success: function(data){
-          console.log(data);
-        }
+      var user = {"username":"StureFahlstedt","email":"sture.fahlstedt@gmail.com","user_id":"13","firstname":"Sturen","lastname":"Fahlsted","personal_id":"1922268267","street_address":"Kvacksalvargränd 2b","postal_code":"123 45","city":"Ankeborg","phone":"016961983","cell_phone":"0709190486","company_tax":"0","company_type":"","company_name":"NULL","org_nr":"NULL","company_size":"0","content_id":"13","active_out":"1","active_in":"1","visible":"1","display_name":"Sture Fahlstedt","content":"Hopplsansns","snippet":"\tlorem ipsum vestibulum nunc aenean sollicitudin sem phasellus class pretium sagittis, at orci ac vulputate lacinia himenaeos purus pharetra purus nunc, quisque sit sagittis massa litora ad praesent aptent blandit. ","categories":"11,8,1","tags":"47,25,45,29,9,5","experience":"24","cv":"cvRepo/cv-plaincv.pdf","portrait":"imageRepo/profiles/profile-pic-300x291.jpg","image_logo":null,"image_view":null,"date_created":"2014-03-24","date_updated":"2014-03-29"}      $.ajax({
+      $.ajax({ 
+        method:'PUT',
+        url:'profile',
+        data: user
       });
     </script>
   </head>
@@ -17,7 +16,7 @@
   <body>
   <p>Testplatta för php-satser</p>
   <?php
-  /*
+  
     $host = "localhost";
     $db = "coderspool";
     try {
@@ -157,9 +156,10 @@
       echo "<br><br>";
       echo(json_encode($sql));
 */
-/*    
+    $sql = "SELECT * FROM profile WHERE content_id = 13";  
     $q = $connection->prepare($sql);
     $q -> execute();
+    echo(json_encode($q -> fetchAll(PDO::FETCH_ASSOC)[0]));
     
     /*Edit profile (update)*/
 

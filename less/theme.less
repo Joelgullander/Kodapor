@@ -102,23 +102,7 @@
 // Navbar
 // --------------------------------------------------
 
-// Default navbar
-.navbar-default {
-  #gradient > .vertical(@start-color: lighten(@navbar-default-bg, 10%); @end-color: @navbar-default-bg);
-  .reset-filter(); // Remove gradient in IE<10 to fix bug where dropdowns don't get triggered
-  border-radius: @navbar-border-radius;
-  @shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 5px rgba(0,0,0,.075);
-  .box-shadow(@shadow);
 
-  .navbar-nav > .active > a {
-    #gradient > .vertical(@start-color: darken(@navbar-default-bg, 5%); @end-color: darken(@navbar-default-bg, 2%));
-    .box-shadow(inset 0 3px 9px rgba(0,0,0,.075));
-  }
-}
-.navbar-brand,
-.navbar-nav > li > a {
-  text-shadow: 0 1px 0 rgba(255,255,255,.25);
-}
 
 // Inverted navbar
 .navbar-inverse {
@@ -136,12 +120,7 @@
   }
 }
 
-// Undo rounded corners in static and fixed navbars
-.navbar-static-top,
-.navbar-fixed-top,
-.navbar-fixed-bottom {
-  border-radius: 0;
-}
+
 
 
 
@@ -263,7 +242,7 @@ input {border-radius: 4px;}
 * Footer
 */
 
-.footer { width: 1600px; background-color: #000000; height: 60px; color: #ffffff; padding: 20px 0px; margin-top: 30px;}
+.footer {  background-color: #000000; height: 60px; color: #ffffff; padding: 20px 0px; margin-top: 30px;}
 .copyright {color:#ffffff}
 
 #searchTextResult h4 {text-align: center;}
@@ -371,6 +350,7 @@ border-radius: .25em;}
 #activenav {
   background-color:black;
 }
+
 
 .flip {
   display:inline-block;
@@ -497,30 +477,27 @@ border-radius: .25em;}
 }
  /* browse */
  img.browse {
-  margin-right: 20px;
+  margin: 20px;
   float: left;
-  height: 100px;
+  height: 60px;
   width: auto;
 }
 
 li.browse {
-  height: 130px;
-  margin-bottom: 10px;
-  padding: 15px;
+  padding: 0px;
+  font-size: 10px;
+}
+
+.browse a {
+  text-decoration: none;
+  color: black;
+  padding-bottom: 25px;
+}
+/*
+li.browse:hover {
   border: 1px solid gray;
 }
-
-a {
-  text-decoration: none;
-}
-
-li.browse:hover {
-  background: gray;
-}
-
-fieldset.browse {
-  margin-bottom: 30px;
-}
+*/
 
 .tagcontainer {
   position: relative;
@@ -532,15 +509,15 @@ select.tags {
   width: 200px; 
   text-align: center;
   vertical-align: middle;
-  margin-left: 30px;
-  margin-right: 30px;
+  margin-left: 0px;
+  margin-right: 0px;
 
 }
 
 label.taglist {
   width:170px;
   margin-right: 20px;
-  text-align: right;
+
 }
 
 .taglist li {

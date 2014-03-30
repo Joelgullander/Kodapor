@@ -132,7 +132,6 @@ computenzServices.service('CacheService', function() {
         $.totalStorage('Kodapor',cache);
       }
       else {
-        console.log("Returning cache...");
         return cache[prop];
       }
     },
@@ -154,7 +153,8 @@ computenzServices.service('CacheService', function() {
       $.totalStorage('Kodapor',cache);
     },
     loadCache: function(){
-      cache = $.totalStorage('Kodapor');
+      if ($.totalStorage('Kodapor'))
+        cache = $.totalStorage('Kodapor');
     }
   };
 });

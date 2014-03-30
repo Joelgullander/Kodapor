@@ -18,7 +18,7 @@ computenzControllers.controller('ProfileCtrl', ['$scope','$http','$location','$r
 
   $http({
     method: "GET",
-    url: "php/advertisements/" + $scope.user.user_id, // OBS! pluralis must remain! Otherwise it gets single ad and probably wrong ad
+    url: "php/advertisements/" + $scope.user.content_id, // OBS! pluralis must remain! Otherwise it gets single ad and probably wrong ad
     headers : {
       'Content-Type' : 'application/json; charset=UTF-8'
     }
@@ -41,7 +41,5 @@ computenzControllers.controller('ProfileCtrl', ['$scope','$http','$location','$r
   $scope.edit = function(){
     $location.path('profile/edit/'+UserService.getUsername());
   };
-
   console.log("Profile data: ", $scope.user);
-
 }]);

@@ -207,7 +207,7 @@
       }
 
       $sql = substr($sql.$setStatements,0,-1) . " WHERE $primaryKey = '$id';";
-
+      var_dump($sql);
       $q = $connection->prepare($sql);
       $q -> execute();
       
@@ -224,6 +224,8 @@
     };
 
     update($target);
+
+    $_SESSION['LoginHandlerCurrentUser'] = json_encode($input);
 
   }
   
