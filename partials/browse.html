@@ -1,185 +1,189 @@
 
 
 <div class="container">
-  <div class="row">
-    <div class="col-sm-8 col-sm-offset-2 wrapper">
-      <div class="face front">
-      <div class="row">
-        <h2>Sökformulär</h2><br>
-        
-        <div class="col-sm-4 center-block">  
-          <input type="radio" name="maincategory" ng-model="main" ng-click="req.main='advertisement'" value="1">Annonser</input>
-          <input type="radio" name="maincategory" ng-model="main" ng-click="req.main='profile'" value="2">Profiler</input>
-        </div>
-        <br>
-
-        <div class="col-sm-10 col-sm-offset-1">
-          <input type="text" class="form-control" placeholder="sök fritext" ng-model="req.searchText"><br><br>
-        </div>
-
-        <div class="col-sm-5 col-xs-12 col-sm-offset-1">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h4>
-                Urval:
-              </h4>  
+  <div class="col-sm-10 flips">
+    <div class="cards">
+      <div class="col-sm-12 wrapper face front">
+          <div class="row">
+            <h2>Sökformulär</h2><br>
+            
+            <div class="col-sm-4 center-block">  
+              <input type="radio" name="maincategory" ng-model="main" ng-click="req.main='advertisement'" value="1">Annonser</input>
+              <input type="radio" name="maincategory" ng-model="main" ng-click="req.main='profile'" value="2">Profiler</input>
             </div>
-            <div class="panel-body">
-              <label for="categories">Kompetensområde: </label> 
-              <select class="tags" name="categories" 
-                ng-model="catSelected"
-                ng-change="selectedCategories.push(catSelected)"
-                ng-options="cat as cat for cat in categories">
-                <option value="">Välj</option>
-              </select>
-              <!-- Select-box for tags -->
-              <label for="tags">Nyckelord: </label>
-              <select class="tags" name="tags" 
-                ng-model="tagSelected"
-                ng-change="selectedTags.push(tagSelected)"
-                ng-options="tag as tag for tag in tags">
-                <option value="">Välj</option>
-              </select>
-              <!-- Select-box for experience -->
-              <label for="experience">Erfarenhet/år i branchen: </label>
-              <select class="tags" ng-model="req.experience" name="experience">
-                <option value="0" default>Inget krav</option>
-                <option value="1">minst 1 år</option>
-                <option value="3">minst 3 år</option>
-                <option value="5">minst 5 år</option>
-                <option value="10">minst 10 år</option>
-              </select> 
+            <br>
+
+            <div class="col-sm-10 col-sm-offset-1">
+              <input type="text" class="form-control" placeholder="sök fritext" ng-model="req.searchText"><br><br>
+            </div>
+
+            <div class="col-sm-5 col-xs-12 col-sm-offset-1">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4>
+                    Urval:
+                  </h4>  
+                </div>
+                <div class="panel-body">
+                  <label for="categories">Kompetensområde: </label> 
+                  <select class="tags" name="categories" 
+                    ng-model="catSelected"
+                    ng-change="selectedCategories.push(catSelected)"
+                    ng-options="cat as cat for cat in categories">
+                    <option value="">Välj</option>
+                  </select>
+                  <!-- Select-box for tags -->
+                  <label for="tags">Nyckelord: </label>
+                  <select class="tags" name="tags" 
+                    ng-model="tagSelected"
+                    ng-change="selectedTags.push(tagSelected)"
+                    ng-options="tag as tag for tag in tags">
+                    <option value="">Välj</option>
+                  </select>
+                  <!-- Select-box for experience -->
+                  <label for="experience">Erfarenhet/år i branchen: </label>
+                  <select class="tags" ng-model="req.experience" name="experience">
+                    <option value="0" default>Inget krav</option>
+                    <option value="1">minst 1 år</option>
+                    <option value="3">minst 3 år</option>
+                    <option value="5">minst 5 år</option>
+                    <option value="10">minst 10 år</option>
+                  </select> 
+                </div>
+              </div>  
+            </div>  
+              
+
+    <!--
+              <div id="searchMain">
+                <! Radio buttons  -  advertisement/profile search -->
+
+                
+                <!-- Radio buttons  -  user types selection 
+
+                <input type="radio" name="profilecategory" ng-model="selection" value="1">Företag och privatpersoner</input>
+                <input type="radio" name="profilecategory" ng-model="selection" value="2">Endast företag</input> 
+                <input type="radio" name="profilecategory" ng-model="selection" value="3">Endast privatpersoner</input> -->
+                
+                <!-- Checkboxes 
+
+                
+                <label class="checkbox"><input type="checkbox" 
+                  ng-model="req.inactive" ng-true-value="1" ng-false-value="0" value="0"> Visa även inaktiva profiler</label>
+                
+                <br>
+              </div>-->
+
+            
+
+            <div class="col-sm-5">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <label class="checkbox"><input type="checkbox" 
+                  ng-model="req.company_tax" ng-true-value="1" ng-false-value="0" value="0">Företagssökning</label>
+                  </h3>
+                </div>
+                <div class="panel-body">
+                  <label class="checkbox"><input type="checkbox" 
+                    ng-model="types[0]" ng-true-value="1" ng-false-value="0">Aktiebolag</label>
+                  <label class="checkbox"><input type="checkbox" 
+                    ng-model="types[1]" ng-true-value="2" ng-false-value="0">Enskild firma</label>
+                  <label class="checkbox"><input type="checkbox" 
+                    ng-model="types[2]" ng-true-value="4" ng-false-value="0">Handelsbolag</label>
+                  <label class="checkbox"><input type="checkbox" 
+                    ng-model="types[3]" ng-true-value="8" ng-false-value="0">Ekonomisk förening</label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+              <!-- Text search -->
+
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">   
+              
+
+              <!-- Select-box for categories -->
+
+              
+
+
+              
+
+              <!-- Display rows for selected categories and tags -->
+
+              <hr>
+         
+
+              <!-- Field with search button and result header -->
+
+              <button type="button" class="btn btn-default btn-lg btn-warning" ng-click="search()"><span class="glyphicon glyphicon-search"></span> Sök</button>
+              <button type="button" class="btn btn-default btn-lg btn-warning" ng-click="reset()"><span class="glyphicon right"></span> Rensa</button>
+              
+
+            </div>
+          </div>
+
+      </div> <!-- face front -->
+
+
+          <!-- PAGINATION ABOVE BLOCK -->
+
+      <div class="col-sm-12 wrapper face back">    
+         <!--  {{ req }} <br> {{ cType }} -->
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1" >
+              <span class="resultHeader">{{ resultHeader }}</span>
+              <hr>
+              <ul class="pagination">
+                <li class="disabled"><a href="">«</a></li> <!-- out of scope, fix  page-1 -->
+                <li class="active" ng-repeat="page in pages"><a ng-click="getResultPage(page-1)">{{page}}</a></li>
+                <li class="active">{{pageTail}}</li> 
+              </ul>
+              <hr>
             </div>
           </div>  
-        </div>  
-          
-
-<!--
-          <div id="searchMain">
-            <! Radio buttons  -  advertisement/profile search -->
-
-            
-            <!-- Radio buttons  -  user types selection 
-
-            <input type="radio" name="profilecategory" ng-model="selection" value="1">Företag och privatpersoner</input>
-            <input type="radio" name="profilecategory" ng-model="selection" value="2">Endast företag</input> 
-            <input type="radio" name="profilecategory" ng-model="selection" value="3">Endast privatpersoner</input> -->
-            
-            <!-- Checkboxes 
-
-            
-            <label class="checkbox"><input type="checkbox" 
-              ng-model="req.inactive" ng-true-value="1" ng-false-value="0" value="0"> Visa även inaktiva profiler</label>
-            
-            <br>
-          </div>-->
-
-        
-
-        <div class="col-sm-5">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">
-                <label class="checkbox"><input type="checkbox" 
-              ng-model="req.company_tax" ng-true-value="1" ng-false-value="0" value="0">Företagssökning</label>
-              </h3>
-            </div>
-            <div class="panel-body">
-              <label class="checkbox"><input type="checkbox" 
-                ng-model="types[0]" ng-true-value="1" ng-false-value="0">Aktiebolag</label>
-              <label class="checkbox"><input type="checkbox" 
-                ng-model="types[1]" ng-true-value="2" ng-false-value="0">Enskild firma</label>
-              <label class="checkbox"><input type="checkbox" 
-                ng-model="types[2]" ng-true-value="4" ng-false-value="0">Handelsbolag</label>
-              <label class="checkbox"><input type="checkbox" 
-                ng-model="types[3]" ng-true-value="8" ng-false-value="0">Ekonomisk förening</label>
-            </div>
-          </div>
-        </div>
-
-      </div>
-          <!-- Text search -->
-
-      <div class="row">
-        <div class="col-sm-10 col-sm-offset-1">   
-          
-
-          <!-- Select-box for categories -->
-
-          
-
-
-          
-
-          <!-- Display rows for selected categories and tags -->
-
-          <hr>
-     
-
-          <!-- Field with search button and result header -->
-
-          <button type="button" class="btn btn-default btn-lg btn-warning" ng-click="search()"><span class="glyphicon glyphicon-search"></span> Sök</button>
-          <button type="button" class="btn btn-default btn-lg btn-warning" ng-click="reset()"><span class="glyphicon right"></span> Rensa</button>
-          <span class="resultHeader">{{ resultHeader }}</span>
-
-        </div>
-      </div>
-      </div>
-        <!-- PAGINATION ABOVE BLOCK -->
-
-        
-       <!--  {{ req }} <br> {{ cType }} -->
-      <div class="face back">
-        <div class="row">
-          <div class="col-sm-10 col-sm-offset-1" >
-            <hr>
-            <ul class="pagination">
-              <li class="disabled"><a href="">«</a></li> <!-- out of scope, fix  page-1 -->
-              <li class="active" ng-repeat="page in pages"><a ng-click="getResultPage(page-1)">{{page}}</a></li>
-              <li class="active">{{pageTail}}</li> 
-            </ul>
-            <hr>
-          </div>
-        </div>  
-       
          
-        <!-- RESULT SET: ng-repeated 'li'-element defines the blueprint for each result item -->
-        <div class="row">
-          <div class="col-sm-10 col-sm-offset-1">
-            <ul>
-              <li class="browse" ng-repeat="post in resultPage" ng-click="go(req.main + '/' + post.content_id, post)"><a href="" class="thumbnail"><img class="browse" ng-src="php/{{ post.image_logo || post.portrait || post.image }}"> <h6>{{post.display_name}}</h6> {{ post.snippet }}</a> </li>
-            </ul>
+           
+          <!-- RESULT SET: ng-repeated 'li'-element defines the blueprint for each result item -->
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+              <ul>
+                <li class="browse" ng-repeat="post in resultPage" ng-click="go(req.main + '/' + post.content_id, post)"><a href="" class="thumbnail"><img class="browse" ng-src="php/{{ post.image_logo || post.portrait || post.image }}"> <h6>{{post.display_name}}</h6> {{ post.snippet }}</a> </li>
+              </ul>
+            </div>
           </div>
-        </div>
 
-        <!-- PAGINATION BELOW BLOCK -->
+          <!-- PAGINATION BELOW BLOCK -->
 
-        
-        <div class="row">
-          <div class="col-sm-10 col-sm-offset-1" >
-            <hr>
-            <ul class="pagination">
-              <li class="disabled"><a href="#">«</a></li> <!-- out of scope, fix  page-1 -->
-              <li class="active" ng-repeat="page in pages"><a ng-click="getResultPage(page-1)">{{page}}</a></li>
-              <li class="active">{{pageTail}}</li> 
-            </ul>
-            <hr>
+          
+          <div class="row">
+            <div class="col-sm-10 col-sm-offset-1" >
+              <hr>
+              <ul class="pagination">
+                <li class="disabled"><a href="#">«</a></li> <!-- out of scope, fix  page-1 -->
+                <li class="active" ng-repeat="page in pages"><a ng-click="getResultPage(page-1)">{{page}}</a></li>
+                <li class="active">{{pageTail}}</li> 
+              </ul>
+              <hr>
+            </div>
           </div>
-        </div>
-      </div>
 
-    </div>
+      </div> <!-- face back -->
+
+    </div> <!-- cards -->
+
+  </div> <!-- row flips -->
 
     <div class="col-sm-2 wrapper">
       <h5 class="center-block">Sökkriterier</h5>
       <label class="taglist">Kompetensområden: </label><br>
         <ul class="taglist"><li class="catcloud" ng-repeat="cat in selectedCategories">{{cat}}</li></ul><br>
       <label class="taglist">Nyckelord: </label>
-        <ul class="taglist"><li class="tagcloud" ng-repeat="tag in selectedTags">{{tag}}</li></ul><br>
-          
+        <ul class="taglist"><li class="tagcloud" ng-repeat="tag in selectedTags">{{tag}}</li></ul><br>  
     </div>
 
-  </div>
-</div>
+</div> <!-- container -->
 
 

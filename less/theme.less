@@ -308,8 +308,9 @@ border-radius: .25em;}
 }
 
 .container{
-
+  overflow: visible;
 }
+
 .jumbotron{
   padding-top:0;
 }
@@ -351,6 +352,48 @@ border-radius: .25em;}
   background-color:black;
 }
 
+
+// Single flip 
+
+.flips {
+  position: relative;
+  .perspective(800);
+}
+
+.flips .cards.flipped {
+  .rotateX(-180deg);
+}
+
+.flips .cards {
+  position: relative;
+
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  .transition(0.5s);
+}
+
+.flips .cards .face {
+
+  .backface-visibility(hidden);
+}
+
+.flips .cards .front {
+
+}
+
+.flips .cards .back {
+  .rotateX(-180deg);
+  position: absolute;
+  bottom: 0;
+  display: none;
+}
+
+
+
+
+// Dual flip
 
 .flip {
   display:inline-block;
@@ -533,10 +576,12 @@ ul.taglist {
 
 .catcloud {
   background: lightgreen;
+  font-size: 10px;
 }
 
 .tagcloud {
   background: orange;
+  font-size: 10px;
 }
 
 .resultHeader {

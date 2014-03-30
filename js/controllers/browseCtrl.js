@@ -79,7 +79,8 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
         'Content-Type' : 'application/json; charset=UTF-8'
       }
     }).success(function(data){
-
+      $('.cards').addClass('flipped');
+      $('.flips .cards .back').css({'display':'block'});
       // Prepare and display data
       $scope.result = data;
       $scope.resultPage = data.slice(0,pageSize);
