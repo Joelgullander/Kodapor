@@ -53,13 +53,13 @@ computenzControllers.controller('RegCtrl', ['$scope','$http', 'UserService', fun
   }
 
   function checkPassword () {
-   if(testData.password !==testData.repeatPassword){
+   if(testData.password !==$scope.user.repeatPassword){
       alert("password dont match");
     }
     else{
 
-    resultArray.push(testData.username,testData.email,testData.password,testData.firstname,testData.lastname,testData.street_adress,testData.postal_code,testData.city,testData.phone,testData.company_name,restData.org_nr);//,$scope.user.email,$scope.user.password,$scope.user.firstname,$scope.user.lastname, ,$scope.user.street_address,$scope.user.postal_code,$scope.user.city,$scope.user.phone, , , ,$scope.user.company_name,$scope.user.org_nr,...);
-      
+    resultArray.push("Andreas","ab@live.se","123","Andreas","Benatti","790512","Torggatan 34","23361","Bara","0736211454",null,null,null,null,null,null);//l,testData.password,testData.firstname,testData.lastname,testdata.personal_id,testData.street_adress,testData.postal_code,testData.city,testData.phone,null,null,null,testData.company_name,restData.org_nr,null);//,$scope.user.email,$scope.user.password,$scope.user.firstname,$scope.user.lastname, ,$scope.user.street_address,$scope.user.postal_code,$scope.user.city,$scope.user.phone, , , ,$scope.user.company_name,$scope.user.org_nr,...);
+          
       /*
       var obj = testData;
       for (var prop in obj) {
