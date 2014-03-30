@@ -10,6 +10,9 @@ computenzControllers.controller('editProfileCtrl', ['$scope','$http','$routePara
   $scope.selectedCategories = MetaService.convertCategories($scope.user.categories);
   $scope.selectedTags = MetaService.convertTags($scope.user.tags);
 
+      $scope.user.categories = (MetaService.convertCategories($scope.selectedCategories)).join(",");
+    $scope.user.tags = (MetaService.convertTags($scope.selectedTags)).join(",");
+
   $http({
     url: 'php/profile_person/' + encodeURIComponent(currentUserProfile),
     method: 'GET',
