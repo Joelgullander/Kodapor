@@ -359,7 +359,8 @@ input {
 }
 .profileInfo {
   position: relative;
-  top: 140px;
+  top: 20px;
+  height:130px;
   background: white;
   opacity: 0.8;
 }
