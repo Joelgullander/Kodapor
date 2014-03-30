@@ -324,8 +324,9 @@ input {
   border-radius: .25em;
 }
 .myFooter {
+  bottom: -20px;
   margin-bottom: 1px;
-  margin-top: 65px;
+  margin-top: 120px;
 }
 /*-----------------Herbert CSS-------------*/
 .images {
