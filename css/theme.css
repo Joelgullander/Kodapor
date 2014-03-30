@@ -43,12 +43,6 @@ body {
 .navbar-fixed-bottom {
   border-radius: 0;
 }
-.navbar-static-bottom {
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  margin-top: 10px;
-}
 .navbar-form {
   margin-bottom: 10px;
 }
@@ -338,6 +332,12 @@ input {
   height: 350px;
   padding: 10px;
 }
+.modal-content {
+  width: 750px;
+}
+.panel-body {
+  background: cccccc;
+}
 .profileImage {
   position: absolute;
   top: 140px;
@@ -350,10 +350,11 @@ input {
 .imageView {
   position: absolute;
   top: 0;
-  width: 750px;
+  width: auto;
   height: auto;
   z-index: 0;
   margin-bottom: 50px;
+  background: red;
 }
 .profileInfo {
   position: relative;

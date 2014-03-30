@@ -10,9 +10,6 @@ computenzControllers.controller('editProfileCtrl', ['$scope','$http','$routePara
   $scope.selectedCategories = MetaService.convertCategories($scope.user.categories);
   $scope.selectedTags = MetaService.convertTags($scope.user.tags);
 
-  $scope.getFullName = UserService.getFullName;
-
-
 $scope.update = function(){
 
   $scope.user.categories = (MetaService.convertCategories($scope.selectedCategories)).join(",");
@@ -25,12 +22,11 @@ $scope.update = function(){
     headers : {
       'Content-Type' : 'application/json; charset=UTF-8'
     }
-  }).success ( function(data){
-    //UserService.setUser($scope.user);
+  }).success(function(data){
     CacheService.call('destination', $scope.user);
-    console.log("IN success: ",UserService.getUser());
-});
-
+    UserService.setUser
+    ($scope.user);
+  });
 };
 
 }]);
