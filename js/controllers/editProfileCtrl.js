@@ -10,6 +10,9 @@ computenzControllers.controller('editProfileCtrl', ['$scope','$http','$routePara
   $scope.selectedCategories = MetaService.convertCategories($scope.user.categories);
   $scope.selectedTags = MetaService.convertTags($scope.user.tags);
 
+      $scope.user.categories = (MetaService.convertCategories($scope.selectedCategories)).join(",");
+    $scope.user.tags = (MetaService.convertTags($scope.selectedTags)).join(",");
+
   $http({
     url: 'php/profile_person/' + encodeURIComponent(currentUserProfile),
     method: 'GET',
@@ -26,30 +29,6 @@ computenzControllers.controller('editProfileCtrl', ['$scope','$http','$routePara
 
   $scope.getFullName = UserService.getFullName;
 
-  // for save!
-
-  $scope.save = function() {
-    testData = $scope.user;
-    handlePerson('POST', testData);
-    console.log(testData);
-  };
-  function handlePerson(method, data) {
-
-    console.log(data);
-    //Add person to database!
-    $http({
-      url:'php/user_person/' + testData.username,
-      method: method,
-      data: data,
-      headers : {
-        'Content-Type' : 'application/json; charset=UTF-8'
-      }
-    }).success(function(data){
-      $scope.res = getUserAccount(testData.username);
-     
-    });
-  }
-
 $scope.update = function(){
   $http({
     method: "PUT",
@@ -58,6 +37,10 @@ $scope.update = function(){
     headers : {
       'Content-Type' : 'application/json; charset=UTF-8'
     }
+  }).success(function(data){
+    CacheService.call('destination', $scope.user);
+    UserService.setUser
+    ($scope.user);
   });
 
 };

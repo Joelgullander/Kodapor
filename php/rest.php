@@ -224,7 +224,7 @@
     };
 
     update($target);
-
+$_SESSION['LoginHandlerCurrentUser'] = json_encode($input);
   }
   
                   /***************************************
