@@ -9,7 +9,7 @@
     <script src="modernizr.custom.js"></script>
   </head>
   <body ng-controller="appCtrl">
-    
+
       <div class="navbar navbar-default navbar-static-top">
         <div class="container">
 
@@ -23,6 +23,8 @@
             </button>
           </div><!--.navbar-header-->
 
+          <p class="navbar-text navbar-left"> {{ loginStatus() ? "Inloggad som " + getFullName() : "Inte inloggad" }} </p>
+
           <div class="navbar-collapse collapse" id="navbar-main">
             
             <!-- go to login view if not already logged in, else logout and return to homepage -->
@@ -32,13 +34,14 @@
               <li><a ng-href="{{whereToGo.link}}" ng-click="whereToGo.text == 'Logga ut' && logOut()"> {{ whereToGo.text }} </a></li>
 
               <li class="divider"></li>
-              <li><a ng-href="new_ad">Lägg till nytt annons</a></li>
+              <li><a ng-href="new_ad">Lägg till ny annons</a></li>
             </ul>
 
-            <p class="navbar-text navbar-left"> {{ loginStatus() ? "Inloggad som " + getFullName() : "Inte inloggad" }} </p>
+            
 
             <ul class="nav navbar-nav navbar-right">
-              <form class="navbar-form navbar-right" role="form">
+              <!-- Login form navbar -->
+              <form class="navbar-form navbar-right" role="form" ng-show="!loginStatus()">
                 <div class="form-group">
                   <input type="text" name="username" ng-model="username" class="form-control" placeholder="Användarnamn" required>
                 </div>
@@ -46,9 +49,12 @@
                   <input  type="password" name="password" ng-model="password" ng-minlength="6" class="form-control" placeholder="Lösenord"required>
                 </div>
                 <button ng-click="sendForm(username,password)"  class="btn btn-success">Logga in</button>
-                
               </form>
+ 
+              
             </ul>
+
+
           </div><!--.navbar-collapse-->
         </div><!--.container-->
       </div><!--.navbar-->

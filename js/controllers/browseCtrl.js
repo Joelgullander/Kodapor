@@ -20,8 +20,9 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
   $scope.selectedCategories = CacheService.call('selectedCategories') || [];
   $scope.selectedTags = CacheService.call('selectedTags') || [];
 
-  $scope.main = CacheService.call('main') || 1;
-  $scope.selection = 1; // This choice has no function right now...
+  $scope.main = 'advertisement';
+  // $scope.main = CacheService.call('main') || 1;
+  // $scope.selection = 1; // This choice has no function right now...
 
   if ($scope.req) {
     $('select[name="experience"]').val($scope.req.experience);
@@ -42,8 +43,8 @@ computenzControllers.controller('BrowseCtrl', ['$scope','$http','$location','Cac
   };
 
   $scope.reset = function(){
-    //$scope.selectedCategories = [];
-    //$scope.selectedTags = [];
+    $scope.selectedCategories = [];
+    $scope.selectedTags = [];
   };
 
   $scope.search = function(){

@@ -1,77 +1,97 @@
-<div class="row" ng-controller='NewAdController'>
-  <div class="container">
-    <div class="col-md-6">
-      <h1>Registrering av nytt annons</h1>
-      <p style='color: red'> Att göra: validering</p>
-        <form name='addAd'>
+
+<div class="container">
+  <div class="col-md-8 center-block wrapper">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+
+        <h1>Skapa annons</h1>
+    
+        <form name='editAdvertisement'>
           <fieldset>
+
             <div class="row block">
-            <label for='nameAd'>Projekt namn: </label>
-            <input type='text' name='namn' class="form-control col-md-4" ng-model="ad.name"  placeholder="Namn" maxlength="60"/></div>
-            <div class="row block">
-            <label for="description">Beskrivning:</label>
-            <textarea name="ad.description" id="" class='col-md-12' rows="5"></textarea>
+              <button type="button" class="btn btn-primary btn-sm" ng-model="ad.content_type" btn-radio="'job_offer'">Jobberbjudande</button>
+              <button type="button" class="btn btn-primary btn-sm" ng-model="ad.content_type" btn-radio="'service'">Service</button>
             </div>
+
             <div class="row block">
-            <label for="kategorier">Välja kategorier:</label>
-              <div class="checkbox">
-                  <label class="checkbox">
-                    <input type="checkbox" ng-model="category.projman"> Project management
-                  </label>
-                </div><!--.checkbox-->
-                <div class="checkbox">
-                  <label class="checkbox">
-                    <input type="checkbox" ng-model="category.webdev"> Webb utveckling
-                  </label>
-                </div><!--.checkbox-->
-                <div class="checkbox">
-                  <label class="checkbox">
-                    <input type="checkbox" ng-model="category.webdes"> Web design
-                  </label>
-                </div><!--.checkbox-->
-                <div class="checkbox">
-                  <label class="checkbox">
-                    <input type="checkbox" ng-model="category.mobapp"> Mobile applikationer
-                  </label>
-                </div><!--.checkbox-->
+              <label for='nameAd'>Rubrik: </label>
+              <input type='text' name='namn' class="form-control col-md-4" ng-model="ad.heading"  placeholder="Namn" maxlength="60"/>
             </div>
+           
             <div class="row block">
-            <label for="location">Välj ort</label>
-            <div class="checkbox">
-                  <label class="checkbox">
-                    <input type="checkbox" ng-model="location.id"> Malmö
-                  </label>
-            </div><!--.checkbox-->
-            <div class="checkbox">
-                  <label class="checkbox">
-                    <input type="checkbox" ng-model="location.id"> Stockholm
-                  </label>
-            </div><!--.checkbox-->
-            <div class="checkbox">
-                  <label class="checkbox">
-                    <input type="checkbox" ng-model="location.id"> Distans
-                  </label>
-            </div><!--.checkbox-->
-            <label for="ort">Annars</label>
-            <input type="text" name='addLocation'>
+              <label for="content">Annonstext:</label>
+              <textarea name="content" ng-model="ad.content" class='col-md-12' rows="5"></textarea>
             </div>
+            
             <div class="row block">
-            <label for="duration">Anställning</label>
-            <select class="form-control">
-                <option>tills vidare</option>
-                <option>projekt</option>
-                <option>heltid</option>
-            </select>
+              <label for="snippet">Kort text för söksidan:</label>
+              <textarea name="snippet" ng-model="ad.snippet" class='col-md-12' rows="2"></textarea>
             </div>
+
             <div class="row block">
-            <label for="bugdet">Ange er budget:</label>
-            <input type="number">
+
+              <div class="col-md-6">
+                <label for="categories">Kompetensområden: </label> <br>
+                <select class="tags" name="categories" 
+                  ng-model="catSelected"
+                  ng-change="selectedCategories.push(catSelected)"
+                  ng-options="cat as cat for cat in categories">
+                  <option value="">Välj</option>
+                </select>
+                <ul class="taglist"><li class="catcloud" ng-repeat="cat in selectedCategories">{{cat}}</li></ul><br>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="tags">Nyckelord: </label><br>
+                <select class="tags" name="tags" 
+                  ng-model="tagSelected"
+                  ng-change="selectedTags.push(tagSelected)"
+                  ng-options="tag as tag for tag in tags">
+                  <option value="">Välj</option>
+                </select>
+                <ul class="taglist"><li class="tagcloud" ng-repeat="tag in selectedTags">{{tag}}</li></ul><br>
+              </div>
+
             </div>
+            
+            <div class="row block" ng-controller="DatepickerDemoCtrl">
+
+              <div class="col-md-6">
+                <h4>Datum för publicering</h4>
+                <p class="input-group">
+                  <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="ad.date_publish" is-open="openedPub" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="open($event,'pub')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                </p>
+              </div>
+
+              <div class="col-md-6">
+                <h4>Sista visningsdatum</h4>
+                <p class="input-group">
+                  <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="ad.date_expire" is-open="openedExp" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions"      ng-required="true" close-text="Close" />
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="open($event,'exp')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                </p>
+              </div>
+
+            </div>
+
             <div class="row block">
-            <button ng-click="save()" class="btn btn-success">Spara</button>
+              <label for="location">Ort</label> <!-- Not supported in db yet, but good idea -->
+              <input type="text" name='location'>
             </div>
-            </fieldset>
-    </form>
+
+            <div class="row block">
+              <button ng-click="send(0)" class="btn btn-success btn-sm">Spara</button>
+              <button ng-click="send(1)" class="btn btn-success btn-sm">Publicera</button>
+            </div>
+
+          </fieldset>
+        </form>
+      </div>
+    </div>
   </div>
-</div>
 </div>

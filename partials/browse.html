@@ -6,9 +6,16 @@
           <div class="row">
             <h2>Sökformulär</h2><br>
             
-            <div class="col-sm-4 center-block">  
+            <div class="col-sm-4 center-block">
+
+                <div class="btn-group">
+                  <button type="button" ng-click="alert(req.main)" class="btn btn-primary btn-sm" ng-model="req.main" btn-radio="'advertisement'">Annonser</button>
+                  <button type="button" ng-click="alert(req.main)" class="btn btn-primary btn-sm" ng-model="req.main" btn-radio="'profile'">Profiler</button>
+                </div> 
+
+                <!--
               <input type="radio" name="maincategory" ng-model="main" ng-click="req.main='advertisement'" value="1">Annonser</input>
-              <input type="radio" name="maincategory" ng-model="main" ng-click="req.main='profile'" value="2">Profiler</input>
+              <input type="radio" name="maincategory" ng-model="main" ng-click="req.main='profile'" value="2">Profiler</input>-->
             </div>
             <br>
 

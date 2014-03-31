@@ -3,10 +3,13 @@
 // This file contains registration of the global app, its 
 // controllers, services etc. 
 
+angular.module('bootstrap', ['ui.bootstrap']);
+
 var computenzApp = angular.module('computenzApp', [
     'ngRoute',
     'computenzControllers',
-    'computenzServices'
+    'computenzServices',
+    'bootstrap'
   ]);
 
 computenzApp.config(['$locationProvider', function($locationProvider){

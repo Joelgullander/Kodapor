@@ -102,7 +102,8 @@
         }
         
         $q = $connection->prepare($sql);
-        $q -> execute(); 
+        $q -> execute();
+        var_dump($sql); 
         exit;
     } 
   }

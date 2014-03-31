@@ -1,30 +1,46 @@
 
-  <div class="modal-header">
-    <h1 class="text-center">PROFILE</h1>
-     <hr>
-  </div>
-  
-  
+<div class="container">
+  <div class="col-md-10 center-block wrapper">
 
-  <div class="container">
-    <div class="col-md-6 images">
-      <img ng-show="user.image_view != null" ng-src="php/{{user.image_view}}" class="imageView"></img>
-      <img ng-src="php/{{ user.image_logo || user.portrait }}" class=" profileImage" alt="Responsive image"></img> 
+    <div class="row">
+      <div class="col-md-2">
+        <img class="imageLogo img-responsive" alt="" ng-show="user.image_logo != null" ng-src="php/{{user.image_logo}}"><img>
+      </div>
+      <div class="col-md-8">
+        <h1 class="">{{user.display_name}}</h1>
+      </div>
     </div>
-  </div>
+  
+    <div class="row">
+      <div class="col-md-12 images">
+        <img ng-show="user.image_view != null" ng-src="php/{{user.image_view}}" class="imageView img-responsive"></img>
+        <!-- <img ng-src="php/{{ user.portrait }}" class=" profileImage" alt="Responsive image"></img> --> 
+      </div>
+    </div>
 
-   <div class="container">  
-     <div class="col-md-6 profileInfo">
+    <div class="row">  
+      <div class="col-md-6 profileInfo col-md-offset-1">
         <label for='namn'>Namn:</label>
           <p>{{ user.firstname }} {{user.lastname}}</p>    
            <h4>Brancherfarenhet</h4>
           <p>{{ user.experience }} år </p>
       </div>
+
+      <div class="col-md-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Annonser</h3>
+          </div>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <li ng-repeat="ad in user.advertisements"> {{ ad.content_id }} {{ ad.date_publish}} </li>
+          </ul>
+        </div>
+      </div>
     </div>
   
-
-    <div class="container">
-      <div class="col-md-8">
+      <div class="col-md-10 center-block">
         <h5>Kategorier: <ul class="taglist"><li class="catcloud" ng-repeat="cat in categories">{{ cat }}</li></h5>
         <h5>Kompetenser: <ul class="taglist"><li class="tagcloud" ng-repeat="tag in tags">{{tag}}</li></ul>
         <h3>Beskrivning</h3>
@@ -33,33 +49,14 @@
           </p>
       </div>
 
-      <div class="col-md-4">
-        <div class=" panel panel-primary">
-          <div class="panel-heading">
-           <h3 class="panel-title">ANONSER</h3>
-          </div>
-          <div class="panel-body">
-            <ul>
-              <li ng-repeat="ad in user.advertisements"> {{ ad.date_publish}} {{ ad.content_id }}  {{ ad.publish_date }} </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div> 
-  </div>  
-  
 
-
-  <div class="row">
-    <div class="container">
-      <div class="col-md-3 col-md-offset-3" >
-        <button class="btn btn-warning" ng-show="destination ==='myprofile'" type="button" ng-click="edit()">EDIT PROFILE</button>
-      </div> 
+    <div class="row">
+        <div class="col-md-12">
+          <br>
+          <button class="btn btn-warning center-block" ng-show="destination ==='myprofile'" type="button" ng-click="edit()">EDIT PROFILE</button>
+        </div> 
     </div>
+
   </div>
-
-
- 
-
-  {{user.advertisements}}
+</div>
 
