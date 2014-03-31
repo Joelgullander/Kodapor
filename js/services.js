@@ -81,6 +81,8 @@ computenzServices.service('LoginService', function($http,$location,UserService) 
           UserService.setUser(data);
           // Link is changed from 'login' to 'logout'
           setLinkData(true);
+          //
+          $('.form-group').addClass('my-hidden');
           // Redirect to the users own profile
           $location.path('myprofile');
         }else{
@@ -97,6 +99,8 @@ computenzServices.service('LoginService', function($http,$location,UserService) 
         UserService.unsetUser();
         // Set link back to 'login'
         setLinkData(false);
+        //
+        $('.form-group').removeClass('my-hidden');
       });
     },
     getLoginStatusApp: function(){  // If need to check loginstatus

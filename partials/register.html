@@ -1,10 +1,12 @@
-
 <div class="container">
-         
-        <div class="row">
+  <div class="col-md-8 center-block wrapper">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
 
-          <form class="form col-md-8 center-block wrapper" name="regForm" novalidate>
+        <form  name="regForm" novalidate>
+
             <h1 class="text-center">Registrering</h1>
+
             <label for='username'>Användarnamn</label>
             <input type='text' name='username' class="form-control" ng-model="user.username" placeholder="Användarnamn" ng-minlength="3" maxlength="30" required/>
                    
@@ -68,8 +70,10 @@
 
             <button ng-click="save()" class="btn btn-success">Spara</button>
           
-            </form>
-      </div><!--row-->
+        </form>
+      </div>
+    </div><!--row-->
+  </div>
 </div>
          
  

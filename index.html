@@ -23,32 +23,32 @@
             </button>
           </div><!--.navbar-header-->
 
-          <p class="navbar-text navbar-left"> {{ loginStatus() ? "Inloggad som " + getFullName() : "Inte inloggad" }} </p>
+          <p class="navbar-text navbar-left"> {{ loginStatus() ? "Inloggad som " + getFullName() : "" }} </p>
 
           <div class="navbar-collapse collapse" id="navbar-main">
             
             <!-- go to login view if not already logged in, else logout and return to homepage -->
             <ul class="nav navbar-nav">
-              <li><a ng-href="{{ loginStatus() ? 'myprofile' : '' }}">{{ loginStatus() ? "Min profil" : "" }}</a></li>
-              <li><a href="browse">Sök profiler</a></li>
-              <li><a ng-href="{{whereToGo.link}}" ng-click="whereToGo.text == 'Logga ut' && logOut()"> {{ whereToGo.text }} </a></li>
+              <li><a ng-href="myprofile">{{ loginStatus() ? "Min profil" : "" }}</a></li>
+              <li><a href="browse">Sök profiler och annonser</a></li>
+              <li><a ng-href="{{whereToGo.link}}" ng-click="whereToGo.text == 'Logga ut' && logOut()"> {{ !loginStatus() ? "Logga in/Registrera" : "" }} </a></li>
 
               <li class="divider"></li>
-              <li><a ng-href="new_ad">Lägg till ny annons</a></li>
+              <li><a ng-href="new_ad">{{ loginStatus() ? "Lägg till ny annons" : ""}}</a></li>
             </ul>
 
             
 
             <ul class="nav navbar-nav navbar-right">
               <!-- Login form navbar -->
-              <form class="navbar-form navbar-right" role="form" ng-show="!loginStatus()">
+              <form class="navbar-form navbar-right" role="form">
                 <div class="form-group">
                   <input type="text" name="username" ng-model="username" class="form-control" placeholder="Användarnamn" required>
                 </div>
                 <div class="form-group">
                   <input  type="password" name="password" ng-model="password" ng-minlength="6" class="form-control" placeholder="Lösenord"required>
                 </div>
-                <button ng-click="sendForm(username,password)"  class="btn btn-success">Logga in</button>
+                <button ng-click="(whereToGo.text == 'Logga ut' && logOut()) || sendForm(username,password)"  class="btn btn-success btn-sm">{{ whereToGo.text }}</button>
               </form>
  
               
